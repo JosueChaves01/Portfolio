@@ -1,0 +1,58 @@
+.activityBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: var(--width-activity-bar);
+  background-color: var(--color-activity-bar);
+  border-right: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.topIcons,
+.bottomIcons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-2) 0;
+  gap: var(--space-1);
+}
+
+.icon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.icon:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+}
+
+.icon.active {
+  color: var(--color-text);
+}
+
+.icon.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  height: 50%;
+  width: 2px;
+  background-color: var(--color-accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.iconSymbol {
+  font-size: 18px;
+  line-height: 1;
+}

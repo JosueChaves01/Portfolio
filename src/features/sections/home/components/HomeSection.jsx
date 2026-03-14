@@ -1,0 +1,49 @@
+import { useIDE } from '../../../../store/IDEContext';
+import { Icon } from '../../../../shared/icons/Icon';
+import { HOME, ROLE_BADGES, ACTION_BUTTONS } from '../constants/home.constants';
+import { TypewriterText } from './TypewriterText';
+import { RoleBadge } from './RoleBadge';
+import { StatsCard } from './StatsCard';
+import { SocialLinks } from './SocialLinks';
+import { Button } from '../../../../shared/components/Button/Button';
+import styles from './HomeSection.module.css';
+
+export function HomeSection() {
+  const { openTab } = useIDE();
+
+  return (
+    <section className={styles.section}>
+      <p className={styles.headerComment}>{HOME.HEADER_COMMENT}</p>
+
+      <div className={styles.nameBlock}>
+        <h1 className={styles.nameFirst}>{HOME.NAME_FIRST}</h1>
+        <h1 className={styles.nameLast}>{HOME.NAME_LAST}</h1>
+      </div>
+
+      <div className={styles.badges}>
+        {ROLE_BADGES.map(({ id, label, dotColor }) => (
+          <RoleBadge key={id} label={label} dotColor={dotColor} />
+        ))}
+      </div>
+
+      <TypewriterText />
+
+      <p className={styles.bio}>{HOME.BIO}</p>
+
+      <div className={styles.actions}>
+        {ACTION_BUTTONS.map(({ id, icon, label, variant, targetTab }) => (
+          <Button
+            key={id}
+            variant={variant}
+            onClick={() => openTab(targetTab)}
+          >
+            <Icon name={icon} size={14} /> {label}
+          </Button>
+        ))}
+      </div>
+
+      <StatsCard />
+      <SocialLinks />
+    </section>
+  );
+}

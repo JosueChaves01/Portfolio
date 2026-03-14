@@ -1,0 +1,31 @@
+.ide {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.workbench {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidePanel {
+  flex-shrink: 0;
+}
+
+.editorColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.editorBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}

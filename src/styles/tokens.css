@@ -1,0 +1,262 @@
+/* ─── Design Tokens ─────────────────────────────────────────────────────────── */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Syne:wght@400..800&display=swap');
+
+:root {
+  /* Typefaces */
+  --font-sans: 'JetBrains Mono', monospace;
+  --font-decorative: 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+
+  /* Font sizes */
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Layout heights */
+  --height-title-bar: 38px;
+  --height-menu-bar: 30px;
+  --height-tab-bar: 35px;
+  --height-breadcrumb: 28px;
+  --height-status-bar: 24px;
+  --height-terminal: 220px;
+
+  /* Layout widths */
+  --width-activity-bar: 48px;
+  --width-sidebar: 220px;
+  --width-copilot: 280px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+
+  /* Z-index */
+  --z-modal: 1000;
+  --z-overlay: 100;
+
+  /* Shadows */
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Tote Dark (default) ─────────────────────────────────────────────────── */
+[data-theme="tote-dark"],
+:root {
+  --color-bg:             #0f0f14;
+  --color-title-bar:      #1a1a24;
+  --color-menu-bar:       #13131a;
+  --color-activity-bar:   #0a0a0f;
+  --color-sidebar:        #13131a;
+  --color-editor:         #0f0f14;
+  --color-tab-bar:        #13131a;
+  --color-tab-inactive:   #13131a;
+  --color-tab-active:     #0f0f14;
+  --color-tab-hover:      #1c1c28;
+  --color-terminal:       #0f0f14;
+  --color-status-bar:     #6366f1;
+  --color-status-bar-text: #ffffff;
+  --color-status-bar-hover: rgba(255, 255, 255, 0.1);
+
+  --color-surface:        #1a1a24;
+  --color-surface-hover:  #252533;
+  --color-surface-active: #2b2b3d;
+  --color-border:         #2d2d3d;
+
+  --color-text:           #e5e7eb;
+  --color-text-muted:     #94a3b8;
+  --color-comment:        #64748b;
+
+  --color-accent:         #818cf8;
+  --color-accent-hover:   #6366f1;
+  --color-accent-subtle:  rgba(99, 102, 241, 0.1);
+
+  --color-terminal-text:  #e5e7eb;
+}
+
+
+/* ─── Rosé Pine ──────────────────────────────────────────────────────────────── */
+[data-theme="rose-pine"] {
+  --color-bg:             #191724;
+  --color-title-bar:      #1f1d2e;
+  --color-menu-bar:       #1f1d2e;
+  --color-activity-bar:   #191724;
+  --color-sidebar:        #1f1d2e;
+  --color-editor:         #191724;
+  --color-tab-bar:        #1f1d2e;
+  --color-tab-inactive:   #1f1d2e;
+  --color-tab-active:     #191724;
+  --color-tab-hover:      #26233a;
+  --color-terminal:       #191724;
+  --color-status-bar:     #eb6f92;
+  --color-status-bar-text: #191724;
+  --color-status-bar-hover: rgba(235,111,146,0.2);
+
+  --color-surface:        #1f1d2e;
+  --color-surface-hover:  #26233a;
+  --color-surface-active: #2a283e;
+  --color-border:         #26233a;
+
+  --color-text:           #e0def4;
+  --color-text-muted:     #6e6a86;
+  --color-comment:        #403d52;
+
+  --color-accent:         #eb6f92;
+  --color-accent-hover:   #e85d84;
+  --color-accent-subtle:  rgba(235, 111, 146, 0.1);
+
+  --color-terminal-text:  #e0def4;
+}
+
+/* ─── Tokyo Night ────────────────────────────────────────────────────────────── */
+[data-theme="tokyo-night"] {
+  --color-bg:             #1a1b26;
+  --color-title-bar:      #16161e;
+  --color-menu-bar:       #16161e;
+  --color-activity-bar:   #16161e;
+  --color-sidebar:        #16161e;
+  --color-editor:         #1a1b26;
+  --color-tab-bar:        #16161e;
+  --color-tab-inactive:   #16161e;
+  --color-tab-active:     #1a1b26;
+  --color-tab-hover:      #1f2335;
+  --color-terminal:       #1a1b26;
+  --color-status-bar:     #7aa2f7;
+  --color-status-bar-text: #1a1b26;
+  --color-status-bar-hover: rgba(122, 162, 247, 0.2);
+
+  --color-surface:        #1f2335;
+  --color-surface-hover:  #24283b;
+  --color-surface-active: #292e42;
+  --color-border:         #292e42;
+
+  --color-text:           #a9b1d6;
+  --color-text-muted:     #565f89;
+  --color-comment:        #414868;
+
+  --color-accent:         #7aa2f7;
+  --color-accent-hover:   #6a90e7;
+  --color-accent-subtle:  rgba(122, 162, 247, 0.1);
+
+  --color-terminal-text:  #a9b1d6;
+}
+
+/* ─── Catppuccin ─────────────────────────────────────────────────────────────── */
+[data-theme="catppuccin"] {
+  --color-bg:             #1e1e2e;
+  --color-title-bar:      #181825;
+  --color-menu-bar:       #181825;
+  --color-activity-bar:   #181825;
+  --color-sidebar:        #181825;
+  --color-editor:         #1e1e2e;
+  --color-tab-bar:        #181825;
+  --color-tab-inactive:   #181825;
+  --color-tab-active:     #1e1e2e;
+  --color-tab-hover:      #24273a;
+  --color-terminal:       #1e1e2e;
+  --color-status-bar:     #cba6f7;
+  --color-status-bar-text: #1e1e2e;
+  --color-status-bar-hover: rgba(203, 166, 247, 0.2);
+
+  --color-surface:        #313244;
+  --color-surface-hover:  #363651;
+  --color-surface-active: #45475a;
+  --color-border:         #45475a;
+
+  --color-text:           #cdd6f4;
+  --color-text-muted:     #6c7086;
+  --color-comment:        #585b70;
+
+  --color-accent:         #cba6f7;
+  --color-accent-hover:   #ba95e6;
+  --color-accent-subtle:  rgba(203, 166, 247, 0.1);
+
+  --color-terminal-text:  #cdd6f4;
+}
+
+/* ─── Nord ───────────────────────────────────────────────────────────────────── */
+[data-theme="nord"] {
+  --color-bg:             #2e3440;
+  --color-title-bar:      #242933;
+  --color-menu-bar:       #242933;
+  --color-activity-bar:   #242933;
+  --color-sidebar:        #2e3440;
+  --color-editor:         #2e3440;
+  --color-tab-bar:        #242933;
+  --color-tab-inactive:   #242933;
+  --color-tab-active:     #2e3440;
+  --color-tab-hover:      #3b4252;
+  --color-terminal:       #2e3440;
+  --color-status-bar:     #5e81ac;
+  --color-status-bar-text: #eceff4;
+  --color-status-bar-hover: rgba(94, 129, 172, 0.2);
+
+  --color-surface:        #3b4252;
+  --color-surface-hover:  #434c5e;
+  --color-surface-active: #4c566a;
+  --color-border:         #434c5e;
+
+  --color-text:           #eceff4;
+  --color-text-muted:     #616e88;
+  --color-comment:        #4c566a;
+
+  --color-accent:         #88c0d0;
+  --color-accent-hover:   #78b0c0;
+  --color-accent-subtle:  rgba(136, 192, 208, 0.1);
+
+  --color-terminal-text:  #d8dee9;
+}
+
+/* ─── Gruvbox ────────────────────────────────────────────────────────────────── */
+[data-theme="gruvbox"] {
+  --color-bg:             #282828;
+  --color-title-bar:      #1d2021;
+  --color-menu-bar:       #1d2021;
+  --color-activity-bar:   #1d2021;
+  --color-sidebar:        #1d2021;
+  --color-editor:         #282828;
+  --color-tab-bar:        #1d2021;
+  --color-tab-inactive:   #1d2021;
+  --color-tab-active:     #282828;
+  --color-tab-hover:      #3c3836;
+  --color-terminal:       #282828;
+  --color-status-bar:     #d79921;
+  --color-status-bar-text: #1d2021;
+  --color-status-bar-hover: rgba(215, 153, 33, 0.2);
+
+  --color-surface:        #3c3836;
+  --color-surface-hover:  #504945;
+  --color-surface-active: #665c54;
+  --color-border:         #504945;
+
+  --color-text:           #ebdbb2;
+  --color-text-muted:     #928374;
+  --color-comment:        #665c54;
+
+  --color-accent:         #d79921;
+  --color-accent-hover:   #b57614;
+  --color-accent-subtle:  rgba(215, 153, 33, 0.1);
+
+  --color-terminal-text:  #ebdbb2;
+}

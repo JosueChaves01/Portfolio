@@ -1,0 +1,88 @@
+.terminal {
+  display: flex;
+  flex-direction: column;
+  height: var(--height-terminal);
+  background-color: var(--color-terminal);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+
+.tabBar {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-tab-bar);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 var(--space-2);
+  height: 32px;
+  gap: var(--space-1);
+}
+
+.tabLabel {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  padding: var(--space-1) var(--space-2);
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition-fast);
+}
+
+.activeTab {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+
+.closeBtn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+}
+
+.closeBtn:hover {
+  color: var(--color-text);
+}
+
+.output {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.outputLine {
+  color: var(--color-terminal-text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-top: 1px solid var(--color-border);
+  gap: var(--space-2);
+}
+
+.prompt {
+  color: var(--color-accent);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--color-terminal-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  caret-color: var(--color-accent);
+}
