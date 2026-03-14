@@ -20,8 +20,8 @@ export const PREDEFINED_QUESTIONS = [
   { id: 'q2', label: 'What projects has Josue built?' },
   { id: 'q3', label: 'Tell me about her work experience' },
   { id: 'q4', label: "What's her tech stack?" },
-  { id: 'q5', label: 'How can I contact Aahana?' },
-  { id: 'q6', label: 'How can I support Aahana?' },
+  { id: 'q5', label: 'How can I contact Josue?' },
+  { id: 'q6', label: 'How can I support Josue?' },
 ];
 
 export const QUESTION_PREFIX = '✦';
