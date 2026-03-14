@@ -14,7 +14,7 @@ export function useSettings() {
       downloadResume: () => {
         const link = document.createElement('a');
         link.href = RESUME_URL;
-        link.download = 'Aahana_Bobade_Resume.pdf';
+        link.download = 'Josue_Chaves_Resume.pdf';
         link.click();
       },
       fullscreen: () => {

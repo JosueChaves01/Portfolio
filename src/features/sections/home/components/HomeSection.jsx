@@ -28,7 +28,13 @@ export function HomeSection() {
 
       <TypewriterText />
 
-      <p className={styles.bio}>{HOME.BIO}</p>
+      <p className={styles.bio}>
+        {HOME.BIO.split(new RegExp(`(${HOME.BIO_KEYWORDS.join('|')})`, 'gi')).map((part, i) =>
+          HOME.BIO_KEYWORDS.some(kw => kw.toLowerCase() === part.toLowerCase()) ? (
+            <span key={i} className={styles.highlight}>{part}</span>
+          ) : part
+        )}
+      </p>
 
       <div className={styles.actions}>
         {ACTION_BUTTONS.map(({ id, icon, label, variant, targetTab }) => (
