@@ -5,13 +5,13 @@ export const PANEL_IDS = {
 };
 
 export const ACTIVITY_ICONS_TOP = [
-  { id: PANEL_IDS.EXPLORER, icon: 'Files', label: 'Explorer' },
-  { id: 'search', icon: 'Search', label: 'Search' },
-  { id: PANEL_IDS.SOURCE_CONTROL, icon: 'GitBranch', label: 'Source Control' },
-  { id: 'download', icon: 'Download', label: 'Download Resume' },
-  { id: 'copilot', icon: 'Sparkles', label: 'Copilot Chat' },
+  { id: PANEL_IDS.EXPLORER, icon: 'Files', label: { en: 'Explorer', es: 'Explorador' } },
+  { id: 'search', icon: 'Search', label: { en: 'Search', es: 'Buscar' } },
+  { id: PANEL_IDS.SOURCE_CONTROL, icon: 'GitBranch', label: { en: 'Source Control', es: 'Control de Código' } },
+  { id: 'download', icon: 'Download', label: { en: 'Download Resume', es: 'Descargar Currículum' } },
+  { id: 'copilot', icon: 'Sparkles', label: { en: 'Copilot Chat', es: 'Chat de Copilot' } },
 ];
 
 export const ACTIVITY_ICONS_BOTTOM = [
-  { id: PANEL_IDS.SETTINGS, icon: 'Settings', label: 'Settings' },
+  { id: PANEL_IDS.SETTINGS, icon: 'Settings', label: { en: 'Settings', es: 'Ajustes' } },
 ];

@@ -75,15 +75,19 @@ export const MENU_ITEMS = [
   },
   {
     id: MENU_ITEM_IDS.HELP,
-    label: 'Help',
+    label: { en: 'Help', es: 'Ayuda' },
     items: [
-      { id: 'help-shortcuts', label: 'Keyboard Shortcuts',    action: 'togglePanel', payload: PANEL_IDS.SETTINGS },
+      { id: 'help-shortcuts', label: { en: 'Keyboard Shortcuts', es: 'Atajos de Teclado' }, action: 'togglePanel', payload: PANEL_IDS.SETTINGS },
       { type: 'separator' },
-      { id: 'help-github',    label: 'View Source on GitHub', action: 'openGitHub' },
+      { id: 'lang-en', label: 'English (US)', action: 'setLanguage', payload: 'en' },
+      { id: 'lang-es', label: 'Español (ES)', action: 'setLanguage', payload: 'es' },
       { type: 'separator' },
-      { id: 'help-about',     label: 'About',                 action: 'openTab', payload: FILE_IDS.README },
+      { id: 'help-github', label: { en: 'View Source on GitHub', es: 'Ver Código en GitHub' }, action: 'openGitHub' },
+      { type: 'separator' },
+      { id: 'help-about', label: { en: 'About', es: 'Acerca de' }, action: 'openTab', payload: FILE_IDS.README },
     ],
   },
+
   {
     id: MENU_ITEM_IDS.COPILOT,
     label: 'Copilot',

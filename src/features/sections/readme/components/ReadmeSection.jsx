@@ -1,58 +1,59 @@
 import { Icon } from '../../../../shared/icons/Icon';
+import { useLanguage } from '../../../../store/LanguageContext';
 import { README, ROLE_TAGS, ABOUT_BULLETS, STACK_CATEGORIES, CONNECT_LINKS } from '../constants/readme.constants';
 import { Tag } from '../../../../shared/components/Tag/Tag';
 import styles from './ReadmeSection.module.css';
 
 export function ReadmeSection() {
+  const { t } = useLanguage();
+
   return (
     <article className={styles.readme}>
       <h1 className={styles.h1}>{README.HEADING}</h1>
-      <p className={styles.subtitle}>{README.SUBTITLE}</p>
+      <p className={styles.subtitle}>{t(README.SUBTITLE)}</p>
 
       <div className={styles.roleTags}>
-        {ROLE_TAGS.map(({ id, icon, color, label }) => (
-          <span 
-            key={id} 
+        {ROLE_TAGS.map(({ icon, color, label }, i) => (
+          <span
+            key={i}
             className={styles.roleTag}
-            style={{ 
+            style={{
               borderColor: color,
               backgroundColor: `${color}15`,
               color: color
             }}
           >
-            <Icon name={icon} size={12} color={color} /> {label}
+            <Icon name={icon} size={12} color={color} /> {t(label)}
           </span>
         ))}
       </div>
 
-
       <hr className={styles.divider} />
 
-      <h2 className={styles.h2}>About</h2>
+      <h2 className={styles.h2}>{t({ en: 'About', es: 'Acerca de' })}</h2>
       <ul className={styles.list}>
-        {ABOUT_BULLETS.map(({ icon, color, text }) => (
-          <li key={text} className={styles.listItem}>
-            <Icon name={icon} size={14} color={color} /> {text}
+        {ABOUT_BULLETS.map(({ icon, color, text }, i) => (
+          <li key={i} className={styles.listItem}>
+            <Icon name={icon} size={14} color={color} /> {t(text)}
           </li>
         ))}
       </ul>
 
       <hr className={styles.divider} />
 
-      <h2 className={styles.h2}>Stack</h2>
-      {STACK_CATEGORIES.map(({ label, tags }) => (
-        <div key={label} className={styles.stackRow}>
-          <strong className={styles.stackLabel}>{label}:</strong>
+      <h2 className={styles.h2}>{t({ en: 'Stack', es: 'Tecnologías' })}</h2>
+      {STACK_CATEGORIES.map(({ title, items }, i) => (
+        <div key={i} className={styles.stackRow}>
+          <strong className={styles.stackLabel}>{t(title)}:</strong>
           <div className={styles.stackTags}>
-
-            {tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
+            {items.map((tag) => <Tag key={tag}>{tag}</Tag>)}
           </div>
         </div>
       ))}
 
       <hr className={styles.divider} />
 
-      <h2 className={styles.h2}>Connect</h2>
+      <h2 className={styles.h2}>{t({ en: 'Connect', es: 'Conectar' })}</h2>
       <div className={styles.connectLinks}>
         {CONNECT_LINKS.map(({ label, url }) => (
           <a key={label} href={url} target="_blank" rel="noopener noreferrer" className={styles.link}>
@@ -62,7 +63,8 @@ export function ReadmeSection() {
       </div>
 
       <hr className={styles.divider} />
-      <p className={styles.footer}>{README.FOOTER}</p>
+      <p className={styles.footer}>{t(README.FOOTER)}</p>
     </article>
   );
 }
+

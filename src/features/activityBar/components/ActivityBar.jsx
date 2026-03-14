@@ -1,3 +1,4 @@
+import { useLanguage } from '../../../store/LanguageContext';
 import { ACTIVITY_ICONS_TOP, ACTIVITY_ICONS_BOTTOM } from '../constants/activityBar.constants';
 import { useActivityBar } from '../hooks/useActivityBar';
 import { ActivityBarIcon } from './ActivityBarIcon';
@@ -5,6 +6,7 @@ import styles from './ActivityBar.module.css';
 
 export function ActivityBar({ onDownloadResume, onOpenSearch }) {
   const { activePanel, handleIconClick } = useActivityBar({ onDownloadResume, onOpenSearch });
+  const { t } = useLanguage();
 
   return (
     <aside className={styles.activityBar}>
@@ -14,7 +16,7 @@ export function ActivityBar({ onDownloadResume, onOpenSearch }) {
             key={id}
             id={id}
             icon={icon}
-            label={label}
+            label={t(label)}
             isActive={activePanel === id}
             onClick={handleIconClick}
           />
@@ -26,7 +28,7 @@ export function ActivityBar({ onDownloadResume, onOpenSearch }) {
             key={id}
             id={id}
             icon={icon}
-            label={label}
+            label={t(label)}
             isActive={activePanel === id}
             onClick={handleIconClick}
           />
@@ -35,3 +37,4 @@ export function ActivityBar({ onDownloadResume, onOpenSearch }) {
     </aside>
   );
 }
+

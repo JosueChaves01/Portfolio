@@ -46,6 +46,7 @@ export const LS_OUTPUT = FILE_TREE_ORDER.map((id) => FILE_REGISTRY[id].name).joi
 
 export const PWD_OUTPUT = '/home/josue/portfolio';
 
+
 export const HELP_OUTPUT = [
   'Available commands:',
   '  help              — Show this help message',

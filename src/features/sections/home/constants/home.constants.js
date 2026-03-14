@@ -1,25 +1,29 @@
 export const HOME = {
-  HEADER_COMMENT: '// hello world !! Welcome to my portfolio',
+  HEADER_COMMENT: { en: '// hello world !! Welcome to my portfolio', es: '// hola mundo !! Bienvenido a mi portafolio' },
   NAME_FIRST: 'Josue',
   NAME_LAST: 'Chaves',
-  BIO: 'I specialize in backend engineering, distributed systems, and agentic workflows. I build intelligent, scalable applications and explore the boundaries of LLM integration at ITCR.',
-  BIO_KEYWORDS: ['backend engineering', 'distributed systems', 'agentic workflows', 'LLM integration', 'ITCR'],
+  BIO: {
+    en: 'I specialize in backend engineering, distributed systems, and agentic workflows. I build intelligent, scalable applications and explore the boundaries of LLM integration at ITCR.',
+    es: 'Me especializo en ingeniería backend, sistemas distribuidos y flujos de trabajo agénticos. Construyo aplicaciones inteligentes y escalables, explorando los límites de la integración de LLMs en el ITCR.'
+  },
+  BIO_KEYWORDS: ['backend engineering', 'distributed systems', 'agentic workflows', 'LLM integration', 'ITCR', 'ingeniería backend', 'sistemas distribuidos', 'flujos de trabajo agénticos', 'integración de LLMs'],
 };
 
 export const ROLE_BADGES = [
-  { id: 'backend', label: 'Backend Engineer', dotColor: '#22c55e' },
-  { id: 'systems', label: 'Systems Engineer', dotColor: '#3b82f6' },
-  { id: 'datascience', label: 'Data Scientist', dotColor: '#a855f7' },
-  { id: 'agentic', label: 'AI Agent Dev', dotColor: '#ec4899' },
+  { id: 'backend', label: { en: 'Backend Engineer', es: 'Ingeniero Backend' }, dotColor: '#22c55e' },
+  { id: 'systems', label: { en: 'Systems Engineer', es: 'Ingeniero de Sistemas' }, dotColor: '#3b82f6' },
+  { id: 'datascience', label: { en: 'Data Scientist', es: 'Científico de Datos' }, dotColor: '#a855f7' },
+  { id: 'agentic', label: { en: 'AI Agent Dev', es: 'Desarrollador de Agentes IA' }, dotColor: '#ec4899' },
 ];
 
 export const TYPEWRITER_PHRASES = [
-  'Computer Engineering Student @ ITCR',
-  'Building scalable backend systems',
-  'Enthusiastic about LLMs and Agent Workflows',
-  'Exploring Distributed Architectures',
-  'Passionate about efficient software design',
+  { en: 'Computer Engineering Student @ ITCR', es: 'Estudiante de Ingeniería en Computadores @ ITCR' },
+  { en: 'Building scalable backend systems', es: 'Construyendo sistemas backend escalables' },
+  { en: 'Enthusiastic about LLMs and Agent Workflows', es: 'Entusiasta de los LLMs y flujos de trabajo con agentes' },
+  { en: 'Exploring Distributed Architectures', es: 'Explorando arquitecturas distribuidas' },
+  { en: 'Passionate about efficient software design', es: 'Apasionado por el diseño de software eficiente' },
 ];
+
 
 
 export const TYPEWRITER_SPEED_MS = 60;

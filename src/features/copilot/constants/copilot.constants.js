@@ -1,27 +1,37 @@
 export const COPILOT = {
-  TITLE: "Josue's AI Assistant",
-  WORKSPACE_BADGE: '● portfolio · josuechaves01',
-  AVATAR_ICON: 'Bot',
-  WELCOME_HEADING: "Hi! I'm Josue's Copilot",
-  WELCOME_BODY: 'Ask me anything about his projects, skills, experience, or achievements.',
-  INPUT_PLACEHOLDER: "Ask about Josue's projects, experience, skills...",
-  SEND_ICON: 'Send',
-  DISCLAIMER: 'AI can make mistakes · Contact Josue directly for important info',
-  TOGGLE_LABEL: "Josue's Copilot | AI",
-  TOGGLE_STATUS: 'open ✓',
-  MESSAGES_LEFT_TEMPLATE: (n) => `${n} msgs left`,
-  EDIT_ICON: 'Pencil',
+  TITLE: 'COPILOT',
+  WORKSPACE_BADGE: 'Portfolio',
+  WELCOME_HEADING: { en: 'Hi Josue, I\'m your assistant', es: 'Hola Josue, soy tu asistente' },
+  WELCOME_BODY: {
+    en: 'How can I help you build your portfolio today? I have context on your projects, skills, and experience.',
+    es: '¿Cómo puedo ayudarte a construir tu portafolio hoy? Tengo contexto sobre tus proyectos, habilidades y experiencia.'
+  },
+  AVATAR_ICON: 'Sparkles',
+  EDIT_ICON: 'SquarePen',
+  MESSAGES_LEFT_TEMPLATE: (count) => ({
+    en: `${count} messages left`,
+    es: `${count} mensajes restantes`
+  }),
+  DISCLAIMER: {
+    en: 'AI-generated content may be incorrect.',
+    es: 'El contenido generado por IA puede ser incorrecto.'
+  },
+  INPUT_PLACEHOLDER: { en: 'Ask Copilot...', es: 'Preguntar a Copilot...' },
 };
 
 export const MAX_MESSAGES = 2;
 
 export const PREDEFINED_QUESTIONS = [
-  { id: 'q1', label: 'Tell me about Josue?' },
-  { id: 'q2', label: 'What projects has Josue built?' },
-  { id: 'q3', label: 'Tell me about her work experience' },
-  { id: 'q4', label: "What's her tech stack?" },
-  { id: 'q5', label: 'How can I contact Josue?' },
-  { id: 'q6', label: 'How can I support Josue?' },
+  { id: 'skills', label: { en: 'Summarize my technical skills', es: 'Resume mis habilidades técnicas' } },
+  { id: 'projects', label: { en: 'Show my latest projects', es: 'Muestra mis últimos proyectos' } },
+  { id: 'experience', label: { en: 'What is my professional focus?', es: '¿Cuál es mi enfoque profesional?' } },
 ];
 
-export const QUESTION_PREFIX = '✦';
+export const QUESTION_PREFIX = '⚡';
+
+export const SYSTEM_PROMPT = `You are the AI assistant for Josue Chaves, a Junior Software Developer from Costa Rica. 
+You are embedded in his IDE-style portfolio.
+Your goal is to help visitors understand Josue's background, projects (BarberHub, Roomiefy, Chess vs IA), and technical expertise (Node.js, TypeScript, PostgreSQL, Docker, AI Agents).
+Always be professional, concise, and helpful. 
+Respond in the language the user is chatting in (English or Spanish).
+Josue is a Computer Engineering student at ITCR.`;

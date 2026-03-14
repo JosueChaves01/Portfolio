@@ -1,8 +1,11 @@
 import { Icon } from '../../../shared/icons/Icon';
+import { useLanguage } from '../../../store/LanguageContext';
 import { COPILOT } from '../constants/copilot.constants';
 import styles from './CopilotPanel.module.css';
 
 export function CopilotInput({ value, onChange, onSubmit, disabled }) {
+  const { t } = useLanguage();
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -14,7 +17,7 @@ export function CopilotInput({ value, onChange, onSubmit, disabled }) {
     <div className={styles.inputRow}>
       <input
         className={styles.chatInput}
-        placeholder={COPILOT.INPUT_PLACEHOLDER}
+        placeholder={t(COPILOT.INPUT_PLACEHOLDER)}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
@@ -24,10 +27,11 @@ export function CopilotInput({ value, onChange, onSubmit, disabled }) {
         className={styles.sendBtn}
         onClick={onSubmit}
         disabled={disabled || !value.trim()}
-        aria-label="Send message"
+        aria-label={t({ en: 'Send message', es: 'Enviar mensaje' })}
       >
-        <Icon name={COPILOT.SEND_ICON} size={14} />
+        <Icon name={COPILOT.SEND_ICON || 'Send'} size={14} />
       </button>
     </div>
   );
 }
+

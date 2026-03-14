@@ -59,8 +59,20 @@ export function useTerminal() {
     } else if (cmd === TERMINAL_COMMANDS.ECHO) {
       appendLines(args.join(' '));
     } else if (cmd === TERMINAL_COMMANDS.CD) {
-      appendLines(CD_MSG(args[0] ?? '~'));
+      const target = args[0];
+      if (!target || target === '~' || target === '/') {
+        appendLines(CD_MSG('~'));
+      } else {
+        const fileId = FILE_NAME_TO_ID[target];
+        if (fileId) {
+          appendLines(CD_MSG(target));
+          openTab(fileId);
+        } else {
+          appendLines(CD_MSG(target));
+        }
+      }
     } else if (cmd === TERMINAL_COMMANDS.CAT || cmd === TERMINAL_COMMANDS.OPEN) {
+
       const fileName = args[0];
       const fileId = FILE_NAME_TO_ID[fileName];
       if (fileId) {

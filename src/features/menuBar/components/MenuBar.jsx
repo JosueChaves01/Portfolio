@@ -1,11 +1,14 @@
 import { useRef, useEffect } from 'react';
 import { MENU_ITEMS, MENU_ITEM_IDS } from '../constants/menuBar.constants';
 import { useMenuBar } from '../hooks/useMenuBar';
+import { useLanguage } from '../../../store/LanguageContext';
 import { MenuDropdown } from './MenuDropdown';
 import styles from './MenuBar.module.css';
 
+
 export function MenuBar() {
   const { openMenuId, toggleMenu, closeMenu, dispatch } = useMenuBar();
+  const { t } = useLanguage();
   const navRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +27,7 @@ export function MenuBar() {
             className={`${styles.menuItem} ${id === MENU_ITEM_IDS.COPILOT ? styles.copilot : ''} ${openMenuId === id ? styles.active : ''}`}
             onClick={() => toggleMenu(id)}
           >
-            {label}
+            {t(label)}
           </button>
           {openMenuId === id && (
             <MenuDropdown items={items} onSelect={dispatch} />
@@ -34,3 +37,4 @@ export function MenuBar() {
     </nav>
   );
 }
+

@@ -1,4 +1,5 @@
 import { Icon } from '../../../shared/icons/Icon';
+import { useLanguage } from '../../../store/LanguageContext';
 import { useCopilot } from '../hooks/useCopilot';
 import {
   COPILOT, PREDEFINED_QUESTIONS, QUESTION_PREFIX,
@@ -8,6 +9,7 @@ import { CopilotInput } from './CopilotInput';
 import styles from './CopilotPanel.module.css';
 
 export function CopilotPanel() {
+  const { t } = useLanguage();
   const {
     messages, inputValue, setInputValue, messagesLeft,
     handlePredefinedQuestion, handleSubmit, onClose,
@@ -35,16 +37,16 @@ export function CopilotPanel() {
             <div className={styles.avatar}>
               <Icon name={COPILOT.AVATAR_ICON} size={24} />
             </div>
-            <h3 className={styles.welcomeHeading}>{COPILOT.WELCOME_HEADING}</h3>
-            <p className={styles.welcomeBody}>{COPILOT.WELCOME_BODY}</p>
+            <h3 className={styles.welcomeHeading}>{t(COPILOT.WELCOME_HEADING)}</h3>
+            <p className={styles.welcomeBody}>{t(COPILOT.WELCOME_BODY)}</p>
             <div className={styles.predefinedGrid}>
               {PREDEFINED_QUESTIONS.map(({ id, label }) => (
                 <button
                   key={id}
                   className={styles.predefinedBtn}
-                  onClick={() => handlePredefinedQuestion(label)}
+                  onClick={() => handlePredefinedQuestion(t(label))}
                 >
-                  {QUESTION_PREFIX} {label}
+                  {QUESTION_PREFIX} {t(label)}
                 </button>
               ))}
             </div>
@@ -67,11 +69,12 @@ export function CopilotPanel() {
         />
         <div className={styles.footerMeta}>
           <span className={styles.messagesLeft}>
-            {COPILOT.MESSAGES_LEFT_TEMPLATE(messagesLeft)}
+            {t(COPILOT.MESSAGES_LEFT_TEMPLATE(messagesLeft))}
           </span>
-          <span className={styles.disclaimer}>{COPILOT.DISCLAIMER}</span>
+          <span className={styles.disclaimer}>{t(COPILOT.DISCLAIMER)}</span>
         </div>
       </footer>
     </aside>
   );
 }
+

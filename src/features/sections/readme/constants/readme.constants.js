@@ -1,32 +1,36 @@
 export const README = {
   HEADING: 'Josue Chaves',
-  SUBTITLE: 'Junior Software Developer @TEC · Costa Rica',
-  FOOTER: 'Made with AI by Josue · 2026',
+  SUBTITLE: { en: 'Junior Software Developer @TEC · Costa Rica', es: 'Desarrollador de Software Junior @TEC · Costa Rica' },
+  FOOTER: { en: 'Made with AI by Josue · 2026', es: 'Hecho con IA por Josue · 2026' },
 };
+
 
 export const ROLE_TAGS = [
   { id: 'javascript', icon: 'Code2', color: '#facc15', label: 'JavaScript' },
   { id: 'typescript', icon: 'FileCode', color: '#1e40af', label: 'TypeScript' },
   { id: 'python', icon: 'Zap', color: '#3b82f6', label: 'Python' },
   { id: 'go', icon: 'Zap', color: '#00add8', label: 'Go' },
-  { id: 'cpp', icon: 'Code2', color: '#00599c', label: 'C++' },
+  { label: { en: 'Backend Specialist', es: 'Especialista Backend' }, color: '#3b82f6' },
+  { label: { en: 'Distributed Systems', es: 'Sistemas Distribuidos' }, color: '#22c55e' },
+  { label: { en: 'AI Agent Architect', es: 'Arquitecto de Agentes IA' }, color: '#a855f7' },
 ];
-
-
 
 export const ABOUT_BULLETS = [
-  { icon: 'Telescope', color: '#6366f1', text: 'Computer Engineering Student @ ITCR (TEC)' },
-  { icon: 'Sprout', color: '#22c55e', text: 'Exploring Distributed Systems, GIS & Software Design' },
-  { icon: 'Lightbulb', color: '#eab308', text: 'Passionate about Backend Architecture & Performance' },
-  { icon: 'Users', color: '#3b82f6', text: 'Open to collaborations & interesting problems' },
-  { icon: 'Mail', color: '#EA4335', text: 'Reach me at josuechaves.dev@gmail.com' },
+  { icon: '🎓', text: { en: 'Computer Engineering Student at ITCR', es: 'Estudiante de Ingeniería en Computadores en el ITCR' } },
+  { icon: '🚀', text: { en: 'Passionate about structural design patterns and scalable backend architectures', es: 'Apasionado por los patrones de diseño estructural y arquitecturas backend escalables' } },
+  { icon: '🛠️', text: { en: 'Currently building a structural-pattern-based workflow engine for LLM agents', es: 'Actualmente construyendo un motor de flujo de trabajo basado en patrones estructurales para agentes LLM' } },
+  { icon: '🌎', text: { en: 'Based in Costa Rica', es: 'Basado en Costa Rica' } },
 ];
 
-
 export const STACK_CATEGORIES = [
-  { label: 'Languages', tags: ['JavaScript', 'TypeScript', 'Python', 'Java', 'Go', 'C++', 'SQL'] },
-  { label: 'Backend', tags: ['Node.js', 'Express', 'Spring Boot', 'Prisma', 'Docker'] },
-  { label: 'Infrastructure', tags: ['PostgreSQL', 'Redis', 'Microservices', 'Linux'] },
+  {
+    title: { en: 'Core Tech Stack', es: 'Tecnologías Principales' },
+    items: ['Node.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Docker'],
+  },
+  {
+    title: { en: 'Tools & DevOps', es: 'Herramientas y DevOps' },
+    items: ['Git', 'GitHub Actions', 'Azure', 'Linux', 'REST APIs'],
+  },
 ];
 
 

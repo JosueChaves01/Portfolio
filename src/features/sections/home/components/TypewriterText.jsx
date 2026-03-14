@@ -1,9 +1,13 @@
 import { useTypewriter } from '../hooks/useTypewriter';
+import { useLanguage } from '../../../../store/LanguageContext';
 import { TYPEWRITER_PHRASES } from '../constants/home.constants';
 import styles from './HomeSection.module.css';
 
+
 export function TypewriterText() {
-  const { displayText, isTyping } = useTypewriter(TYPEWRITER_PHRASES);
+  const { t } = useLanguage();
+  const translatedPhrases = TYPEWRITER_PHRASES.map(phrase => t(phrase));
+  const { displayText, isTyping } = useTypewriter(translatedPhrases);
 
   return (
     <p className={styles.typewriter}>
@@ -12,3 +16,4 @@ export function TypewriterText() {
     </p>
   );
 }
+

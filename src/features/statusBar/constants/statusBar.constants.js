@@ -11,12 +11,12 @@ export const FILE_LANGUAGE_MAP = {
 };
 
 export const STATUS_BAR = {
-  GIT_BRANCH: 'main',
-  PROJECT_NAME: "Josue's Portfolio",
-  COPILOT_LABEL: 'Copilot',
-  ENCODING: 'UTF-8',
-  FORMATTER: 'Prettier',
   ERRORS: '0',
   WARNINGS: '0',
+  GIT_BRANCH: 'main',
+  PROJECT_NAME: 'Portfolio',
+  COPILOT_LABEL: { en: 'Copilot', es: 'Copiloto' },
+  ENCODING: 'UTF-8',
+  FORMATTER: { en: 'Prettier', es: 'Prettier' },
+  THEME_TITLE: { en: 'Change Color Theme', es: 'Cambiar Tema de Color' },
 };
-

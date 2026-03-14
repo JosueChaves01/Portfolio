@@ -32,8 +32,9 @@ export const FILE_TREE_ORDER = [
 ];
 
 export const EXPLORER = {
-  ROOT_LABEL: 'PORTFOLIO',
+  ROOT_LABEL: { en: 'PORTFOLIO', es: 'PORTAFOLIO' },
   GIT_BADGE: '↑1 ✦3',
 };
+
 
 export const RESUME_URL = '/Josue_Chaves_Resume.pdf';

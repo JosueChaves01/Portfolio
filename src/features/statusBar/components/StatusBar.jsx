@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLanguage } from '../../../store/LanguageContext';
 import { useStatusBar } from '../hooks/useStatusBar';
 import { STATUS_BAR } from '../constants/statusBar.constants';
 import { Icon } from '../../../shared/icons/Icon';
@@ -7,6 +8,7 @@ import styles from './StatusBar.module.css';
 
 export function StatusBar() {
   const { language, themeLabel, currentTime, togglePanel, SETTINGS_PANEL_ID } = useStatusBar();
+  const { t } = useLanguage();
   const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
 
   return (
@@ -15,7 +17,6 @@ export function StatusBar() {
         <ThemeSelector onClose={() => setIsThemeSelectorOpen(false)} />
       )}
       <div className={styles.left}>
-
         <span className={styles.item}>
           <Icon name="CircleX" size={12} color="#f87171" className={styles.icon} />
           {STATUS_BAR.ERRORS}
@@ -36,15 +37,15 @@ export function StatusBar() {
       <div className={styles.right}>
         <span className={styles.item}>
           <Icon name="Cpu" size={12} className={styles.icon} />
-          {STATUS_BAR.COPILOT_LABEL}
+          {t(STATUS_BAR.COPILOT_LABEL)}
         </span>
         <span className={styles.item}>{language}</span>
-        <span className={styles.item}>{STATUS_BAR.ENCODING}</span>
-        <span className={styles.item}>{STATUS_BAR.FORMATTER}</span>
-        <span 
+        <span className={styles.item}>{t(STATUS_BAR.ENCODING)}</span>
+        <span className={styles.item}>{t(STATUS_BAR.FORMATTER)}</span>
+        <span
           className={`${styles.item} ${styles.theme}`}
           onClick={() => setIsThemeSelectorOpen(!isThemeSelectorOpen)}
-          title="Change Color Theme"
+          title={t(STATUS_BAR.THEME_TITLE)}
         >
           <Icon name="Palette" size={12} className={styles.icon} />
           {themeLabel}
@@ -54,5 +55,6 @@ export function StatusBar() {
     </footer>
   );
 }
+
 
 

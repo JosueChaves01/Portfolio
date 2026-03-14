@@ -1,4 +1,6 @@
 import { useIDE } from '../../../../store/IDEContext';
+import { useLanguage } from '../../../../store/LanguageContext';
+
 import { Icon } from '../../../../shared/icons/Icon';
 import { HOME, ROLE_BADGES, ACTION_BUTTONS } from '../constants/home.constants';
 import { TypewriterText } from './TypewriterText';
@@ -10,10 +12,11 @@ import styles from './HomeSection.module.css';
 
 export function HomeSection() {
   const { openTab } = useIDE();
+  const { t } = useLanguage();
 
   return (
     <section className={styles.section}>
-      <p className={styles.headerComment}>{HOME.HEADER_COMMENT}</p>
+      <p className={styles.headerComment}>{t(HOME.HEADER_COMMENT)}</p>
 
       <div className={styles.nameBlock}>
         <h1 className={styles.nameFirst}>{HOME.NAME_FIRST}</h1>
@@ -22,19 +25,20 @@ export function HomeSection() {
 
       <div className={styles.badges}>
         {ROLE_BADGES.map(({ id, label, dotColor }) => (
-          <RoleBadge key={id} label={label} dotColor={dotColor} />
+          <RoleBadge key={id} label={t(label)} dotColor={dotColor} />
         ))}
       </div>
 
       <TypewriterText />
 
       <p className={styles.bio}>
-        {HOME.BIO.split(new RegExp(`(${HOME.BIO_KEYWORDS.join('|')})`, 'gi')).map((part, i) =>
+        {t(HOME.BIO).split(new RegExp(`(${HOME.BIO_KEYWORDS.join('|')})`, 'gi')).map((part, i) =>
           HOME.BIO_KEYWORDS.some(kw => kw.toLowerCase() === part.toLowerCase()) ? (
             <span key={i} className={styles.highlight}>{part}</span>
           ) : part
         )}
       </p>
+
 
       <div className={styles.actions}>
         {ACTION_BUTTONS.map(({ id, icon, label, variant, targetTab }) => (

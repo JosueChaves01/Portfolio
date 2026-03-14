@@ -1,6 +1,9 @@
+import { useLanguage } from '../../../store/LanguageContext';
 import styles from './MenuDropdown.module.css';
 
 export function MenuDropdown({ items, onSelect }) {
+  const { t } = useLanguage();
+
   return (
     <div className={styles.dropdown}>
       {items.map((item, i) => {
@@ -13,7 +16,7 @@ export function MenuDropdown({ items, onSelect }) {
             className={styles.item}
             onClick={() => onSelect(item.action, item.payload)}
           >
-            <span className={styles.label}>{item.label}</span>
+            <span className={styles.label}>{t(item.label)}</span>
             {item.shortcut && <span className={styles.shortcut}>{item.shortcut}</span>}
           </button>
         );
@@ -21,3 +24,4 @@ export function MenuDropdown({ items, onSelect }) {
     </div>
   );
 }
+

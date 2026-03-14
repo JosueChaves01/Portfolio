@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useIDE } from '../../../store/IDEContext';
+import { useLanguage } from '../../../store/LanguageContext';
 import { RESUME_URL } from '../../explorer/constants/explorer.constants';
 import { SOCIAL_LINKS } from '../../sections/home/constants/home.constants';
 
@@ -13,6 +14,7 @@ function downloadResume() {
 }
 
 export function useMenuBar() {
+  const { setLanguage } = useLanguage();
   const [openMenuId, setOpenMenuId] = useState(null);
   const {
     openTab,
@@ -29,6 +31,7 @@ export function useMenuBar() {
   const dispatch = useCallback((action, payload) => {
     closeMenu();
     switch (action) {
+      case 'setLanguage':           setLanguage(payload); break;
       case 'toggleCommandPalette': toggleCommandPalette(); break;
       case 'downloadResume':       downloadResume();       break;
       case 'copyPageUrl':          navigator.clipboard.writeText(window.location.href); break;
@@ -39,7 +42,8 @@ export function useMenuBar() {
       case 'openTab':              openTab(payload);       break;
       case 'openGitHub':           window.open(GITHUB_URL, '_blank', 'noopener,noreferrer'); break;
     }
-  }, [closeMenu, openTab, togglePanel, toggleTerminal, toggleCopilot, toggleCommandPalette, newTerminal]);
+  }, [closeMenu, openTab, togglePanel, toggleTerminal, toggleCopilot, toggleCommandPalette, newTerminal, setLanguage]);
 
   return { openMenuId, toggleMenu, closeMenu, dispatch };
 }
+

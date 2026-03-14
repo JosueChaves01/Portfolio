@@ -1,39 +1,55 @@
-import { useContactForm } from '../hooks/useContactForm';
+import { useRef, useState } from 'react';
+import { useLanguage } from '../../../../store/LanguageContext';
 import { CONTACT, FORM_FIELDS } from '../constants/contact.constants';
 import styles from './ContactSection.module.css';
 
-const SUCCESS_MESSAGE = '// Message sent! I\'ll get back to you soon ✓';
-const ERROR_MESSAGE = '// Something went wrong. Please try again.';
-
 export function ContactForm() {
-  const { formData, handleChange, handleSubmit, isSending, isSuccess, isError } = useContactForm();
+  const { t } = useLanguage();
+  const formRef = useRef(null);
+  const [status, setStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+
+    try {
+      const response = await fetch(CONTACT.FORMSPREE_ACTION, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (response.ok) {
+        setStatus('SUCCESS');
+        form.reset();
+      } else {
+        setStatus('ERROR');
+      }
+    } catch (err) {
+      setStatus('ERROR');
+    }
+  };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      {FORM_FIELDS.map(({ id, name, label, type, placeholder, required, multiline }) => (
-        <div key={id} className={styles.formField}>
-          <label className={styles.fieldLabel} htmlFor={id}>{label}</label>
-          {multiline ? (
+    <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
+      {FORM_FIELDS.map((field) => (
+        <div key={field.id} className={styles.fieldGroup}>
+          <label className={styles.label}>{t(field.label)}</label>
+          {field.multiline ? (
             <textarea
-              id={id}
-              name={name}
+              name={field.name}
               className={styles.textarea}
-              placeholder={placeholder}
-              required={required}
-              value={formData[name]}
-              onChange={(e) => handleChange(name, e.target.value)}
-              rows={5}
+              placeholder={t(field.placeholder)}
+              required={field.required}
             />
           ) : (
             <input
-              id={id}
-              name={name}
-              type={type}
+              type={field.type}
+              name={field.name}
               className={styles.input}
-              placeholder={placeholder}
-              required={required}
-              value={formData[name]}
-              onChange={(e) => handleChange(name, e.target.value)}
+              placeholder={t(field.placeholder)}
+              required={field.required}
             />
           )}
         </div>
