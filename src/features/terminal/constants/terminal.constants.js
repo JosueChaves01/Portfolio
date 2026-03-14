@@ -1,7 +1,7 @@
 import { FILE_REGISTRY, FILE_TREE_ORDER, FILE_IDS } from '../../explorer/constants/explorer.constants';
 
 export const TERMINAL = {
-  PROMPT: 'aahana@portfolio:~$',
+  PROMPT: 'josue@portfolio:~$',
   WELCOME_MESSAGE: "Welcome! Type 'help' to see available commands.",
   TAB_LABELS: ['TERMINAL', 'PROBLEMS', 'OUTPUT'],
 };
@@ -24,27 +24,27 @@ export const TERMINAL_COMMANDS = {
 };
 
 export const WHOAMI_OUTPUT = [
-  'Name:     Aahana Bobade',
-  'Title:    Junior Software Developer',
-  'Company:  @ EduVanceAI',
-  'Roles:    Backend Engineer · AI/ML Dev · Data Scientist',
-  'Location: India',
-  'Email:    aahanabobade@gmail.com',
+  'Name:     Josue Chaves',
+  'Title:    Computer Science Student',
+  'Company:  @ ITCR (TEC)',
+  'Roles:    Backend Engineer · GIS Dev · Distributed Systems',
+  'Location: Costa Rica',
+  'Email:    josuechaves.dev@gmail.com',
 ];
 
 export const GIT_LOG_OUTPUT = [
-  'commit a3f1c2e — feat: add RAG pipeline integration',
-  'commit b7d4a1f — fix: optimize PostgreSQL queries',
-  'commit c9e2d3b — feat: implement GraphRAG with Neo4j',
-  'commit d1f5a8c — refactor: modularize FastAPI routers',
-  'commit e4b7c6d — feat: deploy portfolio v3.0',
+  'commit a3f1c2e — feat: add BarberHub authentication API',
+  'commit b7d4a1f — fix: optimize PostGIS geospatial queries',
+  'commit c9e2d3b — feat: implement Chess AI with Web Workers',
+  'commit d1f5a8c — refactor: improve Docker container orchestration',
+  'commit e4b7c6d — feat: initial release of Roomiefy platform',
 ];
 
 export const PYTHON_VERSION_OUTPUT = 'Python 3.11.4';
 
 export const LS_OUTPUT = FILE_TREE_ORDER.map((id) => FILE_REGISTRY[id].name).join('  ');
 
-export const PWD_OUTPUT = '/home/aahana/portfolio';
+export const PWD_OUTPUT = '/home/josue/portfolio';
 
 export const HELP_OUTPUT = [
   'Available commands:',
@@ -54,13 +54,14 @@ export const HELP_OUTPUT = [
   '  cd <dir>          — Change directory',
   '  cat <file>        — Open file in editor',
   '  open <file>       — Alias for cat',
-  '  whoami            — About Aahana',
+  '  whoami            — About Josue',
   '  echo <text>       — Print text',
   '  date              — Show current date & time',
   '  git log           — Show recent commits',
   '  python --version  — Show Python version',
   '  clear             — Clear terminal',
 ];
+
 
 export const FILE_NAME_TO_ID = Object.fromEntries(
   Object.entries(FILE_REGISTRY).map(([id, file]) => [file.name, id])

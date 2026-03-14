@@ -1,3 +1,3 @@
 export const APP = {
-  TITLE: "Aahana Bobade | Portfolio",
+  TITLE: "Josue Chaves | Portfolio",
 };

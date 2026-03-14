@@ -1,15 +1,16 @@
 export const MOCK_RESPONSES = {
-  q1: `Aahana Bobade is a Junior Software Developer at EduVanceAI, India. She lives at the crossroads of backend engineering, AI/ML, and data science — building systems that are intelligent and scalable. She holds a B.E. in Computer Engineering (AI/ML minor) from SIES Graduate School of Technology with a GPA of 9.28.`,
+  q1: `Josue Chaves is a Computer Science Student at ITCR (TEC), Costa Rica. He specialized in backend engineering, distributed systems, and geospatial data — building intelligent and highly performant applications.`,
 
-  q2: `Aahana has built 7+ projects including:\n• OrgMind — Company intelligence assistant using GraphRAG, Neo4j, GPT-4o\n• Safe Yatra — Women's safety app with TensorFlow.js & Voice AI\n• Gita-GPT — Full-stack NLP app with Hume AI & LangChain\n• Dockerized ML Prediction API — MLOps with Docker & FastAPI\n• AI Code Review Bot — TypeScript DevTools automation`,
+  q2: `Josue has built several significant projects including:\n• BarberHub — Barber management API with Prisma, TypeScript, and Docker\n• Roomiefy — Full-stack room rental platform with Azure integration\n• Chess vs IA — Game developed in React using Stockfish and Web Workers\n• Face Attendance — Computer vision system for student attendance and emotion detection\n• Geospatial ITCR — GIS database system with PLpgSQL and QGIS`,
 
-  q3: `Aahana's professional experience:\n\n● 2025–Present: Junior Software Developer @ EduVanceAI\nBuilding AI-powered backend systems, RAG pipelines, and scalable APIs.\n\n○ Jun–Aug 2023: UX Designer @ Zepto Digital Labs\nDesigned UI for simulation platforms using Figma & design thinking.\n\n○ Jun–Jul 2023: Back End Intern @ Laser Technologies Pvt Ltd\nMaintained backend systems and databases for enterprise web apps.`,
+  q3: `Josue's academic and project experience:\n\n● 2021–Present: Computer Science Student @ ITCR (TEC)\nFocused on advanced software design and systems engineering.\n\n○ 2024: Full-Stack Developer @ BarberHub\nBuilt a scalable management API with modern backend technologies.\n\n○ 2023: GIS Database Developer @ Geospatial ITCR\nEngineered spatial data systems and PostGIS integrations.\n\n○ 2023: Computer Vision Developer @ AI Research\nImplemented face recognition and sentiment analysis tools.`,
 
-  q4: `Aahana's tech stack spans multiple domains:\n\nLanguages: Python (92%), TypeScript (74%), JavaScript (78%), SQL (88%)\nAI/ML: PyTorch, TensorFlow, scikit-learn, LangChain, RAG Pipelines\nBackend: FastAPI (90%), Django, Flask\nDatabases: PostgreSQL, Redis, Neo4j, Pinecone, FAISS\nDevOps: Docker, Git, AWS, GitHub Actions`,
+  q4: `Josue's tech stack includes:\n\nLanguages: JavaScript, TypeScript, Python, Java, Go, C++, C#, SQL\nFull Stack: Node.js, Express, Spring Boot, React, Next.js, Prisma\nDatabases: PostgreSQL, Redis, MongoDB, PostGIS\nInfra & Tools: Docker, Git, Linux, Microservices, REST APIs\nAnalytics: SQL Analytics, Dimensional Modeling, Snowflake, Databricks`,
 
-  q5: `You can reach Aahana through:\n\nEmail: aahanabobade@gmail.com\nLinkedIn: linkedin.com/in/aahana-bobade\nGitHub: github.com/aahanabobade\nMedium: medium.com/@aahanabobade\n\nOr use the contact form in the Contact section!`,
+  q5: `You can reach Josue through:\n\nEmail: josuechaves.dev@gmail.com\nLinkedIn: linkedin.com/in/josue-chaves-465ba823a\nGitHub: github.com/josuechaves01\nYouTube: youtube.com/@josue.chaves9270\nInstagram: instagram.com/josue_chaves__\n\nOr use the contact form in the Contact section!`,
 
-  q6: `You can support Aahana by:\n\nStarring her projects on GitHub\nConnecting on LinkedIn\nReading her articles on Medium\nChecking out her Tableau visualizations\nReaching out for collaborations or opportunities!`,
+  q6: `You can support Josue by:\n\nStarring his projects on GitHub\nConnecting on LinkedIn\nChecking out his technical repositories\nCollaborating on microservices or open-source projects!`,
 
-  default: `I'm Aahana's portfolio assistant! I can tell you about her projects, skills, experience, and how to get in touch. What would you like to know?`,
+  default: `I'm Josue's portfolio assistant! I can tell you about his projects, skills, experience, and how to get in touch. What would you like to know?`,
 };
+
