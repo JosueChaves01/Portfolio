@@ -1,8 +1,10 @@
 import { useRef, useEffect } from 'react';
+import { useLanguage } from '../../../store/LanguageContext';
 import { TERMINAL } from '../constants/terminal.constants';
 import styles from './Terminal.module.css';
 
 export function TerminalInput({ value, onChange, onSubmit, onKeyDown }) {
+  const { t } = useLanguage();
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -28,8 +30,9 @@ export function TerminalInput({ value, onChange, onSubmit, onKeyDown }) {
         onKeyDown={handleKeyDown}
         autoComplete="off"
         spellCheck={false}
-        aria-label="Terminal input"
+        aria-label={t({ en: 'Terminal input', es: 'Entrada de terminal' })}
       />
     </div>
   );
 }
+

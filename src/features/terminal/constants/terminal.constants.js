@@ -2,8 +2,15 @@ import { FILE_REGISTRY, FILE_TREE_ORDER, FILE_IDS } from '../../explorer/constan
 
 export const TERMINAL = {
   PROMPT: 'josue@portfolio:~$',
-  WELCOME_MESSAGE: "Welcome! Type 'help' to see available commands.",
-  TAB_LABELS: ['TERMINAL', 'PROBLEMS', 'OUTPUT'],
+  WELCOME_MESSAGE: { 
+    en: "Welcome! Type 'help' to see available commands.", 
+    es: "¡Bienvenido! Escribe 'help' para ver los comandos disponibles." 
+  },
+  TAB_LABELS: [
+    { en: 'TERMINAL', es: 'TERMINAL' },
+    { en: 'PROBLEMS', es: 'PROBLEMAS' },
+    { en: 'OUTPUT', es: 'SALIDA' }
+  ],
 };
 
 export const TERMINAL_COMMANDS = {
@@ -23,14 +30,24 @@ export const TERMINAL_COMMANDS = {
   GIT: 'git',
 };
 
-export const WHOAMI_OUTPUT = [
-  'Name:     Josue Chaves',
-  'Title:    Computer Science Student',
-  'Company:  @ ITCR (TEC)',
-  'Roles:    Backend Engineer · GIS Dev · Distributed Systems',
-  'Location: Costa Rica',
-  'Email:    josuechaves.dev@gmail.com',
-];
+export const WHOAMI_OUTPUT = {
+  en: [
+    'Name:     Josue Chaves',
+    'Title:    Computer Engineering Student',
+    'Company:  @ ITCR (TEC)',
+    'Roles:    Backend Engineer · GIS Dev · Distributed Systems',
+    'Location: Costa Rica',
+    'Email:    josuechaves.dev@gmail.com',
+  ],
+  es: [
+    'Nombre:   Josué Chaves',
+    'Título:   Estudiante de Ingeniería en Computadores',
+    'Empresa:  @ ITCR (TEC)',
+    'Roles:    Ingeniero Backend · Dev GIS · Sistemas Distribuidos',
+    'Ubicación: Costa Rica',
+    'Correo:   josuechaves.dev@gmail.com',
+  ]
+};
 
 export const GIT_LOG_OUTPUT = [
   'commit a3f1c2e — feat: add BarberHub authentication API',
@@ -47,21 +64,39 @@ export const LS_OUTPUT = FILE_TREE_ORDER.map((id) => FILE_REGISTRY[id].name).joi
 export const PWD_OUTPUT = '/home/josue/portfolio';
 
 
-export const HELP_OUTPUT = [
-  'Available commands:',
-  '  help              — Show this help message',
-  '  ls                — List project files',
-  '  pwd               — Print working directory',
-  '  cd <dir>          — Change directory',
-  '  cat <file>        — Open file in editor',
-  '  open <file>       — Alias for cat',
-  '  whoami            — About Josue',
-  '  echo <text>       — Print text',
-  '  date              — Show current date & time',
-  '  git log           — Show recent commits',
-  '  python --version  — Show Python version',
-  '  clear             — Clear terminal',
-];
+export const HELP_OUTPUT = {
+  en: [
+    'Available commands:',
+    '  help              — Show this help message',
+    '  ls                — List project files',
+    '  pwd               — Print working directory',
+    '  cd <dir>          — Change directory',
+    '  cat <file>        — Open file in editor',
+    '  open <file>       — Alias for cat',
+    '  whoami            — About Josue',
+    '  echo <text>       — Print text',
+    '  date              — Show current date & time',
+    '  git log           — Show recent commits',
+    '  python --version  — Show Python version',
+    '  clear             — Clear terminal',
+  ],
+  es: [
+    'Comandos disponibles:',
+    '  help              — Muestra este mensaje de ayuda',
+    '  ls                — Lista los archivos del proyecto',
+    '  pwd               — Muestra el directorio de trabajo',
+    '  cd <dir>          — Cambia de directorio',
+    '  cat <file>        — Abre un archivo en el editor',
+    '  open <file>       — Alias de cat',
+    '  whoami            — Acerca de Josue',
+    '  echo <text>       — Imprime texto',
+    '  date              — Muestra la fecha y hora actual',
+    '  git log           — Muestra los commits recientes',
+    '  python --version  — Muestra la versión de Python',
+    '  clear             — Limpia la terminal',
+  ]
+};
+
 
 
 export const FILE_NAME_TO_ID = Object.fromEntries(

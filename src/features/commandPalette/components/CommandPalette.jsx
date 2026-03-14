@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useLanguage } from '../../../store/LanguageContext';
 import { Icon } from '../../../shared/icons/Icon';
 import { useClickOutside } from '../../../shared/hooks/useClickOutside';
 import { useCommandPalette } from '../hooks/useCommandPalette';
@@ -6,6 +7,7 @@ import { COMMAND_PALETTE } from '../constants/commandPalette.constants';
 import styles from './CommandPalette.module.css';
 
 export function CommandPalette() {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const {
     query, setQuery, filteredFiles, filteredCommands,
@@ -20,7 +22,7 @@ export function CommandPalette() {
         <div className={styles.searchRow}>
           <input
             className={styles.searchInput}
-            placeholder={COMMAND_PALETTE.PLACEHOLDER}
+            placeholder={t(COMMAND_PALETTE.PLACEHOLDER)}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
@@ -33,14 +35,14 @@ export function CommandPalette() {
         <div className={styles.results}>
           {filteredCommands.length > 0 && (
             <section>
-              <div className={styles.sectionLabel}>{COMMAND_PALETTE.SECTION_COMMANDS}</div>
+              <div className={styles.sectionLabel}>{t(COMMAND_PALETTE.SECTION_COMMANDS)}</div>
               {filteredCommands.map((cmd) => (
                 <button
                   key={cmd.id}
                   className={styles.resultItem}
                   onClick={() => handleCommandSelect(cmd.action)}
                 >
-                  <span className={styles.resultName}>{cmd.label}</span>
+                  <span className={styles.resultName}>{t(cmd.label)}</span>
                   <span className={styles.resultShortcut}>{cmd.shortcut}</span>
                 </button>
               ))}
@@ -49,7 +51,7 @@ export function CommandPalette() {
 
           {filteredFiles.length > 0 && (
             <section>
-              <div className={styles.sectionLabel}>{COMMAND_PALETTE.SECTION_FILES}</div>
+              <div className={styles.sectionLabel}>{t(COMMAND_PALETTE.SECTION_FILES)}</div>
               {filteredFiles.map((file) => (
                 <button
                   key={file.id}
@@ -65,8 +67,9 @@ export function CommandPalette() {
           )}
         </div>
 
-        <div className={styles.tip}>{COMMAND_PALETTE.TIP}</div>
+        <div className={styles.tip}>{t(COMMAND_PALETTE.TIP)}</div>
       </div>
     </div>
   );
 }
+

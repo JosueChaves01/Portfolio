@@ -8,10 +8,16 @@ export function ContactForm() {
   const formRef = useRef(null);
   const [status, setStatus] = useState(null);
 
+  const isSending = status === 'SENDING';
+  const isSuccess = status === 'SUCCESS';
+  const isError = status === 'ERROR';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const data = new FormData(form);
+
+    setStatus('SENDING');
 
     try {
       const response = await fetch(CONTACT.FORMSPREE_ACTION, {
@@ -34,8 +40,8 @@ export function ContactForm() {
   return (
     <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
       {FORM_FIELDS.map((field) => (
-        <div key={field.id} className={styles.fieldGroup}>
-          <label className={styles.label}>{t(field.label)}</label>
+        <div key={field.id} className={styles.formField}>
+          <label className={styles.fieldLabel}>{t(field.label)}</label>
           {field.multiline ? (
             <textarea
               name={field.name}
@@ -56,13 +62,22 @@ export function ContactForm() {
       ))}
 
       <button type="submit" className={styles.submitBtn} disabled={isSending}>
-        {isSending ? '// Sending...' : CONTACT.SUBMIT_LABEL}
+        {isSending ? t({ en: '// Sending...', es: '// Enviando...' }) : t(CONTACT.SUBMIT_LABEL)}
       </button>
 
-      {isSuccess && <p className={styles.successMsg}>{SUCCESS_MESSAGE}</p>}
-      {isError && <p className={styles.errorMsg}>{ERROR_MESSAGE}</p>}
+      {isSuccess && (
+        <p className={styles.successMsg}>
+          {t({ en: 'Message sent! I\'ll get back to you soon.', es: '¡Mensaje enviado! Te responderé pronto.' })}
+        </p>
+      )}
+      {isError && (
+        <p className={styles.errorMsg}>
+          {t({ en: 'Ops! Something went wrong.', es: '¡Ups! Algo salió mal.' })}
+        </p>
+      )}
 
-      <p className={styles.formNote}>{CONTACT.FOOTER_NOTE}</p>
+      <p className={styles.formNote}>{t(CONTACT.FOOTER_NOTE)}</p>
     </form>
   );
 }
+

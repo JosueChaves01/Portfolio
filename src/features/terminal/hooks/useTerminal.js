@@ -11,12 +11,30 @@ import {
   FILE_NAME_TO_ID,
 } from '../constants/terminal.constants';
 
-const UNKNOWN_COMMAND_MSG = (cmd) => `command not found: ${cmd}`;
-const OPEN_FILE_MSG = (name) => `Opening ${name} in editor...`;
-const CD_MSG = (dir) => `Navigated to ${dir}`;
-const PYTHON_INTERACTIVE_MSG = 'Python interactive mode not available here.';
+import { useLanguage } from '../../../store/LanguageContext';
+
+const UNKNOWN_COMMAND_MSG = (cmd) => ({
+  en: `command not found: ${cmd}`,
+  es: `comando no encontrado: ${cmd}`,
+});
+
+const OPEN_FILE_MSG = (name) => ({
+  en: `Opening ${name} in editor...`,
+  es: `Abriendo ${name} en el editor...`,
+});
+
+const CD_MSG = (dir) => ({
+  en: `Navigated to ${dir}`,
+  es: `Navegado a ${dir}`,
+});
+
+const PYTHON_INTERACTIVE_MSG = {
+  en: 'Python interactive mode not available here.',
+  es: 'El modo interactivo de Python no está disponible aquí.',
+};
 
 export function useTerminal() {
+  const { t } = useLanguage();
   const { openTab } = useIDE();
   const [lines, setLines] = useState([]);
   const [history, setHistory] = useState([]);
@@ -39,7 +57,7 @@ export function useTerminal() {
     const fullCmd = trimmed.toLowerCase();
 
     if (fullCmd === TERMINAL_COMMANDS.HELP) {
-      appendLines(HELP_OUTPUT);
+      appendLines(t(HELP_OUTPUT));
     } else if (fullCmd === TERMINAL_COMMANDS.LS) {
       appendLines(LS_OUTPUT);
     } else if (fullCmd === TERMINAL_COMMANDS.PWD) {
@@ -47,28 +65,28 @@ export function useTerminal() {
     } else if (fullCmd === TERMINAL_COMMANDS.CLEAR) {
       setLines([]);
     } else if (fullCmd === TERMINAL_COMMANDS.WHOAMI) {
-      appendLines(WHOAMI_OUTPUT);
+      appendLines(t(WHOAMI_OUTPUT));
     } else if (fullCmd === TERMINAL_COMMANDS.DATE) {
-      appendLines(new Date().toString());
+      appendLines(new Date().toLocaleString());
     } else if (fullCmd === `${TERMINAL_COMMANDS.GIT} log`) {
       appendLines(GIT_LOG_OUTPUT);
     } else if (fullCmd === TERMINAL_COMMANDS.PYTHON_VERSION) {
       appendLines(PYTHON_VERSION_OUTPUT);
     } else if (fullCmd === TERMINAL_COMMANDS.PYTHON) {
-      appendLines(PYTHON_INTERACTIVE_MSG);
+      appendLines(t(PYTHON_INTERACTIVE_MSG));
     } else if (cmd === TERMINAL_COMMANDS.ECHO) {
       appendLines(args.join(' '));
     } else if (cmd === TERMINAL_COMMANDS.CD) {
       const target = args[0];
       if (!target || target === '~' || target === '/') {
-        appendLines(CD_MSG('~'));
+        appendLines(t(CD_MSG('~')));
       } else {
         const fileId = FILE_NAME_TO_ID[target];
         if (fileId) {
-          appendLines(CD_MSG(target));
+          appendLines(t(CD_MSG(target)));
           openTab(fileId);
         } else {
-          appendLines(CD_MSG(target));
+          appendLines(t(CD_MSG(target)));
         }
       }
     } else if (cmd === TERMINAL_COMMANDS.CAT || cmd === TERMINAL_COMMANDS.OPEN) {
@@ -76,15 +94,19 @@ export function useTerminal() {
       const fileName = args[0];
       const fileId = FILE_NAME_TO_ID[fileName];
       if (fileId) {
-        appendLines(OPEN_FILE_MSG(fileName));
+        appendLines(t(OPEN_FILE_MSG(fileName)));
         openTab(fileId);
       } else {
-        appendLines(`No such file: ${fileName}`);
+        appendLines(t({
+          en: `No such file: ${fileName}`,
+          es: `No existe el archivo: ${fileName}`
+        }));
       }
     } else {
-      appendLines(UNKNOWN_COMMAND_MSG(trimmed));
+      appendLines(t(UNKNOWN_COMMAND_MSG(trimmed)));
     }
-  }, [openTab]);
+  }, [openTab, t]);
+
 
   const handleInputChange = (value) => setInput(value);
 

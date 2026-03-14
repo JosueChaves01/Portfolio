@@ -2,27 +2,36 @@ import { FILE_IDS, FILE_REGISTRY } from '../../explorer/constants/explorer.const
 import { THEMES } from '../../settings/constants/settings.constants';
 
 export const COMMAND_PALETTE = {
-  PLACEHOLDER: '> Go to file or run command...',
+  PLACEHOLDER: { 
+    en: '> Go to file or run command...', 
+    es: '> Ir a archivo o ejecutar comando...' 
+  },
   CLOSE_LABEL: 'Esc',
-  SECTION_COMMANDS: 'COMMANDS',
-  SECTION_FILES: 'FILES',
-  TIP: 'Tip: type "copilot" to open AI chat',
+  SECTION_COMMANDS: { en: 'COMMANDS', es: 'COMANDOS' },
+  SECTION_FILES: { en: 'FILES', es: 'ARCHIVOS' },
+  TIP: { 
+    en: 'Tip: type "copilot" to open AI chat', 
+    es: 'Sugerencia: escribe "copilot" para abrir el chat de IA' 
+  },
 };
 
 export const PALETTE_COMMANDS = [
   {
     id: 'open-copilot',
-    label: "Open Josue's Copilot",
-
+    label: { en: "Open Josue's Copilot", es: "Abrir Copilot de Josue" },
     shortcut: 'Ctrl+Shift+C',
     action: 'toggleCopilot',
   },
   ...THEMES.map((theme) => ({
     id: `theme-${theme.id}`,
-    label: `Color Theme: ${theme.label}`,
+    label: { 
+      en: `Color Theme: ${theme.label.en || theme.label}`, 
+      es: `Tema de Color: ${theme.label.es || theme.label}` 
+    },
     action: `setTheme:${theme.id}`,
   })),
 ];
+
 
 
 export const PALETTE_FILES = [

@@ -1,4 +1,25 @@
+export const STORAGE_KEY_THEME = 'portfolio-theme';
+
+export const THEME_IDS = {
+  TOTE_DARK: 'tote-dark',
+  ROSE_PINE: 'rose-pine',
+  TOKYO_NIGHT: 'tokyo-night',
+  CATPPUCCIN: 'catppuccin',
+  NORD: 'nord',
+  GRUVBOX: 'gruvbox',
+};
+
+export const THEMES = [
+  { id: THEME_IDS.TOTE_DARK, label: 'Tote Dark', color: '#0f0f14' },
+  { id: THEME_IDS.ROSE_PINE, label: 'Rosé Pine', color: '#191724' },
+  { id: THEME_IDS.TOKYO_NIGHT, label: 'Tokyo Night', color: '#1a1b26' },
+  { id: THEME_IDS.CATPPUCCIN, label: 'Catppuccin', color: '#1e1e2e' },
+  { id: THEME_IDS.NORD, label: 'Nord', color: '#2e3440' },
+  { id: THEME_IDS.GRUVBOX, label: 'Gruvbox', color: '#282828' },
+];
+
 export const LANGUAGES = [
+
   { id: 'en', label: 'English', icon: '🇺🇸' },
   { id: 'es', label: 'Español', icon: '🇪🇸' },
 ];

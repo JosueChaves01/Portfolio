@@ -3,13 +3,17 @@ import { Tag } from '../../../../shared/components/Tag/Tag';
 import { EXPERIENCE } from '../constants/experience.constants';
 import styles from './ExperienceSection.module.css';
 
-export function TimelineItem({ period, role, company, description, projects, tags = [] }) {
+export function TimelineItem({ period, role, company, description, projects, tags = [], isCurrent }) {
   const { t } = useLanguage();
+
+  const indicator = isCurrent ? EXPERIENCE.CURRENT_INDICATOR : EXPERIENCE.PAST_INDICATOR;
 
   return (
     <div className={styles.timelineItem}>
       <div className={styles.timelineLeft}>
-        <span className={styles.indicator}>{EXPERIENCE.PAST_INDICATOR}</span>
+        <span className={`${styles.indicator} ${isCurrent ? styles.current : ''}`}>
+          {indicator}
+        </span>
         <div className={styles.timelineLine} />
       </div>
       <div className={styles.timelineContent}>
@@ -38,4 +42,5 @@ export function TimelineItem({ period, role, company, description, projects, tag
     </div>
   );
 }
+
 

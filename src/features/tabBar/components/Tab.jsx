@@ -1,8 +1,10 @@
 import { Icon } from '../../../shared/icons/Icon';
+import { useLanguage } from '../../../store/LanguageContext';
 import { FILE_REGISTRY } from '../../explorer/constants/explorer.constants';
 import styles from './TabBar.module.css';
 
 export function Tab({ fileId, isActive, onClick, onClose }) {
+  const { t } = useLanguage();
   const file = FILE_REGISTRY[fileId];
   if (!file) return null;
 
@@ -21,10 +23,11 @@ export function Tab({ fileId, isActive, onClick, onClose }) {
       <button
         className={styles.closeBtn}
         onClick={(e) => onClose(e, fileId)}
-        aria-label={`Close ${file.name}`}
+        aria-label={t({ en: `Close ${file.name}`, es: `Cerrar ${file.name}` })}
       >
         ✕
       </button>
     </div>
   );
 }
+

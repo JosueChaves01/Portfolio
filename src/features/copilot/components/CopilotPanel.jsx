@@ -20,16 +20,17 @@ export function CopilotPanel() {
   return (
     <aside className={styles.panel}>
       <header className={styles.header}>
-        <span className={styles.title}>{COPILOT.TITLE}</span>
+        <span className={styles.title}>{t(COPILOT.TITLE)}</span>
         <div className={styles.headerActions}>
-          <button className={styles.iconBtn} aria-label="Edit">
+          <button className={styles.iconBtn} aria-label={t({ en: 'Edit', es: 'Editar' })}>
             <Icon name={COPILOT.EDIT_ICON} size={14} />
           </button>
-          <button className={styles.iconBtn} onClick={onClose} aria-label="Close">✕</button>
+          <button className={styles.iconBtn} onClick={onClose} aria-label={t({ en: 'Close', es: 'Cerrar' })}>✕</button>
         </div>
       </header>
 
       <div className={styles.workspaceBadge}>{COPILOT.WORKSPACE_BADGE}</div>
+
 
       <div className={styles.body}>
         {messages.length === 0 ? (

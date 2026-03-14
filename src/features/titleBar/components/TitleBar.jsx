@@ -1,9 +1,11 @@
+import { useLanguage } from '../../../store/LanguageContext';
 import { TITLE_BAR, WINDOW_CONTROLS } from '../constants/titleBar.constants';
 import { useTitleBar } from '../hooks/useTitleBar';
 import { Icon } from '../../../shared/icons/Icon';
 import styles from './TitleBar.module.css';
 
 export function TitleBar({ onOpenCommandPalette }) {
+  const { t } = useLanguage();
   const { handleFullscreen, handleTitleClick } = useTitleBar({ onOpenCommandPalette });
 
   return (
@@ -11,11 +13,11 @@ export function TitleBar({ onOpenCommandPalette }) {
       <div className={styles.windowControls}>
         {Object.values(WINDOW_CONTROLS).map(({ label, color }) => (
           <button
-            key={label}
+            key={t(label)}
             className={styles.windowButton}
             style={{ backgroundColor: color }}
-            aria-label={label}
-            onClick={label === WINDOW_CONTROLS.FULLSCREEN.label ? handleFullscreen : undefined}
+            aria-label={t(label)}
+            onClick={t(label) === t(WINDOW_CONTROLS.FULLSCREEN.label) ? handleFullscreen : undefined}
           />
         ))}
       </div>
@@ -30,4 +32,5 @@ export function TitleBar({ onOpenCommandPalette }) {
     </header>
   );
 }
+
 

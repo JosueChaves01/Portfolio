@@ -1,3 +1,4 @@
+import { useLanguage } from '../../../store/LanguageContext';
 import { useIDE } from '../../../store/IDEContext';
 import { useTerminal } from '../hooks/useTerminal';
 import { TERMINAL } from '../constants/terminal.constants';
@@ -6,6 +7,7 @@ import { TerminalInput } from './TerminalInput';
 import styles from './Terminal.module.css';
 
 export function Terminal() {
+  const { t } = useLanguage();
   const { toggleTerminal } = useIDE();
   const { lines, input, handleInputChange, handleSubmit, handleKeyDown } = useTerminal();
 
@@ -13,15 +15,20 @@ export function Terminal() {
     <div className={styles.terminal}>
       <div className={styles.tabBar}>
         {TERMINAL.TAB_LABELS.map((label, index) => (
-          <span key={label} className={`${styles.tabLabel} ${index === 0 ? styles.activeTab : ''}`}>
-            {label}
+          <span key={index} className={`${styles.tabLabel} ${index === 0 ? styles.activeTab : ''}`}>
+            {t(label)}
           </span>
         ))}
-        <button className={styles.closeBtn} onClick={toggleTerminal} aria-label="Close terminal">
+        <button
+          className={styles.closeBtn}
+          onClick={toggleTerminal}
+          aria-label={t({ en: 'Close terminal', es: 'Cerrar terminal' })}
+        >
           ✕
         </button>
       </div>
-      <TerminalOutput lines={[TERMINAL.WELCOME_MESSAGE, ...lines]} />
+      <TerminalOutput lines={[t(TERMINAL.WELCOME_MESSAGE), ...lines]} />
+
       <TerminalInput
         value={input}
         onChange={handleInputChange}

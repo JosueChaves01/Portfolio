@@ -1,5 +1,5 @@
 export const COPILOT = {
-  TITLE: 'COPILOT',
+  TITLE: { en: 'COPILOT', es: 'COPILOT' },
   WORKSPACE_BADGE: 'Portfolio',
   WELCOME_HEADING: { en: 'Hi Josue, I\'m your assistant', es: 'Hola Josue, soy tu asistente' },
   WELCOME_BODY: {

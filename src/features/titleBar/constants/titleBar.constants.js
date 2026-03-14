@@ -5,7 +5,8 @@ export const TITLE_BAR = {
 };
 
 export const WINDOW_CONTROLS = {
-  CLOSE: { label: 'Close', color: '#FF5F57' },
-  MINIMIZE: { label: 'Minimize', color: '#FEBC2E' },
-  FULLSCREEN: { label: 'Fullscreen', color: '#28C840' },
+  CLOSE: { label: { en: 'Close', es: 'Cerrar' }, color: '#FF5F57' },
+  MINIMIZE: { label: { en: 'Minimize', es: 'Minimizar' }, color: '#FEBC2E' },
+  FULLSCREEN: { label: { en: 'Fullscreen', es: 'Pantalla completa' }, color: '#28C840' },
 };
+

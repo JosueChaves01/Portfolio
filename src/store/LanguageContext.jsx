@@ -15,9 +15,11 @@ export function LanguageProvider({ children }) {
   }, [language]);
 
   const t = (translations) => {
+    if (typeof translations === 'string') return translations;
     if (!translations) return '';
     return translations[language] || translations['en'] || '';
   };
+
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
