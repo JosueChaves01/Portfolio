@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useOverlay } from '../../../store/OverlayContext';
-import { MAX_MESSAGES, COPILOT_MESSAGES_LEFT_KEY, PREDEFINED_QUESTIONS } from '../constants/copilot.constants';
+import {
+  MAX_MESSAGES,
+  COPILOT_MESSAGES_LEFT_KEY,
+  ROLE,
+  API_ENDPOINT,
+  COPILOT,
+  ERROR_FALLBACK,
+} from '../constants/copilot.constants';
 
-const ROLE = { USER: 'user', ASSISTANT: 'assistant' };
+const RADIX = 10;
 
 function getInitialMessagesLeft() {
   try {
     const stored = localStorage.getItem(COPILOT_MESSAGES_LEFT_KEY);
     if (stored == null) return MAX_MESSAGES;
-    const n = parseInt(stored, 10);
+    const n = parseInt(stored, RADIX);
     if (!Number.isInteger(n) || n < 0 || n > MAX_MESSAGES) return MAX_MESSAGES;
     return n;
   } catch {
@@ -40,7 +47,7 @@ export function useCopilot() {
     const history = messages.map((m) => ({ role: m.role, content: m.content }));
 
     try {
-      const res = await fetch('/api/copilot', {
+      const res = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text.trim(), history }),
@@ -49,7 +56,7 @@ export function useCopilot() {
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        setError(data?.error ?? `Request failed (${res.status})`);
+        setError(data?.error ?? ERROR_FALLBACK.REQUEST_FAILED(res.status));
         setIsLoading(false);
         return;
       }
@@ -58,12 +65,12 @@ export function useCopilot() {
       const assistantMsg = {
         id: `assistant-${Date.now()}`,
         role: ROLE.ASSISTANT,
-        content: content || 'No response from the assistant.',
+        content: content || COPILOT.NO_RESPONSE_FALLBACK,
       };
       setMessages((prev) => [...prev, assistantMsg]);
       setMessagesLeft((prev) => prev - 1);
     } catch (err) {
-      setError(err?.message ?? 'Network error');
+      setError(err?.message ?? ERROR_FALLBACK.NETWORK);
     } finally {
       setIsLoading(false);
     }

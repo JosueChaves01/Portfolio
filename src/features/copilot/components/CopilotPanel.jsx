@@ -2,7 +2,10 @@ import { Icon } from '../../../shared/icons/Icon';
 import { useLanguage } from '../../../store/LanguageContext';
 import { useCopilot } from '../hooks/useCopilot';
 import {
-  COPILOT, PREDEFINED_QUESTIONS, QUESTION_PREFIX,
+  COPILOT,
+  PREDEFINED_QUESTIONS,
+  QUESTION_PREFIX,
+  ICON_SIZE,
 } from '../constants/copilot.constants';
 import { CopilotMessage } from './CopilotMessage';
 import { CopilotInput } from './CopilotInput';
@@ -11,9 +14,15 @@ import styles from './CopilotPanel.module.css';
 export function CopilotPanel() {
   const { t } = useLanguage();
   const {
-    messages, inputValue, setInputValue, messagesLeft,
-    isLoading, error,
-    handlePredefinedQuestion, handleSubmit, onClose,
+    messages,
+    inputValue,
+    setInputValue,
+    messagesLeft,
+    isLoading,
+    error,
+    handlePredefinedQuestion,
+    handleSubmit,
+    onClose,
   } = useCopilot();
 
   const isExhausted = messagesLeft <= 0;
@@ -24,21 +33,22 @@ export function CopilotPanel() {
       <header className={styles.header}>
         <span className={styles.title}>{t(COPILOT.TITLE)}</span>
         <div className={styles.headerActions}>
-          <button className={styles.iconBtn} aria-label={t({ en: 'Edit', es: 'Editar' })}>
-            <Icon name={COPILOT.EDIT_ICON} size={14} />
+          <button className={styles.iconBtn} aria-label={t(COPILOT.ARIA_LABEL.EDIT)}>
+            <Icon name={COPILOT.EDIT_ICON} size={ICON_SIZE.SMALL} />
           </button>
-          <button className={styles.iconBtn} onClick={onClose} aria-label={t({ en: 'Close', es: 'Cerrar' })}>✕</button>
+          <button className={styles.iconBtn} onClick={onClose} aria-label={t(COPILOT.ARIA_LABEL.CLOSE)}>
+            ✕
+          </button>
         </div>
       </header>
 
       <div className={styles.workspaceBadge}>{COPILOT.WORKSPACE_BADGE}</div>
 
-
       <div className={styles.body}>
         {messages.length === 0 ? (
           <div className={styles.welcome}>
             <div className={styles.avatar}>
-              <Icon name={COPILOT.AVATAR_ICON} size={24} />
+              <Icon name={COPILOT.AVATAR_ICON} size={ICON_SIZE.AVATAR} />
             </div>
             <h3 className={styles.welcomeHeading}>{t(COPILOT.WELCOME_HEADING)}</h3>
             <p className={styles.welcomeBody}>{t(COPILOT.WELCOME_BODY)}</p>
@@ -62,7 +72,7 @@ export function CopilotPanel() {
             ))}
             {isLoading && (
               <div className={styles.loadingRow}>
-                <span className={styles.loadingText}>{t({ en: 'Copilot is typing...', es: 'Copilot está escribiendo...' })}</span>
+                <span className={styles.loadingText}>{t(COPILOT.LOADING)}</span>
               </div>
             )}
             {error && (
@@ -82,9 +92,7 @@ export function CopilotPanel() {
           disabled={isDisabled}
         />
         <div className={styles.footerMeta}>
-          <span className={styles.messagesLeft}>
-            {t(COPILOT.MESSAGES_LEFT_TEMPLATE(messagesLeft))}
-          </span>
+          <span className={styles.messagesLeft}>{t(COPILOT.MESSAGES_LEFT_TEMPLATE(messagesLeft))}</span>
           <span className={styles.disclaimer}>{t(COPILOT.DISCLAIMER)}</span>
         </div>
       </footer>

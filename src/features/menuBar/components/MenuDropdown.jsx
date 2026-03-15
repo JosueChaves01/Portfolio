@@ -8,7 +8,7 @@ export function MenuDropdown({ items, onSelect }) {
     <div className={styles.dropdown}>
       {items.map((item, i) => {
         if (item.type === 'separator') {
-          return <hr key={`sep-${item.id || 'separator'}`} className={styles.separator} />;
+          return <hr key={`sep-${i}`} className={styles.separator} />;
         }
         return (
           <button

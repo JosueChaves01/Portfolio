@@ -1,11 +1,14 @@
+import { useLanguage } from '../../../store/LanguageContext';
+import { ROLE_LABELS } from '../constants/copilot.constants';
 import styles from './CopilotPanel.module.css';
 
-const ROLE_LABELS = { user: 'You', assistant: 'Copilot' };
-
 export function CopilotMessage({ role, content }) {
+  const { t } = useLanguage();
+  const label = ROLE_LABELS[role] ? t(ROLE_LABELS[role]) : role;
+
   return (
     <div className={`${styles.message} ${styles[role]}`}>
-      <span className={styles.messageRole}>{ROLE_LABELS[role]}</span>
+      <span className={styles.messageRole}>{label}</span>
       <p className={styles.messageContent}>{content}</p>
     </div>
   );

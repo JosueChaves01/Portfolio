@@ -13,7 +13,7 @@ import { TabBar } from '../features/tabBar/components/TabBar';
 import { Breadcrumb } from '../features/breadcrumb/components/Breadcrumb';
 import { EditorArea } from '../features/editor/components/EditorArea';
 import { Terminal } from '../features/terminal/components/Terminal';
-import { CopilotPanel } from '../features/copilot/components/CopilotPanel';
+import { CopilotPanel } from '../features/copilot';
 import { CommandPalette } from '../features/commandPalette/components/CommandPalette';
 import { StatusBar } from '../features/statusBar/components/StatusBar';
 import { RESUME_URL } from '../features/explorer/constants/explorer.constants';

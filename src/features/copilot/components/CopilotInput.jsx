@@ -1,13 +1,15 @@
 import { Icon } from '../../../shared/icons/Icon';
 import { useLanguage } from '../../../store/LanguageContext';
-import { COPILOT } from '../constants/copilot.constants';
+import { COPILOT, ICON_SIZE } from '../constants/copilot.constants';
 import styles from './CopilotPanel.module.css';
+
+const KEY_ENTER = 'Enter';
 
 export function CopilotInput({ value, onChange, onSubmit, disabled }) {
   const { t } = useLanguage();
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === KEY_ENTER && !e.shiftKey) {
       e.preventDefault();
       onSubmit();
     }
@@ -27,9 +29,9 @@ export function CopilotInput({ value, onChange, onSubmit, disabled }) {
         className={styles.sendBtn}
         onClick={onSubmit}
         disabled={disabled || !value.trim()}
-        aria-label={t({ en: 'Send message', es: 'Enviar mensaje' })}
+        aria-label={t(COPILOT.ARIA_LABEL.SEND)}
       >
-        <Icon name={COPILOT.SEND_ICON || 'Send'} size={14} />
+        <Icon name={COPILOT.SEND_ICON} size={ICON_SIZE.SMALL} />
       </button>
     </div>
   );

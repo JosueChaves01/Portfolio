@@ -8,6 +8,7 @@ export const COPILOT = {
   },
   AVATAR_ICON: 'Sparkles',
   EDIT_ICON: 'SquarePen',
+  SEND_ICON: 'Send',
   MESSAGES_LEFT_TEMPLATE: (count) => ({
     en: `${count} messages left`,
     es: `${count} mensajes restantes`
@@ -17,6 +18,13 @@ export const COPILOT = {
     es: 'El contenido generado por IA puede ser incorrecto.'
   },
   INPUT_PLACEHOLDER: { en: 'Ask Copilot...', es: 'Preguntar a Copilot...' },
+  ARIA_LABEL: {
+    EDIT: { en: 'Edit', es: 'Editar' },
+    CLOSE: { en: 'Close', es: 'Cerrar' },
+    SEND: { en: 'Send message', es: 'Enviar mensaje' },
+  },
+  LOADING: { en: 'Copilot is typing...', es: 'Copilot está escribiendo...' },
+  NO_RESPONSE_FALLBACK: 'No response from the assistant.',
 };
 
 export const MAX_MESSAGES = 2;
@@ -31,9 +39,24 @@ export const PREDEFINED_QUESTIONS = [
 
 export const QUESTION_PREFIX = '⚡';
 
-export const SYSTEM_PROMPT = `You are the AI assistant for Josue Chaves, a Junior Software Developer from Costa Rica. 
-You are embedded in his IDE-style portfolio.
-Your goal is to help visitors understand Josue's background, projects (BarberHub, Roomiefy, Chess vs IA), and technical expertise (Node.js, TypeScript, PostgreSQL, Docker, AI Agents).
-Always be professional, concise, and helpful. 
-Respond in the language the user is chatting in (English or Spanish).
-Josue is a Computer Engineering student at ITCR.`;
+export const ROLE = {
+  USER: 'user',
+  ASSISTANT: 'assistant',
+};
+
+export const ROLE_LABELS = {
+  user: { en: 'You', es: 'Tú' },
+  assistant: { en: 'Copilot', es: 'Copilot' },
+};
+
+export const API_ENDPOINT = '/api/copilot';
+
+export const ERROR_FALLBACK = {
+  REQUEST_FAILED: (status) => `Request failed (${status})`,
+  NETWORK: 'Network error',
+};
+
+export const ICON_SIZE = {
+  SMALL: 14,
+  AVATAR: 24,
+};

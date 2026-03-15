@@ -2,7 +2,16 @@
  * Portfolio knowledge base for Copilot RAG.
  * Plain text context built from about, projects, experience, and skills.
  * Used only by the serverless API (no dependency on src/).
+ * Single responsibility: build and cache the portfolio context string.
  */
+
+const SECTION_LABELS = {
+  ABOUT: '--- ABOUT ---',
+  PROJECTS: '--- PROJECTS ---',
+  EXPERIENCE: '--- EXPERIENCE ---',
+  SKILLS: '--- SKILLS ---',
+  CONTACT: '--- CONTACT ---',
+};
 
 const about = {
   bioEn: `Josué Chaves is a Computer Engineering student passionate about software architecture, language design, and building robust systems. He enjoys exploring the principles behind well-designed software — from SOLID principles and design patterns to backend architecture and distributed systems. Currently focused on writing clean, maintainable code and understanding the deeper mechanics of how software works.`,
@@ -53,24 +62,24 @@ const contact = {
 
 function buildPortfolioContext() {
   const sections = [
-    '--- ABOUT ---',
+    SECTION_LABELS.ABOUT,
     `Bio (EN): ${about.bioEn}`,
     `Bio (ES): ${about.bioEs}`,
     `Education: ${about.education}`,
     `Current focus: ${about.focus.join('; ')}`,
     `Talk about: ${about.talkAbout.join(', ')}`,
     '',
-    '--- PROJECTS ---',
+    SECTION_LABELS.PROJECTS,
     ...projects.map((p) => {
       let line = `${p.title}: ${p.descEn} Technologies: ${p.tags}. GitHub: ${p.github}`;
       if (p.live) line += ` Live: ${p.live}`;
       return line;
     }),
     '',
-    '--- EXPERIENCE ---',
+    SECTION_LABELS.EXPERIENCE,
     ...experience.map((e) => `${e.period} – ${e.role} @ ${e.company}. ${e.description}`),
     '',
-    '--- SKILLS ---',
+    SECTION_LABELS.SKILLS,
     `Languages: ${skills.languages.join(', ')}`,
     `Backend: ${skills.backend.join(', ')}`,
     `Frontend: ${skills.frontend.join(', ')}`,
@@ -79,7 +88,7 @@ function buildPortfolioContext() {
     `Data Analytics: ${skills.analytics.join(', ')}`,
     `Also familiar with: ${alsoFamiliar}`,
     '',
-    '--- CONTACT ---',
+    SECTION_LABELS.CONTACT,
     `Email: ${contact.email}. GitHub: ${contact.github}. LinkedIn: ${contact.linkedin}. YouTube: ${contact.youtube}. Instagram: ${contact.instagram}.`,
   ];
   return sections.join('\n');
