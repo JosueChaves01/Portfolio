@@ -20,8 +20,8 @@ export function useCopilot() {
   const sendMessage = (text) => {
     if (!text.trim() || messagesLeft <= 0) return;
 
-    const userMsg = { role: ROLE.USER, content: text };
-    const assistantMsg = { role: ROLE.ASSISTANT, content: getResponse(text) };
+    const userMsg = { id: `user-${Date.now()}`, role: ROLE.USER, content: text };
+    const assistantMsg = { id: `assistant-${Date.now()}`, role: ROLE.ASSISTANT, content: getResponse(text) };
 
     setMessages((prev) => [...prev, userMsg, assistantMsg]);
     setMessagesLeft((prev) => prev - 1);

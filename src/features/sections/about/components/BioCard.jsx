@@ -8,7 +8,7 @@ function highlightKeywords(text, keywords) {
   const parts = text.split(pattern);
   return parts.map((part, i) =>
     keywords.some((k) => k.toLowerCase() === part.toLowerCase())
-      ? <strong key={i} className={styles.keyword}>{part}</strong>
+      ? <strong key={`keyword-${part}-${crypto.randomUUID()}`} className={styles.keyword}>{part}</strong>
       : part
   );
 }

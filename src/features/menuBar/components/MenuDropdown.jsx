@@ -6,9 +6,9 @@ export function MenuDropdown({ items, onSelect }) {
 
   return (
     <div className={styles.dropdown}>
-      {items.map((item, i) => {
+      {items.map((item) => {
         if (item.type === 'separator') {
-          return <hr key={i} className={styles.separator} />;
+          return <hr key={item.id} className={styles.separator} />;
         }
         return (
           <button

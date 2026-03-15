@@ -24,8 +24,8 @@ export function TimelineItem({ period, role, company, description, projects, tag
 
         {projects && projects.length > 0 && (
           <div className={styles.projects}>
-            {projects.map((proj, i) => (
-              <div key={i} className={styles.project}>
+            {projects.map((proj) => (
+              <div key={proj.name} className={styles.project}>
                 <span className={styles.projectName}>{proj.name}:</span>
                 <span className={styles.projectContribution}>{t(proj.contribution)}</span>
               </div>

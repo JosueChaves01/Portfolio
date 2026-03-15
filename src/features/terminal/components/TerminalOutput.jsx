@@ -10,9 +10,9 @@ export function TerminalOutput({ lines }) {
 
   return (
     <div className={styles.output}>
-      {lines.map((line, index) => (
-        <div key={index} className={styles.outputLine}>
-          {line}
+      {lines.map((line) => (
+        <div key={line.id} className={styles.outputLine}>
+          {line.content}
         </div>
       ))}
       <div ref={endRef} />

@@ -15,7 +15,7 @@ export function Terminal() {
     <div className={styles.terminal}>
       <div className={styles.tabBar}>
         {TERMINAL.TAB_LABELS.map((label, index) => (
-          <span key={index} className={`${styles.tabLabel} ${index === 0 ? styles.activeTab : ''}`}>
+          <span key={t(label)} className={`${styles.tabLabel} ${index === 0 ? styles.activeTab : ''}`}>
             {t(label)}
           </span>
         ))}
@@ -27,7 +27,7 @@ export function Terminal() {
           ✕
         </button>
       </div>
-      <TerminalOutput lines={[t(TERMINAL.WELCOME_MESSAGE), ...lines]} />
+      <TerminalOutput lines={[{ id: 'welcome', content: t(TERMINAL.WELCOME_MESSAGE) }, ...lines]} />
 
       <TerminalInput
         value={input}

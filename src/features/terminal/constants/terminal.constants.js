@@ -1,10 +1,10 @@
-import { FILE_REGISTRY, FILE_TREE_ORDER, FILE_IDS } from '../../explorer/constants/explorer.constants';
+import { FILE_REGISTRY, FILE_TREE_ORDER } from '../../explorer/constants/explorer.constants';
 
 export const TERMINAL = {
   PROMPT: 'josue@portfolio:~$',
-  WELCOME_MESSAGE: { 
-    en: "Welcome! Type 'help' to see available commands.", 
-    es: "¡Bienvenido! Escribe 'help' para ver los comandos disponibles." 
+  WELCOME_MESSAGE: {
+    en: "Welcome! Type 'help' to see available commands.",
+    es: "¡Bienvenido! Escribe 'help' para ver los comandos disponibles."
   },
   TAB_LABELS: [
     { en: 'TERMINAL', es: 'TERMINAL' },
@@ -35,7 +35,7 @@ export const WHOAMI_OUTPUT = {
     'Name:     Josue Chaves',
     'Title:    Computer Engineering Student',
     'Company:  @ ITCR (TEC)',
-    'Roles:    Backend Engineer · GIS Dev · Distributed Systems',
+    'Roles:    Software Engineer',
     'Location: Costa Rica',
     'Email:    josuechaves.dev@gmail.com',
   ],
@@ -43,7 +43,7 @@ export const WHOAMI_OUTPUT = {
     'Nombre:   Josué Chaves',
     'Título:   Estudiante de Ingeniería en Computadores',
     'Empresa:  @ ITCR (TEC)',
-    'Roles:    Ingeniero Backend · Dev GIS · Sistemas Distribuidos',
+    'Roles:    Ingeniero de Software',
     'Ubicación: Costa Rica',
     'Correo:   josuechaves.dev@gmail.com',
   ]

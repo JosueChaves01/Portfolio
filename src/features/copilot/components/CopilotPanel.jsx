@@ -54,8 +54,8 @@ export function CopilotPanel() {
           </div>
         ) : (
           <div className={styles.messageList}>
-            {messages.map((msg, i) => (
-              <CopilotMessage key={i} role={msg.role} content={msg.content} />
+            {messages.map((msg) => (
+              <CopilotMessage key={msg.id} role={msg.role} content={msg.content} />
             ))}
           </div>
         )}

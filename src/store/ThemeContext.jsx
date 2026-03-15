@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { THEME_IDS, STORAGE_KEY_THEME } from '../features/settings/constants/settings.constants';
 
 const ThemeContext = createContext(null);
@@ -16,8 +16,10 @@ export function ThemeProvider({ children }) {
     localStorage.setItem(STORAGE_KEY_THEME, theme);
   }, [theme]);
 
+  const value = useMemo(() => ({ theme, setTheme }), [theme]);
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

@@ -41,9 +41,40 @@ export function useTerminal() {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [input, setInput] = useState('');
 
-  const appendLines = (newLines) => {
-    setLines((prev) => [...prev, ...(Array.isArray(newLines) ? newLines : [newLines])]);
-  };
+  const appendLines = useCallback((newLines) => {
+    const toAppend = (Array.isArray(newLines) ? newLines : [newLines]).map((line) => ({
+      id: `line-${Date.now()}-${crypto.randomUUID()}`,
+      content: line,
+    }));
+    setLines((prev) => [...prev, ...toAppend]);
+  }, []);
+
+  const handleCd = useCallback((args) => {
+    const target = args[0];
+    if (!target || target === '~' || target === '/') {
+      appendLines(t(CD_MSG('~')));
+    } else {
+      const fileId = FILE_NAME_TO_ID[target];
+      appendLines(t(CD_MSG(target)));
+      if (fileId) {
+        openTab(fileId);
+      }
+    }
+  }, [appendLines, t, openTab]);
+
+  const handleOpen = useCallback((args) => {
+    const fileName = args[0];
+    const fileId = FILE_NAME_TO_ID[fileName];
+    if (fileId) {
+      appendLines(t(OPEN_FILE_MSG(fileName)));
+      openTab(fileId);
+    } else {
+      appendLines(t({
+        en: `No such file: ${fileName}`,
+        es: `No existe el archivo: ${fileName}`
+      }));
+    }
+  }, [appendLines, t, openTab]);
 
   const processCommand = useCallback((rawInput) => {
     const trimmed = rawInput.trim();
@@ -56,56 +87,29 @@ export function useTerminal() {
     const [cmd, ...args] = trimmed.split(' ');
     const fullCmd = trimmed.toLowerCase();
 
-    if (fullCmd === TERMINAL_COMMANDS.HELP) {
-      appendLines(t(HELP_OUTPUT));
-    } else if (fullCmd === TERMINAL_COMMANDS.LS) {
-      appendLines(LS_OUTPUT);
-    } else if (fullCmd === TERMINAL_COMMANDS.PWD) {
-      appendLines(PWD_OUTPUT);
-    } else if (fullCmd === TERMINAL_COMMANDS.CLEAR) {
-      setLines([]);
-    } else if (fullCmd === TERMINAL_COMMANDS.WHOAMI) {
-      appendLines(t(WHOAMI_OUTPUT));
-    } else if (fullCmd === TERMINAL_COMMANDS.DATE) {
-      appendLines(new Date().toLocaleString());
-    } else if (fullCmd === `${TERMINAL_COMMANDS.GIT} log`) {
-      appendLines(GIT_LOG_OUTPUT);
-    } else if (fullCmd === TERMINAL_COMMANDS.PYTHON_VERSION) {
-      appendLines(PYTHON_VERSION_OUTPUT);
-    } else if (fullCmd === TERMINAL_COMMANDS.PYTHON) {
-      appendLines(t(PYTHON_INTERACTIVE_MSG));
-    } else if (cmd === TERMINAL_COMMANDS.ECHO) {
-      appendLines(args.join(' '));
-    } else if (cmd === TERMINAL_COMMANDS.CD) {
-      const target = args[0];
-      if (!target || target === '~' || target === '/') {
-        appendLines(t(CD_MSG('~')));
-      } else {
-        const fileId = FILE_NAME_TO_ID[target];
-        if (fileId) {
-          appendLines(t(CD_MSG(target)));
-          openTab(fileId);
-        } else {
-          appendLines(t(CD_MSG(target)));
-        }
-      }
-    } else if (cmd === TERMINAL_COMMANDS.CAT || cmd === TERMINAL_COMMANDS.OPEN) {
+    const commandMap = {
+      [TERMINAL_COMMANDS.HELP]: () => appendLines(t(HELP_OUTPUT)),
+      [TERMINAL_COMMANDS.LS]: () => appendLines(LS_OUTPUT),
+      [TERMINAL_COMMANDS.PWD]: () => appendLines(PWD_OUTPUT),
+      [TERMINAL_COMMANDS.CLEAR]: () => setLines([]),
+      [TERMINAL_COMMANDS.WHOAMI]: () => appendLines(t(WHOAMI_OUTPUT)),
+      [TERMINAL_COMMANDS.DATE]: () => appendLines(new Date().toLocaleString()),
+      [`${TERMINAL_COMMANDS.GIT} log`]: () => appendLines(GIT_LOG_OUTPUT),
+      [TERMINAL_COMMANDS.PYTHON_VERSION]: () => appendLines(PYTHON_VERSION_OUTPUT),
+      [TERMINAL_COMMANDS.PYTHON]: () => appendLines(t(PYTHON_INTERACTIVE_MSG)),
+      [TERMINAL_COMMANDS.ECHO]: () => appendLines(args.join(' ')),
+      [TERMINAL_COMMANDS.CD]: () => handleCd(args),
+      [TERMINAL_COMMANDS.CAT]: () => handleOpen(args),
+      [TERMINAL_COMMANDS.OPEN]: () => handleOpen(args),
+    };
 
-      const fileName = args[0];
-      const fileId = FILE_NAME_TO_ID[fileName];
-      if (fileId) {
-        appendLines(t(OPEN_FILE_MSG(fileName)));
-        openTab(fileId);
-      } else {
-        appendLines(t({
-          en: `No such file: ${fileName}`,
-          es: `No existe el archivo: ${fileName}`
-        }));
-      }
+    const handler = commandMap[fullCmd] || commandMap[cmd];
+    if (handler) {
+      handler();
     } else {
       appendLines(t(UNKNOWN_COMMAND_MSG(trimmed)));
     }
-  }, [openTab, t]);
+  }, [appendLines, t, handleCd, handleOpen, setLines]);
 
 
   const handleInputChange = (value) => setInput(value);

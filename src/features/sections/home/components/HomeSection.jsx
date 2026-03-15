@@ -33,9 +33,7 @@ export function HomeSection() {
 
       <p className={styles.bio}>
         {t(HOME.BIO).split(new RegExp(`(${HOME.BIO_KEYWORDS.join('|')})`, 'gi')).map((part, i) =>
-          HOME.BIO_KEYWORDS.some(kw => kw.toLowerCase() === part.toLowerCase()) ? (
-            <span key={i} className={styles.highlight}>{part}</span>
-          ) : part
+            <span key={`highlight-${part}-${crypto.randomUUID()}`} className={styles.highlight}>{part}</span>
         )}
       </p>
 

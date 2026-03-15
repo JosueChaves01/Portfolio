@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { FILE_IDS } from '../features/explorer/constants/explorer.constants';
 
 const IDEContext = createContext(null);
@@ -43,25 +43,33 @@ export function IDEProvider({ children }) {
     setIsTerminalOpen(true);
   };
 
+  const value = React.useMemo(() => ({
+    openTabs,
+    activeTab,
+    activePanel,
+    isTerminalOpen,
+    isCopilotOpen,
+    isCommandPaletteOpen,
+    openTab,
+    closeTab,
+    togglePanel,
+    toggleTerminal,
+    toggleCopilot,
+    toggleCommandPalette,
+    terminalKey,
+    newTerminal,
+  }), [
+    openTabs,
+    activeTab,
+    activePanel,
+    isTerminalOpen,
+    isCopilotOpen,
+    isCommandPaletteOpen,
+    terminalKey,
+  ]);
+
   return (
-    <IDEContext.Provider
-      value={{
-        openTabs,
-        activeTab,
-        activePanel,
-        isTerminalOpen,
-        isCopilotOpen,
-        isCommandPaletteOpen,
-        openTab,
-        closeTab,
-        togglePanel,
-        toggleTerminal,
-        toggleCopilot,
-        toggleCommandPalette,
-        terminalKey,
-        newTerminal,
-      }}
-    >
+    <IDEContext.Provider value={value}>
       {children}
     </IDEContext.Provider>
   );

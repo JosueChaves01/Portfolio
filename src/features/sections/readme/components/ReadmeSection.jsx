@@ -13,9 +13,9 @@ export function ReadmeSection() {
       <p className={styles.subtitle}>{t(README.SUBTITLE)}</p>
 
       <div className={styles.roleTags}>
-        {ROLE_TAGS.map(({ icon, color, label }, i) => (
+        {ROLE_TAGS.map(({ icon, color, label }) => (
           <span
-            key={i}
+            key={t(label)}
             className={styles.roleTag}
             style={{
               borderColor: color,
@@ -32,8 +32,8 @@ export function ReadmeSection() {
 
       <h2 className={styles.h2}>{t({ en: 'About', es: 'Acerca de' })}</h2>
       <ul className={styles.list}>
-        {ABOUT_BULLETS.map(({ icon, color, text }, i) => (
-          <li key={i} className={styles.listItem}>
+        {ABOUT_BULLETS.map(({ icon, color, text }) => (
+          <li key={t(text)} className={styles.listItem}>
             <Icon name={icon} size={14} color={color} /> {t(text)}
           </li>
         ))}
@@ -42,8 +42,8 @@ export function ReadmeSection() {
       <hr className={styles.divider} />
 
       <h2 className={styles.h2}>{t({ en: 'Stack', es: 'Tecnologías' })}</h2>
-      {STACK_CATEGORIES.map(({ title, items }, i) => (
-        <div key={i} className={styles.stackRow}>
+      {STACK_CATEGORIES.map(({ title, items }) => (
+        <div key={t(title)} className={styles.stackRow}>
           <strong className={styles.stackLabel}>{t(title)}:</strong>
           <div className={styles.stackTags}>
             {items.map((tag) => <Tag key={tag}>{tag}</Tag>)}

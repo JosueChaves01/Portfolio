@@ -7,7 +7,7 @@ import { ThemeSelector } from './ThemeSelector';
 import styles from './StatusBar.module.css';
 
 export function StatusBar() {
-  const { language, themeLabel, currentTime, togglePanel, SETTINGS_PANEL_ID } = useStatusBar();
+  const { language, themeLabel, currentTime } = useStatusBar();
   const { t } = useLanguage();
   const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
 

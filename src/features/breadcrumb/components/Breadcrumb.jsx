@@ -8,16 +8,19 @@ export function Breadcrumb() {
 
   return (
     <div className={styles.breadcrumb}>
-      {segments.map((segment, index) => (
-        <span key={index} className={styles.segmentWrapper}>
-          <span className={`${styles.segment} ${index === segments.length - 1 ? styles.active : ''}`}>
-            {segment}
+      {segments.map((segment, index) => {
+        const pathKey = segments.slice(0, index + 1).join('/');
+        return (
+          <span key={pathKey} className={styles.segmentWrapper}>
+            <span className={`${styles.segment} ${index === segments.length - 1 ? styles.active : ''}`}>
+              {segment}
+            </span>
+            {index < segments.length - 1 && (
+              <span className={styles.separator}>{BREADCRUMB_SEPARATOR}</span>
+            )}
           </span>
-          {index < segments.length - 1 && (
-            <span className={styles.separator}>{BREADCRUMB_SEPARATOR}</span>
-          )}
-        </span>
-      ))}
+        );
+      })}
     </div>
   );
 }

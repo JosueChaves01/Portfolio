@@ -2,7 +2,6 @@ import { useIDE } from '../store/IDEContext';
 import { useKeyboardShortcut } from '../shared/hooks/useKeyboardShortcut';
 import { SHORTCUTS } from '../shared/constants/keyboard.constants';
 import { PANEL_IDS } from '../features/activityBar/constants/activityBar.constants';
-
 import { TitleBar } from '../features/titleBar/components/TitleBar';
 import { MenuBar } from '../features/menuBar/components/MenuBar';
 import { ActivityBar } from '../features/activityBar/components/ActivityBar';
