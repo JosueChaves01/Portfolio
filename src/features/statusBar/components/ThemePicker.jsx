@@ -1,10 +1,12 @@
-import { THEMES } from '../../settings/constants/settings.constants';
+import { THEMES, SETTINGS } from '../../settings/constants/settings.constants';
+import { useLanguage } from '../../../store/LanguageContext';
 import styles from './ThemePicker.module.css';
 
 export function ThemePicker({ currentThemeId, onSelect }) {
+  const { t } = useLanguage();
   return (
     <div className={styles.picker}>
-      <p className={styles.title}>Color Theme</p>
+      <p className={styles.title}>{t(SETTINGS.SECTION_THEME)}</p>
       {THEMES.map(({ id, label, color }) => (
         <button
           key={id}

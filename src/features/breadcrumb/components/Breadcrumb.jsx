@@ -1,9 +1,9 @@
-import { useIDE } from '../../../store/IDEContext';
+import { useTabs } from '../../../store/TabsContext';
 import { BREADCRUMB_PATHS, BREADCRUMB_SEPARATOR } from '../constants/breadcrumb.constants';
 import styles from './Breadcrumb.module.css';
 
 export function Breadcrumb() {
-  const { activeTab } = useIDE();
+  const { activeTab } = useTabs();
   const segments = activeTab ? BREADCRUMB_PATHS[activeTab] ?? [] : [];
 
   return (

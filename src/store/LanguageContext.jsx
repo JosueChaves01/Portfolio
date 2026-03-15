@@ -1,16 +1,14 @@
-import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import { createContext, useContext, useEffect, useCallback } from 'react';
+import { useLocalStorage } from '../shared/hooks/useLocalStorage';
 
 const LanguageContext = createContext(null);
 
 const STORAGE_KEY = 'portfolio-language';
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem(STORAGE_KEY) || 'en';
-  });
+  const [language, setLanguage] = useLocalStorage(STORAGE_KEY, 'en');
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, language);
     document.documentElement.lang = language;
   }, [language]);
 
@@ -20,10 +18,8 @@ export function LanguageProvider({ children }) {
     return translations[language] || translations['en'] || '';
   }, [language]);
 
-  const value = useMemo(() => ({ language, setLanguage, t }), [language, t]);
-
   return (
-    <LanguageContext.Provider value={value}>
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

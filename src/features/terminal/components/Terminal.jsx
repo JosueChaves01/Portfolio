@@ -1,5 +1,5 @@
 import { useLanguage } from '../../../store/LanguageContext';
-import { useIDE } from '../../../store/IDEContext';
+import { useOverlay } from '../../../store/OverlayContext';
 import { useTerminal } from '../hooks/useTerminal';
 import { TERMINAL } from '../constants/terminal.constants';
 import { TerminalOutput } from './TerminalOutput';
@@ -8,7 +8,7 @@ import styles from './Terminal.module.css';
 
 export function Terminal() {
   const { t } = useLanguage();
-  const { toggleTerminal } = useIDE();
+  const { toggleTerminal } = useOverlay();
   const { lines, input, handleInputChange, handleSubmit, handleKeyDown } = useTerminal();
 
   return (

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useIDE } from '../../../store/IDEContext';
+import { useTabs } from '../../../store/TabsContext';
 import {
   TERMINAL_COMMANDS,
   WHOAMI_OUTPUT,
@@ -35,7 +35,7 @@ const PYTHON_INTERACTIVE_MSG = {
 
 export function useTerminal() {
   const { t } = useLanguage();
-  const { openTab } = useIDE();
+  const { openTab } = useTabs();
   const [lines, setLines] = useState([]);
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);

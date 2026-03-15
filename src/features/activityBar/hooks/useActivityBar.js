@@ -1,7 +1,9 @@
-import { useIDE } from '../../../store/IDEContext';
+import { usePanel } from '../../../store/PanelContext';
+import { useOverlay } from '../../../store/OverlayContext';
 
 export function useActivityBar({ onDownloadResume, onOpenSearch }) {
-  const { activePanel, togglePanel, toggleCopilot } = useIDE();
+  const { activePanel, togglePanel } = usePanel();
+  const { toggleCopilot } = useOverlay();
 
   const handleIconClick = (id) => {
     if (id === 'download') {

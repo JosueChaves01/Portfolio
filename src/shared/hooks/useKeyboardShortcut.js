@@ -16,7 +16,9 @@ export function useKeyboardShortcut(shortcut, callback, enabled = true) {
       const matchesShift = shortcut.shift ? event.shiftKey : !shortcut.shift || !event.shiftKey;
       const matchesAlt = shortcut.alt ? event.altKey : !shortcut.alt || !event.altKey;
 
-      if (matchesKey && matchesCtrl && matchesShift && matchesAlt) {
+      const isExactMatch = matchesKey && matchesCtrl && matchesShift && matchesAlt;
+
+      if (isExactMatch) {
         event.preventDefault();
         callback();
       }

@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useIDE } from '../../../store/IDEContext';
+import { useOverlay } from '../../../store/OverlayContext';
 import { MAX_MESSAGES, PREDEFINED_QUESTIONS } from '../constants/copilot.constants';
 import { MOCK_RESPONSES } from '../mocks/copilot.responses.mock.js';
 
 const ROLE = { USER: 'user', ASSISTANT: 'assistant' };
 
 export function useCopilot() {
-  const { toggleCopilot } = useIDE();
+  const { toggleCopilot } = useOverlay();
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [messagesLeft, setMessagesLeft] = useState(MAX_MESSAGES);

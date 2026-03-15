@@ -1,5 +1,5 @@
 import { lazy, useMemo } from 'react';
-import { useIDE } from '../../../store/IDEContext';
+import { useTabs } from '../../../store/TabsContext';
 import { SECTION_COMPONENT_MAP } from '../constants/editor.constants';
 
 const SECTION_COMPONENTS = {
@@ -13,7 +13,7 @@ const SECTION_COMPONENTS = {
 };
 
 export function useEditor() {
-  const { activeTab } = useIDE();
+  const { activeTab } = useTabs();
 
   const ActiveSection = useMemo(() => {
     const sectionKey = SECTION_COMPONENT_MAP[activeTab];

@@ -1,4 +1,5 @@
-import { useIDE } from '../store/IDEContext';
+import { usePanel } from '../store/PanelContext';
+import { useOverlay } from '../store/OverlayContext';
 import { useKeyboardShortcut } from '../shared/hooks/useKeyboardShortcut';
 import { SHORTCUTS } from '../shared/constants/keyboard.constants';
 import { PANEL_IDS } from '../features/activityBar/constants/activityBar.constants';
@@ -33,8 +34,8 @@ function downloadResume() {
 }
 
 export function App() {
+  const { activePanel } = usePanel();
   const {
-    activePanel,
     isTerminalOpen,
     isCopilotOpen,
     isCommandPaletteOpen,
@@ -42,7 +43,7 @@ export function App() {
     toggleCommandPalette,
     toggleTerminal,
     toggleCopilot,
-  } = useIDE();
+  } = useOverlay();
 
   useKeyboardShortcut(SHORTCUTS.COMMAND_PALETTE, toggleCommandPalette);
   useKeyboardShortcut(SHORTCUTS.TOGGLE_TERMINAL, toggleTerminal);

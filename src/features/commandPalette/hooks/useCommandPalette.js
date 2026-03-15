@@ -1,10 +1,12 @@
 import { useState, useMemo } from 'react';
-import { useIDE } from '../../../store/IDEContext';
+import { useTabs } from '../../../store/TabsContext';
+import { useOverlay } from '../../../store/OverlayContext';
 import { useTheme } from '../../../store/ThemeContext';
 import { PALETTE_COMMANDS, PALETTE_FILES } from '../constants/commandPalette.constants';
 
 export function useCommandPalette() {
-  const { openTab, toggleCopilot, toggleCommandPalette } = useIDE();
+  const { openTab } = useTabs();
+  const { toggleCopilot, toggleCommandPalette } = useOverlay();
   const { setTheme } = useTheme();
   const [query, setQuery] = useState('');
 

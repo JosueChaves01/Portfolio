@@ -2,7 +2,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Analytics } from '@vercel/analytics/react';
 
-import { IDEProvider } from './store/IDEContext';
+import { TabsProvider } from './store/TabsContext';
+import { PanelProvider } from './store/PanelContext';
+import { OverlayProvider } from './store/OverlayContext';
 import { ThemeProvider } from './store/ThemeContext';
 import { LanguageProvider } from './store/LanguageContext';
 import { App } from './app/App';
@@ -16,9 +18,13 @@ createRoot(document.getElementById('root')).render(
     <Analytics />
     <ThemeProvider>
       <LanguageProvider>
-        <IDEProvider>
-          <App />
-        </IDEProvider>
+        <TabsProvider>
+          <PanelProvider>
+            <OverlayProvider>
+              <App />
+            </OverlayProvider>
+          </PanelProvider>
+        </TabsProvider>
       </LanguageProvider>
     </ThemeProvider>
   </StrictMode>

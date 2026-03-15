@@ -6,7 +6,6 @@ export const MENU_ITEM_IDS = {
   EDIT:     'edit',
   VIEW:     'view',
   GO:       'go',
-  RUN:      'run',
   TERMINAL: 'terminal',
   HELP:     'help',
   COPILOT:  'copilot',
@@ -59,13 +58,7 @@ export const MENU_ITEMS = [
       { id: 'go-readme', label: 'README.md', action: 'openTab', payload: FILE_IDS.README },
     ],
   },
-  {
-    id: MENU_ITEM_IDS.RUN,
-    label: { en: 'Run', es: 'Ejecutar' },
-    items: [
-      { id: 'run-new-terminal', label: { en: 'New Terminal', es: 'Nueva terminal' }, action: 'newTerminal' },
-    ],
-  },
+
   {
     id: MENU_ITEM_IDS.TERMINAL,
     label: { en: 'Terminal', es: 'Terminal' },

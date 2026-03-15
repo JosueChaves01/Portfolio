@@ -22,7 +22,7 @@ export function TimelineItem({ period, role, company, description, projects, tag
         <span className={styles.company}>{company}</span>
         <p className={styles.description}>{t(description)}</p>
 
-        {projects && projects.length > 0 && (
+        {projects?.length > 0 && (
           <div className={styles.projects}>
             {projects.map((proj) => (
               <div key={proj.name} className={styles.project}>
@@ -33,7 +33,7 @@ export function TimelineItem({ period, role, company, description, projects, tag
           </div>
         )}
 
-        {tags && tags.length > 0 && (
+        {tags?.length > 0 && (
           <div className={styles.tags}>
             {tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
           </div>

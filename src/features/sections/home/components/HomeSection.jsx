@@ -1,4 +1,4 @@
-import { useIDE } from '../../../../store/IDEContext';
+import { useTabs } from '../../../../store/TabsContext';
 import { useLanguage } from '../../../../store/LanguageContext';
 
 import { Icon } from '../../../../shared/icons/Icon';
@@ -11,7 +11,7 @@ import { Button } from '../../../../shared/components/Button/Button';
 import styles from './HomeSection.module.css';
 
 export function HomeSection() {
-  const { openTab } = useIDE();
+  const { openTab } = useTabs();
   const { t } = useLanguage();
 
   return (

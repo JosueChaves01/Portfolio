@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useIDE } from '../../../store/IDEContext';
+import { useTabs } from '../../../store/TabsContext';
+import { usePanel } from '../../../store/PanelContext';
 import { useTheme } from '../../../store/ThemeContext';
 import { THEMES } from '../../settings/constants/settings.constants';
 import { PANEL_IDS } from '../../activityBar/constants/activityBar.constants';
@@ -12,7 +13,8 @@ function formatTime(date) {
 }
 
 export function useStatusBar() {
-  const { activeTab, togglePanel } = useIDE();
+  const { activeTab } = useTabs();
+  const { togglePanel } = usePanel();
   const { theme } = useTheme();
   const [currentTime, setCurrentTime] = useState(() => formatTime(new Date()));
 

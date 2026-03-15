@@ -1,7 +1,7 @@
-import { useIDE } from '../../../store/IDEContext';
+import { useTabs } from '../../../store/TabsContext';
 
 export function useTabBar() {
-  const { openTabs, activeTab, openTab, closeTab } = useIDE();
+  const { openTabs, activeTab, openTab, closeTab } = useTabs();
 
   const handleTabClick = (fileId) => openTab(fileId);
 

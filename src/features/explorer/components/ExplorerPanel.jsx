@@ -1,4 +1,4 @@
-import { useIDE } from '../../../store/IDEContext';
+import { useTabs } from '../../../store/TabsContext';
 import { useLanguage } from '../../../store/LanguageContext';
 import { EXPLORER, FILE_TREE_ORDER } from '../constants/explorer.constants';
 
@@ -6,7 +6,7 @@ import { FileTreeItem } from './FileTreeItem';
 import styles from './ExplorerPanel.module.css';
 
 export function ExplorerPanel() {
-  const { activeTab, openTab } = useIDE();
+  const { activeTab, openTab } = useTabs();
   const { t } = useLanguage();
 
   return (

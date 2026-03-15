@@ -1,10 +1,10 @@
 import { useTheme } from '../../../store/ThemeContext';
-import { useIDE } from '../../../store/IDEContext';
+import { useOverlay } from '../../../store/OverlayContext';
 import { RESUME_URL } from '../../explorer/constants/explorer.constants';
 
 export function useSettings() {
   const { theme, setTheme } = useTheme();
-  const { toggleCommandPalette, toggleTerminal, toggleCopilot } = useIDE();
+  const { toggleCommandPalette, toggleTerminal, toggleCopilot } = useOverlay();
 
   const handleQuickAction = (action) => {
     const actionMap = {
