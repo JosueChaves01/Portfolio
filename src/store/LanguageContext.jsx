@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useCallback } from 'react';
+import { createContext, useContext, useEffect, useCallback, useMemo } from 'react';
 import { useLocalStorage } from '../shared/hooks/useLocalStorage';
 
 const LanguageContext = createContext(null);
@@ -18,8 +18,10 @@ export function LanguageProvider({ children }) {
     return translations[language] || translations['en'] || '';
   }, [language]);
 
+  const value = useMemo(() => ({ language, setLanguage, t }), [language, t]);
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

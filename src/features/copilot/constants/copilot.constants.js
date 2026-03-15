@@ -21,6 +21,8 @@ export const COPILOT = {
 
 export const MAX_MESSAGES = 2;
 
+export const COPILOT_MESSAGES_LEFT_KEY = 'portfolio-copilot-messages-left';
+
 export const PREDEFINED_QUESTIONS = [
   { id: 'skills', label: { en: 'Summarize my technical skills', es: 'Resume mis habilidades técnicas' } },
   { id: 'projects', label: { en: 'Show my latest projects', es: 'Muestra mis últimos proyectos' } },

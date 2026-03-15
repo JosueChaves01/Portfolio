@@ -12,10 +12,12 @@ export function CopilotPanel() {
   const { t } = useLanguage();
   const {
     messages, inputValue, setInputValue, messagesLeft,
+    isLoading, error,
     handlePredefinedQuestion, handleSubmit, onClose,
   } = useCopilot();
 
   const isExhausted = messagesLeft <= 0;
+  const isDisabled = isExhausted || isLoading;
 
   return (
     <aside className={styles.panel}>
@@ -46,6 +48,7 @@ export function CopilotPanel() {
                   key={id}
                   className={styles.predefinedBtn}
                   onClick={() => handlePredefinedQuestion(t(label))}
+                  disabled={isLoading}
                 >
                   {QUESTION_PREFIX} {t(label)}
                 </button>
@@ -57,6 +60,16 @@ export function CopilotPanel() {
             {messages.map((msg) => (
               <CopilotMessage key={msg.id} role={msg.role} content={msg.content} />
             ))}
+            {isLoading && (
+              <div className={styles.loadingRow}>
+                <span className={styles.loadingText}>{t({ en: 'Copilot is typing...', es: 'Copilot está escribiendo...' })}</span>
+              </div>
+            )}
+            {error && (
+              <div className={styles.errorRow}>
+                <span className={styles.errorText}>{error}</span>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -66,7 +79,7 @@ export function CopilotPanel() {
           value={inputValue}
           onChange={setInputValue}
           onSubmit={handleSubmit}
-          disabled={isExhausted}
+          disabled={isDisabled}
         />
         <div className={styles.footerMeta}>
           <span className={styles.messagesLeft}>

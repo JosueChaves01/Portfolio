@@ -15,7 +15,7 @@ export function Terminal() {
     <div className={styles.terminal}>
       <div className={styles.tabBar}>
         {TERMINAL.TAB_LABELS.map((label, index) => (
-          <span key={t(label)} className={`${styles.tabLabel} ${index === 0 ? styles.activeTab : ''}`}>
+          <span key={label.en} className={`${styles.tabLabel} ${index === 0 ? styles.activeTab : ''}`}>
             {t(label)}
           </span>
         ))}

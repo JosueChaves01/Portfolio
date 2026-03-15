@@ -4,7 +4,6 @@ import { usePanel } from '../../../store/PanelContext';
 import { useOverlay } from '../../../store/OverlayContext';
 import { useLanguage } from '../../../store/LanguageContext';
 import { RESUME_URL } from '../../explorer/constants/explorer.constants';
-import { SOCIAL_LINKS } from '../../sections/home/constants/home.constants';
 
 const GITHUB_URL = 'https://github.com/josuechaves01/portfolio';
 
