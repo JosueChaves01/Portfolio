@@ -56,3 +56,9 @@
   font-size: 18px;
   line-height: 1;
 }
+
+@media (max-width: 768px) {
+  .activityBar {
+    display: none;
+  }
+}

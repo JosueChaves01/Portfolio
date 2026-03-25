@@ -6,11 +6,36 @@
   overflow-x: auto;
   flex-shrink: 0;
   height: var(--height-tab-bar);
+  position: relative;
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Subtle shadow on scroll */
+.tabBar.scrolled {
+  box-shadow: inset 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .tabBar::-webkit-scrollbar {
-  height: 2px;
+  height: 4px;
 }
+
+.tabBar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabBar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tabBar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================================================
+   TAB STYLING WITH PROFESSIONAL TRANSITIONS
+   ============================================================================ */
 
 .tab {
   display: flex;
@@ -24,48 +49,218 @@
   color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  transition: background-color var(--transition-fast), color var(--transition-fast);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  outline: none;
+  user-select: none;
+  animation: tabSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+@keyframes tabSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tabSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+    max-width: 300px; /* Big enough to bound the original tab */
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-4px);
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 0px;
+    border-right-color: transparent;
+  }
+}
+
+/* Hover state with smooth background transition */
 .tab:hover {
   background-color: var(--color-tab-hover);
   color: var(--color-text);
 }
 
+/* Focus state for keyboard accessibility */
+.tab:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+/* Active state with animated top border */
 .tab.active {
   background-color: var(--color-tab-active);
   color: var(--color-text);
-  border-top: 1px solid var(--color-accent);
+  border-top: 2px solid var(--color-accent);
+  animation: tabActivate 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+/* Closing state with smooth exit animation */
+.tab.closing {
+  animation: tabSlideOut 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  overflow: hidden;
+  min-width: 0 !important;
+}
+
+@keyframes tabActivate {
+  from {
+    border-top-color: transparent;
+    transform: translateY(2px);
+  }
+  to {
+    border-top-color: var(--color-accent);
+    transform: translateY(0);
+  }
+}
+
+/* Tab icon styling */
 .tabIcon {
   font-size: var(--text-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
 }
 
+.tab:hover .tabIcon {
+  transform: scale(1.1);
+}
+
+/* Tab name styling */
 .tabName {
   font-size: var(--text-sm);
+  white-space: nowrap;
+  transition: letter-spacing 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.tab:hover .tabName {
+  letter-spacing: 0.2px;
+}
+
+/* Close button with sophisticated animations */
 .closeBtn {
   background: none;
   border: none;
   cursor: pointer;
   color: var(--color-text-muted);
-  font-size: 10px;
-  padding: 2px;
+  font-size: 12px;
+  padding: 4px 2px;
+  margin-left: auto;
   border-radius: var(--radius-sm);
   opacity: 0;
-  transition: opacity var(--transition-fast), color var(--transition-fast);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transform: scale(0.9);
 }
 
 .tab:hover .closeBtn,
 .tab.active .closeBtn {
   opacity: 1;
+  transform: scale(1);
 }
 
 .closeBtn:hover {
   color: var(--color-text);
-  background-color: var(--color-surface-hover);
+  background-color: rgba(255, 0, 0, 0.2);
+  transform: scale(1.15);
+}
+
+.closeBtn:active {
+  background-color: rgba(255, 0, 0, 0.3);
+  transform: scale(0.95);
+}
+
+/* ============================================================================
+   MOBILE LAYOUT (≤768px)
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .tab {
+    padding: 0 var(--space-2);
+    min-width: auto;
+    flex: 0 1 auto;
+    font-size: 11px;
+    animation: tabSlideInMobile 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes tabSlideInMobile {
+    from {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .tabName {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tabName:hover {
+    letter-spacing: 0;
+  }
+
+  .closeBtn {
+    display: none;
+  }
+
+  .tab.active .closeBtn {
+    display: flex;
+  }
+
+  .tab.active {
+    animation: tabActivateMobile 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .tab.closing {
+    animation: tabSlideOutMobile 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    overflow: hidden;
+    min-width: 0 !important;
+  }
+
+  @keyframes tabActivateMobile {
+    from {
+      background-color: var(--color-tab-inactive);
+    }
+    to {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  @keyframes tabSlideOutMobile {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+      padding-left: var(--space-2);
+      padding-right: var(--space-2);
+      max-width: 200px;
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-4px);
+      padding-left: 0;
+      padding-right: 0;
+      max-width: 0px;
+      border-right-color: transparent;
+    }
+  }
 }

@@ -5,8 +5,7 @@ export function useTabBar() {
 
   const handleTabClick = (fileId) => openTab(fileId);
 
-  const handleTabClose = (event, fileId) => {
-    event.stopPropagation();
+  const handleTabClose = (fileId) => {
     closeTab(fileId);
   };
 

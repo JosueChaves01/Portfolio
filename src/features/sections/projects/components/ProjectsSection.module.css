@@ -159,3 +159,26 @@
   flex-wrap: wrap;
   gap: var(--space-1);
 }
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardImage {
+    width: 100%;
+  }
+
+  .cardBodyWrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cardLinks {
+    margin-left: 0;
+  }
+
+  .heading {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+  }
+}

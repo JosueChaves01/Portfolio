@@ -10,10 +10,23 @@
   display: flex;
   flex: 1;
   overflow: hidden;
+  position: relative;
 }
 
 .sidePanel {
   flex-shrink: 0;
+  animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .editorColumn {
@@ -28,4 +41,14 @@
   flex-direction: column;
   flex: 1;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .workbench {
+    flex-direction: column;
+  }
+
+  .sidePanel {
+    display: none;
+  }
 }

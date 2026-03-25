@@ -6,6 +6,18 @@
   border-top: 1px solid var(--color-border);
   flex-shrink: 0;
   font-family: var(--font-mono);
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .tabBar {
@@ -53,6 +65,41 @@
   overflow-y: auto;
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
+}
+
+@media (max-width: 768px) {
+  .tabBar {
+    height: 28px;
+    padding: 0 var(--space-1);
+    gap: 0;
+  }
+
+  .tabLabel {
+    padding: var(--space-1);
+    font-size: 10px;
+  }
+
+  .closeBtn {
+    padding: var(--space-1) 2px;
+  }
+
+  .output {
+    padding: var(--space-1) var(--space-2);
+    font-size: 11px;
+  }
+
+  .inputRow {
+    padding: var(--space-1) var(--space-2);
+    gap: var(--space-1);
+  }
+
+  .prompt {
+    font-size: 11px;
+  }
+
+  .input {
+    font-size: 11px;
+  }
 }
 
 .outputLine {

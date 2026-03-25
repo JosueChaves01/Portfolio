@@ -1,6 +1,6 @@
 .dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 4px);
   left: 0;
   min-width: 220px;
   background-color: var(--color-surface);
@@ -8,8 +8,16 @@
   border-radius: var(--radius-sm);
   padding: var(--space-1) 0;
   z-index: 1000;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+              0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: top left;
+  backdrop-filter: blur(8px);
 }
+
+/* ============================================================================
+   DROPDOWN ITEMS - STAGGERED ANIMATION
+   ============================================================================ */
 
 .item {
   display: flex;
@@ -25,25 +33,187 @@
   color: var(--color-text);
   text-align: left;
   gap: var(--space-4);
-  transition: background-color var(--transition-fast);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  outline: none;
+  overflow: hidden;
 }
 
-.item:hover {
+/* Background transition on hover */
+.item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background-color: var(--color-surface-hover);
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
 }
 
+.item:hover::before {
+  opacity: 1;
+}
+
+/* Smooth color transition on hover */
+.item:hover {
+  color: var(--color-accent);
+}
+
+/* Focus state for keyboard accessibility */
+.item:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+/* Label styling */
 .label {
   flex: 1;
+  transition: letter-spacing 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.item:hover .label {
+  letter-spacing: 0.3px;
+}
+
+/* Shortcut styling with fade effect */
 .shortcut {
   font-size: var(--text-xs);
   color: var(--color-text-muted);
   white-space: nowrap;
+  opacity: 0.7;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.item:hover .shortcut {
+  opacity: 1;
+  color: var(--color-accent);
+}
+
+/* Separator animation */
 .separator {
   margin: var(--space-1) 0;
   border: none;
   border-top: 1px solid var(--color-border);
+  opacity: 0.5;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: scaleY(0.95) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+  }
+}
+
+/* Stagger animation for items - applies delay based on child index */
+.dropdown > :nth-child(1) {
+  animation: itemFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s both;
+}
+
+.dropdown > :nth-child(2) {
+  animation: itemFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.dropdown > :nth-child(3) {
+  animation: itemFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+}
+
+.dropdown > :nth-child(4) {
+  animation: itemFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+.dropdown > :nth-child(5) {
+  animation: itemFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s both;
+}
+
+.dropdown > :nth-child(6) {
+  animation: itemFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+
+.dropdown > :nth-child(7) {
+  animation: itemFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both;
+}
+
+.dropdown > :nth-child(n + 8) {
+  animation: itemFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+}
+
+@keyframes itemFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================================
+   MOBILE LAYOUT (≤768px)
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .dropdown {
+    min-width: 200px;
+    padding: var(--space-2) 0;
+    animation: dropdownSlideInMobile 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .item {
+    padding: var(--space-2) var(--space-3);
+    font-size: 13px;
+    gap: var(--space-3);
+  }
+
+  .shortcut {
+    display: none;
+  }
+
+  /* Faster stagger on mobile */
+  .dropdown > :nth-child(1) {
+    animation: itemFadeInMobile 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.03s both;
+  }
+
+  .dropdown > :nth-child(2) {
+    animation: itemFadeInMobile 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.06s both;
+  }
+
+  .dropdown > :nth-child(3) {
+    animation: itemFadeInMobile 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.09s both;
+  }
+
+  .dropdown > :nth-child(n + 4) {
+    animation: itemFadeInMobile 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s both;
+  }
+
+  @keyframes dropdownSlideInMobile {
+    from {
+      opacity: 0;
+      transform: scaleY(0.9) translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: scaleY(1) translateY(0);
+    }
+  }
+
+  @keyframes itemFadeInMobile {
+    from {
+      opacity: 0;
+      transform: translateX(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }

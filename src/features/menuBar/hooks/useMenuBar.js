@@ -3,6 +3,7 @@ import { useTabs } from '../../../store/TabsContext';
 import { usePanel } from '../../../store/PanelContext';
 import { useOverlay } from '../../../store/OverlayContext';
 import { useLanguage } from '../../../store/LanguageContext';
+import { PANEL_IDS } from '../../activityBar/constants/activityBar.constants';
 import { RESUME_URL } from '../../explorer/constants/explorer.constants';
 
 const GITHUB_URL = 'https://github.com/josuechaves01/portfolio';
@@ -14,8 +15,12 @@ function downloadResume() {
   link.click();
 }
 
+function isMobileDevice() {
+  return window.matchMedia('(max-width: 768px)').matches;
+}
+
 export function useMenuBar() {
-  const { setLanguage } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const [openMenuId, setOpenMenuId] = useState(null);
 
   const { openTab } = useTabs();
@@ -32,6 +37,16 @@ export function useMenuBar() {
 
   const dispatch = useCallback((action, payload) => {
     closeMenu();
+
+    // Handle Explorer toggle on mobile devices
+    if (action === 'togglePanel' && payload === PANEL_IDS.EXPLORER && isMobileDevice()) {
+      const messages = {
+        en: 'Explorer is not available on mobile devices',
+        es: 'El Explorador no está disponible en dispositivos móviles',
+      };
+      alert(messages[language] || messages.en);
+      return;
+    }
 
     const actionHandlers = {
       setLanguage,
@@ -50,7 +65,7 @@ export function useMenuBar() {
     if (handler) {
       handler(payload);
     }
-  }, [closeMenu, openTab, togglePanel, toggleTerminal, toggleCopilot, toggleCommandPalette, newTerminal, setLanguage]);
+  }, [closeMenu, language, openTab, togglePanel, toggleTerminal, toggleCopilot, toggleCommandPalette, newTerminal, setLanguage]);
 
   return { openMenuId, toggleMenu, closeMenu, dispatch };
 }

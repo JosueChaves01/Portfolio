@@ -18,24 +18,139 @@
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   border-radius: var(--radius-sm);
-  transition: background-color var(--transition-fast), color var(--transition-fast);
+  position: relative;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  overflow: hidden;
 }
 
+/* Pseudo-element for ripple effect on click */
+.menuItem::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  pointer-events: none;
+}
+
+.menuItem:active::before {
+  width: 100px;
+  height: 100px;
+}
+
+/* Hover state with smooth transition */
 .menuItem:hover {
   background-color: var(--color-surface-hover);
   color: var(--color-text);
 }
 
+/* Focus state for keyboard accessibility */
+.menuItem:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+/* Active state with animated underline */
+.menuItem.active {
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+}
+
+.menuItem.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  animation: slideInBottom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Copilot button special styling */
 .copilot {
   color: var(--color-accent);
   font-weight: 500;
-}
-
-.menuGroup {
   position: relative;
 }
 
-.active {
-  background-color: var(--color-surface-hover);
-  color: var(--color-text);
+.copilot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.copilot:hover::before {
+  opacity: 1;
+}
+
+/* Menu group positioning */
+.menuGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+@keyframes slideInBottom {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
+    opacity: 1;
+  }
+}
+
+/* ============================================================================
+   MOBILE LAYOUT (≤768px)
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .menuBar {
+    padding: 0 var(--space-1);
+    gap: 0;
+    height: auto;
+  }
+
+  .menuItem {
+    padding: var(--space-1);
+    font-size: 11px;
+    transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Faster ripple effect on mobile */
+  .menuItem:active::before {
+    width: 80px;
+    height: 80px;
+    transition: width 0.4s, height 0.4s;
+  }
+
+  /* Remove underline animation on mobile, use background only */
+  .menuItem.active::after {
+    display: none;
+  }
+
+  .menuItem.active {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 }

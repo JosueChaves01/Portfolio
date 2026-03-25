@@ -7,34 +7,194 @@
   background-color: var(--color-editor);
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
+  gap: var(--space-1);
+  animation: breadcrumbFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
 }
+
+@keyframes breadcrumbFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================================================
+   BREADCRUMB SEGMENT WRAPPER
+   ============================================================================ */
 
 .segmentWrapper {
   display: flex;
   align-items: center;
+  gap: var(--space-1);
+  animation: segmentSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
 }
+
+/* Stagger animation for segments */
+.breadcrumb > :nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.breadcrumb > :nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.breadcrumb > :nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.breadcrumb > :nth-child(n + 4) {
+  animation-delay: 0.2s;
+}
+
+@keyframes segmentSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================================
+   BREADCRUMB SEGMENT STYLING
+   ============================================================================ */
 
 .segment {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-text-muted);
   cursor: pointer;
-  padding: 0 var(--space-1);
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
-  transition: color var(--transition-fast);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  outline: none;
+  user-select: none;
 }
 
+/* Background hover effect */
+.segment::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-surface-hover);
+  opacity: 0;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.segment:hover::before {
+  opacity: 1;
+}
+
+/* Smooth color transition on hover */
 .segment:hover {
-  color: var(--color-text);
+  color: var(--color-accent);
 }
 
+/* Focus state for keyboard accessibility */
+.segment:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+/* Active segment styling */
 .segment.active {
   color: var(--color-text);
+  font-weight: 500;
 }
+
+.segment.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--space-2);
+  right: var(--space-2);
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: 1px;
+  animation: underlineReveal 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes underlineReveal {
+  from {
+    width: 0;
+    left: 50%;
+  }
+  to {
+    width: calc(100% - var(--space-4));
+    left: var(--space-2);
+  }
+}
+
+/* ============================================================================
+   BREADCRUMB SEPARATOR
+   ============================================================================ */
 
 .separator {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-text-muted);
   padding: 0 var(--space-1);
+  opacity: 0.5;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+/* Separator fades in on hover of adjacent segment */
+.segmentWrapper:hover .separator {
+  opacity: 0.8;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================================
+   MOBILE LAYOUT (≤768px)
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    padding: 0 var(--space-2);
+    animation: breadcrumbFadeInMobile 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes breadcrumbFadeInMobile {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .segmentWrapper {
+    animation: segmentSlideInMobile 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes segmentSlideInMobile {
+    from {
+      opacity: 0;
+      transform: translateX(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .segment {
+    padding: var(--space-1);
+    font-size: 10px;
+  }
+
+  .separator {
+    padding: 0 var(--space-1);
+  }
 }
