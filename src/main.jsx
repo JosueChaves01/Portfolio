@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Analytics } from '@vercel/analytics/react';
-import { injectSpeedInsights } from '@vercel/speed-insights';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import { TabsProvider } from './store/TabsContext';
 import { PanelProvider } from './store/PanelContext';
@@ -14,11 +14,10 @@ import './styles/reset.css';
 import './styles/tokens.css';
 import './styles/base.css';
 
-injectSpeedInsights();
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Analytics />
+    <SpeedInsights />
     <ThemeProvider>
       <LanguageProvider>
         <TabsProvider>
