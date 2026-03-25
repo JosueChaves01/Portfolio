@@ -25,12 +25,12 @@ export function StatusBar() {
       <div className={styles.mobileIndicators}>
         {hasErrors && (
           <span className={`${styles.indicator} ${styles.error}`} title="Errors">
-            <Icon name="CircleX" size={16} strokeWidth={1.75} className={styles.indicatorIcon} />
+            <Icon name="CircleX" size={16} strokeWidth={2.5} className={styles.indicatorIcon} />
           </span>
         )}
         {hasWarnings && (
           <span className={`${styles.indicator} ${styles.warning}`} title="Warnings">
-            <Icon name="TriangleAlert" size={16} strokeWidth={1.75} className={styles.indicatorIcon} />
+            <Icon name="TriangleAlert" size={16} strokeWidth={2.5} className={styles.indicatorIcon} />
           </span>
         )}
       </div>
@@ -39,29 +39,29 @@ export function StatusBar() {
       <div className={styles.desktopContainer}>
         <div className={styles.left}>
           <span className={styles.item}>
-            <Icon name="CircleX" size={14} strokeWidth={1.75} color="#f87171" className={styles.icon} />
+            <Icon name="CircleX" size={14} strokeWidth={2.5} color="#f87171" className={styles.icon} />
             <span className={styles.label}>{STATUS_BAR.ERRORS}</span>
           </span>
           <span className={styles.separator}>•</span>
           <span className={styles.item}>
-            <Icon name="TriangleAlert" size={14} strokeWidth={1.75} color="#fbbf24" className={styles.icon} />
+            <Icon name="TriangleAlert" size={14} strokeWidth={2.5} color="#fbbf24" className={styles.icon} />
             <span className={styles.label}>{STATUS_BAR.WARNINGS}</span>
           </span>
           <span className={styles.separator}>•</span>
           <span className={styles.item}>
-            <Icon name="GitBranch" size={14} strokeWidth={1.75} className={styles.icon} />
+            <Icon name="GitBranch" size={14} strokeWidth={2.5} className={styles.icon} />
             <span className={styles.label}>{STATUS_BAR.GIT_BRANCH}</span>
           </span>
           <span className={styles.separator}>•</span>
           <span className={styles.item}>
-            <Icon name="RefreshCw" size={14} strokeWidth={1.75} className={styles.icon} />
+            <Icon name="RefreshCw" size={14} strokeWidth={2.5} className={styles.icon} />
             <span className={styles.label}>{STATUS_BAR.PROJECT_NAME}</span>
           </span>
         </div>
 
         <div className={styles.right}>
           <span className={styles.item}>
-            <Icon name="Cpu" size={14} strokeWidth={1.75} className={styles.icon} />
+            <Icon name="Cpu" size={14} strokeWidth={2.5} className={styles.icon} />
             <span className={styles.label}>{t(STATUS_BAR.COPILOT_LABEL)}</span>
           </span>
           <span className={styles.separator}>•</span>
@@ -84,12 +84,12 @@ export function StatusBar() {
             role="button"
             tabIndex={0}
           >
-            <Icon name="Palette" size={14} strokeWidth={1.75} className={styles.icon} />
+            <Icon name="Palette" size={14} strokeWidth={2.5} className={styles.icon} />
             <span className={styles.label}>{themeLabel}</span>
           </span>
           <span className={styles.separator}>•</span>
           <span className={styles.item}>
-            <Icon name="Clock" size={14} strokeWidth={1.75} className={styles.icon} />
+            <Icon name="Clock" size={14} strokeWidth={2.5} className={styles.icon} />
             <span className={styles.label}>{currentTime}</span>
           </span>
         </div>
@@ -106,7 +106,7 @@ export function StatusBar() {
         aria-label="More options"
         title="More options"
       >
-        <Icon name="MoreHorizontal" size={18} strokeWidth={1.75} />
+        <Icon name="MoreHorizontal" size={18} strokeWidth={2.5} />
       </button>
 
       {/* Mobile: Expandable menu */}
@@ -125,7 +125,7 @@ export function StatusBar() {
             className={styles.menuItem}
             onClick={() => setIsThemeSelectorOpen(!isThemeSelectorOpen)}
           >
-            <Icon name="Palette" size={14} strokeWidth={1.75} className={styles.icon} />
+            <Icon name="Palette" size={14} strokeWidth={2.5} className={styles.icon} />
             <span className={styles.menuLabel}>{themeLabel}</span>
           </button>
         </div>
