@@ -41,5 +41,5 @@ pnpm-debug.log*
 sonar-project.properties
 .scannerwork/
 
-#IA
+#IA     
 .claude/

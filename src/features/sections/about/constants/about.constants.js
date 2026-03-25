@@ -5,8 +5,8 @@ export const ABOUT = {
 };
 
 export const BIO_TEXT = {
-  en: `Josué Chaves is a Computer Engineering student passionate about software architecture, language design, and building robust systems.\n\nHe enjoys exploring the principles behind well-designed software — from SOLID principles and design patterns to backend architecture and distributed systems.\n\nCurrently focused on writing clean, maintainable code and understanding the deeper mechanics of how software works.`,
-  es: `Josué Chaves es un estudiante de Ingeniería en Computadores apasionado por la arquitectura de software, el diseño de lenguajes y la construcción de sistemas robustos.\n\nDisfruta explorando los principios detrás del software bien diseñado, desde los principios SOLID y patrones de diseño hasta la arquitectura backend y sistemas distribuidos.\n\nActualmente se enfoca en escribir código limpio y mantenible, comprendiendo la mecánica profunda de cómo funciona el software.`
+  en: `Josué Chaves is a Computer Engineering student passionate about software architecture, LLMs and Data Analytics.\n\nHe enjoys exploring the principles behind well-designed software — from SOLID principles and design patterns to backend architecture and distributed systems.\n\nCurrently focused on writing clean, maintainable code and understanding the deeper mechanics of how software works.`,
+  es: `Josué Chaves es un estudiante de Ingeniería en Computadores apasionado por la arquitectura de software, los LLMs y el análisis de datos.\n\nDisfruta explorando los principios detrás del software bien diseñado, desde los principios SOLID y patrones de diseño hasta la arquitectura backend y sistemas distribuidos.\n\nActualmente se enfoca en escribir código limpio y mantenible, comprendiendo la mecánica profunda de cómo funciona el software.`
 };
 
 export const BIO_KEYWORDS = ['Josué Chaves', 'Computer Engineering', 'Ingeniería en Computadores', 'software architecture', 'arquitectura de software', 'SOLID', 'design patterns', 'clean code'];

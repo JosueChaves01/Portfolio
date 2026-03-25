@@ -10,10 +10,9 @@ export const HOME = {
 };
 
 export const ROLE_BADGES = [
-  { id: 'backend', label: { en: 'Backend Engineer', es: 'Ingeniero Backend' }, dotColor: '#22c55e' },
-  { id: 'systems', label: { en: 'Systems Engineer', es: 'Ingeniero de Sistemas' }, dotColor: '#3b82f6' },
-  { id: 'datascience', label: { en: 'Data Scientist', es: 'Científico de Datos' }, dotColor: '#a855f7' },
-  { id: 'agentic', label: { en: 'AI Agent Dev', es: 'Desarrollador de Agentes IA' }, dotColor: '#ec4899' },
+  { id: 'systems', label: { en: 'FullStack Engineer', es: 'Ingeniero FullStack' }, dotColor: '#3b82f6' },
+  { id: 'cloudcomputing', label: { en: 'Future Software Architect', es: 'Futuro Arquitecto de Software' }, dotColor: '#b48f29ff' },
+  { id: 'AI', label: { en: 'AI Enthusiast', es: 'Entusiasta de la IA' }, dotColor: '#22c55e' },
 ];
 
 export const TYPEWRITER_PHRASES = [

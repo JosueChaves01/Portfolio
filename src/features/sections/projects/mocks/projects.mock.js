@@ -3,15 +3,16 @@ export const PROJECTS_DATA = [
     id: 'barber-control-api',
     icon: 'Briefcase',
     color: '#ec4899',
-    category: { en: 'BACKEND · API · TYPESCRIPT', es: 'BACKEND · API · TYPESCRIPT' },
-    title: 'BarberHub – Barber Management API',
+    category: { en: 'FULLSTACK · REACT · TYPESCRIPT', es: 'FULLSTACK · REACT · TYPESCRIPT' },
+    title: 'BarberHub Dashboard – Barber Management System',
     description: {
-      en: 'A centralized barber shop management system with Prisma ORM, TypeScript, and Docker. Features include authentication, authorization APIs, and database management.',
-      es: 'Un sistema centralizado de gestión de barberías con Prisma ORM, TypeScript y Docker. Incluye APIs de autenticación, autorización y gestión de base de datos.'
+      en: 'An advanced barber shop management dashboard with real-time analytics, appointment scheduling, and customer management. Built with React, TypeScript, and modern web technologies for optimal user experience.',
+      es: 'Un avanzado panel de gestión de barberías con análisis en tiempo real, programación de citas y gestión de clientes. Construido con React, TypeScript y tecnologías web modernas para una experiencia de usuario óptima.'
     },
-    github: 'https://github.com/JosueChaves01/barber-control-api',
-    live: null,
-    tags: ['TypeScript', 'Prisma', 'Docker', 'PostgreSQL', 'REST API'],
+    github: 'https://github.com/JosueChaves01/barberhub-dashboard',
+    live: 'https://barberhub-dashboard.vercel.app',
+    image: '/BarberHub.png',
+    tags: ['React', 'TypeScript', 'Dashboard', 'Real-time Analytics', 'Full Stack'],
   },
   {
     id: 'roomiefy',
@@ -25,6 +26,11 @@ export const PROJECTS_DATA = [
     },
     github: 'https://github.com/JosueChaves01/Roomiefy',
     live: null,
+    images: [
+      'https://raw.githubusercontent.com/JosueChaves01/roomiefy/main/Screenshots/image-1.png',
+      'https://raw.githubusercontent.com/JosueChaves01/roomiefy/main/Screenshots/image-2.png',
+      'https://raw.githubusercontent.com/JosueChaves01/roomiefy/main/Screenshots/image-3.png',
+    ],
     tags: ['JavaScript', 'HTML5', 'CSS3', 'Azure', 'CI/CD'],
   },
   {
