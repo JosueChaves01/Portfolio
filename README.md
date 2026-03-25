@@ -104,6 +104,3 @@ The project is ready to deploy on **Vercel**:
 3. Add `OPENROUTER_API_KEY` as an environment variable
 4. Deploy — Vite handles the static build and `/api/copilot` runs as a serverless function
 
-## License
-
-MIT

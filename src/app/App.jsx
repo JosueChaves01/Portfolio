@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { usePanel } from '../store/PanelContext';
 import { useOverlay } from '../store/OverlayContext';
 import { useKeyboardShortcut } from '../shared/hooks/useKeyboardShortcut';
@@ -52,7 +53,43 @@ export function App() {
     if (isCommandPaletteOpen) toggleCommandPalette();
   });
 
-  const ActivePanel = activePanel ? PANEL_COMPONENT_MAP[activePanel] : null;
+  const [displayedPanel, setDisplayedPanel] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
+  const [panelKey, setPanelKey] = useState(0);
+  const visibleRef = useRef(null);
+
+  useEffect(() => {
+    const prev = visibleRef.current;
+    if (activePanel === prev) return;
+
+    if (activePanel === null) {
+      setIsClosing(true);
+      const t = setTimeout(() => {
+        setDisplayedPanel(null);
+        setIsClosing(false);
+        visibleRef.current = null;
+      }, 220);
+      return () => { clearTimeout(t); setIsClosing(false); };
+    }
+
+    if (prev === null) {
+      setDisplayedPanel(activePanel);
+      visibleRef.current = activePanel;
+      return;
+    }
+
+    // Switching panels
+    setIsClosing(true);
+    const t = setTimeout(() => {
+      setIsClosing(false);
+      setDisplayedPanel(activePanel);
+      setPanelKey((k) => k + 1);
+      visibleRef.current = activePanel;
+    }, 220);
+    return () => { clearTimeout(t); setIsClosing(false); };
+  }, [activePanel]);
+
+  const DisplayedPanelComponent = displayedPanel ? PANEL_COMPONENT_MAP[displayedPanel] : null;
 
   return (
     <div className={styles.ide}>
@@ -65,9 +102,12 @@ export function App() {
           onOpenSearch={toggleCommandPalette}
         />
 
-        {ActivePanel && (
-          <div className={styles.sidePanel}>
-            <ActivePanel />
+        {DisplayedPanelComponent && (
+          <div
+            key={panelKey}
+            className={`${styles.sidePanel} ${isClosing ? styles.sidePanelClosing : ''}`}
+          >
+            <DisplayedPanelComponent />
           </div>
         )}
 

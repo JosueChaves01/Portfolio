@@ -10,12 +10,12 @@ export const THEME_IDS = {
 };
 
 export const THEMES = [
-  { id: THEME_IDS.TOTE_DARK, label: 'Tote Dark', color: '#0f0f14' },
-  { id: THEME_IDS.ROSE_PINE, label: 'Rosé Pine', color: '#191724' },
-  { id: THEME_IDS.TOKYO_NIGHT, label: 'Tokyo Night', color: '#1a1b26' },
-  { id: THEME_IDS.CATPPUCCIN, label: 'Catppuccin', color: '#1e1e2e' },
-  { id: THEME_IDS.NORD, label: 'Nord', color: '#2e3440' },
-  { id: THEME_IDS.GRUVBOX, label: 'Gruvbox', color: '#282828' },
+  { id: THEME_IDS.TOTE_DARK, label: 'Tote Dark', color: '#818cf8' },
+  { id: THEME_IDS.ROSE_PINE, label: 'Rosé Pine', color: '#eb6f92' },
+  { id: THEME_IDS.TOKYO_NIGHT, label: 'Tokyo Night', color: '#7aa2f7' },
+  { id: THEME_IDS.CATPPUCCIN, label: 'Catppuccin', color: '#cba6f7' },
+  { id: THEME_IDS.NORD, label: 'Nord', color: '#88c0d0' },
+  { id: THEME_IDS.GRUVBOX, label: 'Gruvbox', color: '#d79921' },
 ];
 
 export const LANGUAGES = [

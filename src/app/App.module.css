@@ -15,7 +15,11 @@
 
 .sidePanel {
   flex-shrink: 0;
-  animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideInLeft 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.sidePanelClosing {
+  animation: slideOutLeft 0.22s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes slideInLeft {
@@ -26,6 +30,17 @@
   to {
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-20px);
+    opacity: 0;
   }
 }
 
