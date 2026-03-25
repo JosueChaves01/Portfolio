@@ -16,7 +16,7 @@ export const MENU_ITEMS = [
     id: MENU_ITEM_IDS.FILE,
     label: { en: 'File', es: 'Archivo' },
     items: [
-      { id: 'open-file', label: { en: 'Open File...', es: 'Abrir archivo...' }, action: 'toggleCommandPalette', shortcut: 'Ctrl+P' },
+      { id: 'open-file', label: { en: 'Open File...', es: 'Abrir archivo...' }, action: 'toggleCommandPalette', payload: 'files', shortcut: 'Ctrl+P' },
       { type: 'separator' },
       { id: 'download-resume', label: { en: 'Download Resume', es: 'Descargar currículum' }, action: 'downloadResume' },
     ],
@@ -47,7 +47,7 @@ export const MENU_ITEMS = [
     id: MENU_ITEM_IDS.GO,
     label: { en: 'Go', es: 'Ir a' },
     items: [
-      { id: 'go-to-file', label: { en: 'Go to File...', es: 'Ir al archivo...' }, action: 'toggleCommandPalette', shortcut: 'Ctrl+P' },
+      { id: 'go-to-file', label: { en: 'Go to File...', es: 'Ir al archivo...' }, action: 'toggleCommandPalette', payload: 'files', shortcut: 'Ctrl+P' },
       { type: 'separator' },
       { id: 'go-home', label: 'home.tsx', action: 'openTab', payload: FILE_IDS.HOME },
       { id: 'go-about', label: 'about.html', action: 'openTab', payload: FILE_IDS.ABOUT },

@@ -3,10 +3,10 @@ export const HOME = {
   NAME_FIRST: 'Josue',
   NAME_LAST: 'Chaves',
   BIO: {
-    en: 'I specialize in backend engineering, distributed systems, and agentic workflows. I build intelligent, scalable applications and explore the boundaries of LLM integration at ITCR.',
-    es: 'Me especializo en ingeniería backend, sistemas distribuidos y flujos de trabajo agénticos. Construyo aplicaciones inteligentes y escalables, explorando los límites de la integración de LLMs en el ITCR.'
+    en: 'I am a computer engineering student at ITCR with a passion for software architecture, distributed systems, data analytics, and agentic workflows. I build intelligent, scalable applications and explore the boundaries of LLM integration at ITCR.',
+    es: 'Soy estudiante de ingeniería en computadores en el ITCR con una pasión por la arquitectura de software, sistemas distribuidos, análisis de datos y flujos de trabajo agénticos. Construyo aplicaciones inteligentes y escalables, explorando los límites de la integración de LLMs en el ITCR.'
   },
-  BIO_KEYWORDS: ['backend engineering', 'distributed systems', 'agentic workflows', 'LLM integration', 'ITCR', 'ingeniería backend', 'sistemas distribuidos', 'flujos de trabajo agénticos', 'integración de LLMs'],
+  BIO_KEYWORDS: ['software architecture', 'distributed systems', 'data analytics', 'agentic workflows', 'LLM integration', 'ITCR', 'arquitectura de software', 'sistemas distribuidos', 'análisis de datos', 'flujos de trabajo agénticos', 'integración de LLMs'],
 };
 
 export const ROLE_BADGES = [

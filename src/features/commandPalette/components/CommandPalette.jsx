@@ -1,20 +1,37 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useLanguage } from '../../../store/LanguageContext';
 import { Icon } from '../../../shared/icons/Icon';
 import { useClickOutside } from '../../../shared/hooks/useClickOutside';
 import { useCommandPalette } from '../hooks/useCommandPalette';
 import { COMMAND_PALETTE } from '../constants/commandPalette.constants';
+import { useOverlay } from '../../../store/OverlayContext';
 import styles from './CommandPalette.module.css';
 
 export function CommandPalette() {
   const { t } = useLanguage();
   const ref = useRef(null);
+  const resultsRef = useRef(null);
+  const { commandPaletteMode } = useOverlay();
   const {
     query, setQuery, filteredFiles, filteredCommands,
     handleFileSelect, handleCommandSelect, handleClose,
   } = useCommandPalette();
 
   useClickOutside(ref, handleClose);
+
+  useEffect(() => {
+    if (commandPaletteMode === 'files' && resultsRef.current) {
+      const timer = setTimeout(() => {
+        if (resultsRef.current) {
+          resultsRef.current.scrollTo({
+            top: resultsRef.current.scrollHeight,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [commandPaletteMode]);
 
   return (
     <div className={styles.overlay}>
@@ -32,7 +49,7 @@ export function CommandPalette() {
           </button>
         </div>
 
-        <div className={styles.results}>
+        <div className={styles.results} ref={resultsRef}>
           {filteredCommands.length > 0 && (
             <section>
               <div className={styles.sectionLabel}>{t(COMMAND_PALETTE.SECTION_COMMANDS)}</div>

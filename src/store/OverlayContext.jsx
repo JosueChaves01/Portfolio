@@ -6,11 +6,15 @@ export function OverlayProvider({ children }) {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [commandPaletteMode, setCommandPaletteMode] = useState(null);
   const [terminalKey, setTerminalKey] = useState(0);
 
   const toggleTerminal = useCallback(() => setIsTerminalOpen((prev) => !prev), []);
   const toggleCopilot = useCallback(() => setIsCopilotOpen((prev) => !prev), []);
-  const toggleCommandPalette = useCallback(() => setIsCommandPaletteOpen((prev) => !prev), []);
+  const toggleCommandPalette = useCallback((mode) => {
+    setCommandPaletteMode(typeof mode === 'string' ? mode : null);
+    setIsCommandPaletteOpen((prev) => !prev);
+  }, []);
   
   const newTerminal = useCallback(() => {
     setTerminalKey((prev) => prev + 1);
@@ -21,12 +25,13 @@ export function OverlayProvider({ children }) {
     isTerminalOpen,
     isCopilotOpen,
     isCommandPaletteOpen,
+    commandPaletteMode,
     terminalKey,
     toggleTerminal,
     toggleCopilot,
     toggleCommandPalette,
     newTerminal,
-  }), [isTerminalOpen, isCopilotOpen, isCommandPaletteOpen, terminalKey, toggleTerminal, toggleCopilot, toggleCommandPalette, newTerminal]);
+  }), [isTerminalOpen, isCopilotOpen, isCommandPaletteOpen, commandPaletteMode, terminalKey, toggleTerminal, toggleCopilot, toggleCommandPalette, newTerminal]);
 
   return (
     <OverlayContext.Provider value={value}>
