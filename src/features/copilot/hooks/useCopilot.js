@@ -1,42 +1,65 @@
 import { useState, useEffect } from 'react';
 import { useOverlay } from '../../../store/OverlayContext';
+import { getCookie, setCookie } from '../../../shared/utils/storage';
 import {
   MAX_MESSAGES,
-  COPILOT_MESSAGES_LEFT_KEY,
+  COPILOT_COOKIE_KEYS,
+  RESET_INTERVAL_MS,
   ROLE,
   API_ENDPOINT,
   COPILOT,
   ERROR_FALLBACK,
 } from '../constants/copilot.constants';
 
-const RADIX = 10;
+function getInitialState() {
+  const now = Date.now();
+  const lastResetStr = getCookie(COPILOT_COOKIE_KEYS.LAST_RESET);
+  const messagesLeftStr = getCookie(COPILOT_COOKIE_KEYS.MESSAGES_LEFT);
 
-function getInitialMessagesLeft() {
-  try {
-    const stored = localStorage.getItem(COPILOT_MESSAGES_LEFT_KEY);
-    if (stored == null) return MAX_MESSAGES;
-    const n = parseInt(stored, RADIX);
-    if (!Number.isInteger(n) || n < 0 || n > MAX_MESSAGES) return MAX_MESSAGES;
-    return n;
-  } catch {
-    return MAX_MESSAGES;
+  const lastReset = lastResetStr ? parseInt(lastResetStr, 10) : 0;
+  const isExpired = now - lastReset > RESET_INTERVAL_MS;
+
+  if (isExpired || !lastResetStr) {
+    return {
+      count: MAX_MESSAGES,
+      resetTime: now,
+    };
   }
+
+  const count = messagesLeftStr ? parseInt(messagesLeftStr, 10) : MAX_MESSAGES;
+  return {
+    count: Math.min(Math.max(0, count), MAX_MESSAGES),
+    resetTime: lastReset,
+  };
 }
 
 export function useCopilot() {
   const { toggleCopilot } = useOverlay();
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [messagesLeft, setMessagesLeft] = useState(getInitialMessagesLeft);
+  
+  const initialState = getInitialState();
+  const [messagesLeft, setMessagesLeft] = useState(initialState.count);
+  const [lastReset, setLastReset] = useState(initialState.resetTime);
+  
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem(COPILOT_MESSAGES_LEFT_KEY, String(messagesLeft));
-  }, [messagesLeft]);
+    setCookie(COPILOT_COOKIE_KEYS.MESSAGES_LEFT, String(messagesLeft));
+    setCookie(COPILOT_COOKIE_KEYS.LAST_RESET, String(lastReset));
+  }, [messagesLeft, lastReset]);
 
   const sendMessage = async (text) => {
     if (!text.trim() || messagesLeft <= 0) return;
+
+    // Double check reset inside sendMessage if the panel was open for a long time
+    const now = Date.now();
+    if (now - lastReset > RESET_INTERVAL_MS) {
+      setMessagesLeft(MAX_MESSAGES);
+      setLastReset(now);
+      // Continue with the new limit
+    }
 
     const userMsg = { id: `user-${Date.now()}`, role: ROLE.USER, content: text };
     setMessages((prev) => [...prev, userMsg]);

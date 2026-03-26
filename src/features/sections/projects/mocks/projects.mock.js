@@ -11,7 +11,7 @@ export const PROJECTS_DATA = [
     },
     github: 'https://github.com/JosueChaves01/barberhub-dashboard',
     live: 'https://barberhub-dashboard.vercel.app',
-    image: '/BarberHub.png',
+    image: '/BarberHub.webp',
     tags: ['React', 'TypeScript', 'Dashboard', 'Real-time Analytics', 'Full Stack'],
   },
   {
@@ -43,7 +43,7 @@ export const PROJECTS_DATA = [
       en: 'Chess game developed in React using the Stockfish engine and Web Workers for high-performance AI integration without blocking the main UI thread.',
       es: 'Juego de ajedrez desarrollado en React utilizando el motor Stockfish y Web Workers para una integración de IA de alto rendimiento sin bloquear el hilo principal de la interfaz.'
     },
-    image: '/Chess.png',
+    image: '/Chess.webp',
     github: 'https://github.com/JosueChaves01/Chess-vs-IA',
     live: 'https://chess-vs-ia.vercel.app/',
     tags: ['React', 'Stockfish', 'Web Workers', 'TailwindCSS'],

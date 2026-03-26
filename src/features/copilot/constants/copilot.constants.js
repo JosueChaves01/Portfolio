@@ -27,9 +27,14 @@ export const COPILOT = {
   NO_RESPONSE_FALLBACK: 'No response from the assistant.',
 };
 
-export const MAX_MESSAGES = 2;
+export const MAX_MESSAGES = 5;
 
-export const COPILOT_MESSAGES_LEFT_KEY = 'portfolio-copilot-messages-left';
+export const COPILOT_COOKIE_KEYS = {
+  MESSAGES_LEFT: 'portfolio_copilot_msgs',
+  LAST_RESET: 'portfolio_copilot_reset',
+};
+
+export const RESET_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export const PREDEFINED_QUESTIONS = [
   { id: 'skills', label: { en: 'Summarize my technical skills', es: 'Resume mis habilidades técnicas' } },
@@ -37,7 +42,7 @@ export const PREDEFINED_QUESTIONS = [
   { id: 'experience', label: { en: 'What is my professional focus?', es: '¿Cuál es mi enfoque profesional?' } },
 ];
 
-export const QUESTION_PREFIX = '⚡';
+export const QUESTION_PREFIX = '';
 
 export const ROLE = {
   USER: 'user',
