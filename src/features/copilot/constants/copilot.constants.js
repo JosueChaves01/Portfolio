@@ -1,7 +1,7 @@
 export const COPILOT = {
   TITLE: { en: 'COPILOT', es: 'COPILOT' },
   WORKSPACE_BADGE: 'Portfolio',
-  WELCOME_HEADING: { en: 'Hi Josue, I\'m your assistant', es: 'Hola Josue, soy tu asistente' },
+  WELCOME_HEADING: { en: 'Hi!, I\'m your assistant', es: '¡Hola!, soy tu asistente' },
   WELCOME_BODY: {
     en: 'How can I help you build your portfolio today? I have context on your projects, skills, and experience.',
     es: '¿Cómo puedo ayudarte a construir tu portafolio hoy? Tengo contexto sobre tus proyectos, habilidades y experiencia.'
