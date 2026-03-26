@@ -1,3 +1,4 @@
+import { useState, useCallback, useEffect } from 'react';
 import { Icon } from '../../../shared/icons/Icon';
 import { useLanguage } from '../../../store/LanguageContext';
 import { useCopilot } from '../hooks/useCopilot';
@@ -25,11 +26,42 @@ export function CopilotPanel() {
     onClose,
   } = useCopilot();
 
+  const [width, setWidth] = useState(380);
+  const [isResizing, setIsResizing] = useState(false);
+
+  const startResizing = useCallback(() => setIsResizing(true), []);
+  const stopResizing = useCallback(() => setIsResizing(false), []);
+
+  const resize = useCallback((e) => {
+    if (isResizing) {
+      // Panel is on the right, distance from right edge is (window innerWidth - mouse X)
+      const newWidth = document.body.clientWidth - e.clientX;
+      if (newWidth >= 300 && newWidth <= 800) {
+        setWidth(newWidth);
+      }
+    }
+  }, [isResizing]);
+
+  useEffect(() => {
+    if (isResizing) {
+      window.addEventListener('mousemove', resize);
+      window.addEventListener('mouseup', stopResizing);
+    }
+    return () => {
+      window.removeEventListener('mousemove', resize);
+      window.removeEventListener('mouseup', stopResizing);
+    };
+  }, [isResizing, resize, stopResizing]);
+
   const isExhausted = messagesLeft <= 0;
   const isDisabled = isExhausted || isLoading;
 
   return (
-    <aside className={styles.panel}>
+    <aside className={styles.panel} style={{ '--dynamic-width': `${width}px` }}>
+      <div 
+        className={`${styles.resizer} ${isResizing ? styles.resizerActive : ''}`} 
+        onMouseDown={startResizing} 
+      />
       <header className={styles.header}>
         <span className={styles.title}>{t(COPILOT.TITLE)}</span>
         <div className={styles.headerActions}>

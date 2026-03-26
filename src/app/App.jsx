@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { usePanel } from '../store/PanelContext';
 import { useOverlay } from '../store/OverlayContext';
 import { useKeyboardShortcut } from '../shared/hooks/useKeyboardShortcut';
@@ -58,6 +58,34 @@ export function App() {
   const [panelKey, setPanelKey] = useState(0);
   const visibleRef = useRef(null);
 
+  // Resize logic
+  const [sidebarWidth, setSidebarWidth] = useState(260); // Default width
+  const [isResizingSidebar, setIsResizingSidebar] = useState(false);
+
+  const startResizingSidebar = useCallback(() => setIsResizingSidebar(true), []);
+  const stopResizingSidebar = useCallback(() => setIsResizingSidebar(false), []);
+
+  const resizeSidebar = useCallback((e) => {
+    if (isResizingSidebar) {
+      // The activity bar is roughly 48px wide.
+      const newWidth = e.clientX - 48;
+      if (newWidth >= 160 && newWidth <= 600) {
+        setSidebarWidth(newWidth);
+      }
+    }
+  }, [isResizingSidebar]);
+
+  useEffect(() => {
+    if (isResizingSidebar) {
+      window.addEventListener('mousemove', resizeSidebar);
+      window.addEventListener('mouseup', stopResizingSidebar);
+    }
+    return () => {
+      window.removeEventListener('mousemove', resizeSidebar);
+      window.removeEventListener('mouseup', stopResizingSidebar);
+    };
+  }, [isResizingSidebar, resizeSidebar, stopResizingSidebar]);
+
   useEffect(() => {
     const prev = visibleRef.current;
     if (activePanel === prev) return;
@@ -106,8 +134,13 @@ export function App() {
           <div
             key={panelKey}
             className={`${styles.sidePanel} ${isClosing ? styles.sidePanelClosing : ''}`}
+            style={{ '--dynamic-sidebar-width': `${sidebarWidth}px` }}
           >
             <DisplayedPanelComponent />
+            <div 
+              className={`${styles.sidebarResizer} ${isResizingSidebar ? styles.sidebarResizerActive : ''}`} 
+              onMouseDown={startResizingSidebar} 
+            />
           </div>
         )}
 

@@ -15,7 +15,25 @@
 
 .sidePanel {
   flex-shrink: 0;
+  width: var(--dynamic-sidebar-width, var(--width-sidebar));
+  position: relative;
   animation: slideInLeft 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.sidebarResizer {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: ew-resize;
+  background-color: transparent;
+  transition: background-color var(--transition-fast);
+  z-index: 10;
+}
+
+.sidebarResizer:hover, .sidebarResizerActive {
+  background-color: var(--color-accent);
 }
 
 .sidePanelClosing {
@@ -64,6 +82,10 @@
   }
 
   .sidePanel {
+    display: none;
+  }
+
+  .sidebarResizer {
     display: none;
   }
 }
