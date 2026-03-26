@@ -19,7 +19,11 @@ export function useCommandPalette() {
   const filteredCommands = useMemo(() => {
     if (!query) return PALETTE_COMMANDS;
     const lower = query.toLowerCase();
-    return PALETTE_COMMANDS.filter((c) => c.label.toLowerCase().includes(lower));
+    return PALETTE_COMMANDS.filter((c) => {
+      const labelEn = (c.label?.en || '').toLowerCase();
+      const labelEs = (c.label?.es || '').toLowerCase();
+      return labelEn.includes(lower) || labelEs.includes(lower);
+    });
   }, [query]);
 
   const handleFileSelect = (fileId) => {
