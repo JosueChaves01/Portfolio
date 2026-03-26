@@ -27,7 +27,6 @@ export function ProjectCard({ icon, color, category, title, description, github,
         </div>
         <h3 className={styles.cardTitle}>{title}</h3>
         <div className={styles.cardBodyWrapper}>
-          <p className={styles.cardDescription}>{t(description)}</p>
           {images && images.length > 0 ? (
             <ImageGallery images={images} title={title} />
           ) : image ? (
@@ -35,6 +34,7 @@ export function ProjectCard({ icon, color, category, title, description, github,
               <img src={image} alt={title} />
             </div>
           ) : null}
+          <p className={styles.cardDescription}>{t(description)}</p>
         </div>
         <div className={styles.cardTags}>
           {tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}

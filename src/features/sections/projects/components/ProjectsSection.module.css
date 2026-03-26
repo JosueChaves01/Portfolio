@@ -47,14 +47,17 @@
 
 .cardImage {
   width: 320px;
-  aspect-ratio: 16 / 9;
   overflow: visible;
   background-color: transparent;
   flex-shrink: 0;
   border-radius: var(--radius-lg);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  float: right;
+  margin-left: var(--space-3);
+  margin-bottom: var(--space-1);
+  margin-top: 4px;
 }
 
 .cardImage img {
@@ -64,9 +67,7 @@
   transition: transform var(--transition-fast);
 }
 
-.card:hover .cardImage img {
-  transform: scale(1.02);
-}
+/* Zoom effect removed as per user request */
 
 .card:hover {
   border-color: var(--color-accent);
@@ -80,10 +81,7 @@
 }
 
 .cardBodyWrapper {
-  display: flex;
-  flex-direction: row;
-  gap: var(--space-3);
-  align-items: flex-start;
+  display: block;
 }
 
 .cardHeader {
@@ -152,6 +150,7 @@
   margin: 0;
   flex: 1;
   min-width: 0;
+  text-align: justify;
 }
 
 .cardTags {
@@ -160,18 +159,24 @@
   gap: var(--space-1);
 }
 
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
+@media (max-width: 1360px) {
   .cardImage {
+    float: none;
     width: 100%;
+    margin-left: 0;
+    margin-bottom: var(--space-3);
   }
 
   .cardBodyWrapper {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+@media (max-width: 1066px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
 
   .cardLinks {
