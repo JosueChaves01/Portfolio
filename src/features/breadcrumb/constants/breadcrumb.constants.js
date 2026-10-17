@@ -8,6 +8,7 @@ export const BREADCRUMB_PATHS = {
   [FILE_IDS.EXPERIENCE]: ['josue-chaves', 'src', 'experience.ts'],
   [FILE_IDS.CONTACT]: ['josue-chaves', 'src', 'contact.css  '],
   [FILE_IDS.README]: ['josue-chaves', 'README.md'],
+  [FILE_IDS.BROWSER]: ['josue-chaves', 'tools', 'galaxy.browser'],
 };
 
 export const BREADCRUMB_SEPARATOR = '>';

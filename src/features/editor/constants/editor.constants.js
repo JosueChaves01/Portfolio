@@ -9,6 +9,7 @@ export const SECTION_COMPONENT_MAP = {
   [FILE_IDS.EXPERIENCE]: 'experience',
   [FILE_IDS.CONTACT]: 'contact',
   [FILE_IDS.README]: 'readme',
+  [FILE_IDS.BROWSER]: 'browser',
 };
 
 export const EDITOR_PLACEHOLDER = 'No file open. Select a file from the Explorer.';

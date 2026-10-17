@@ -1,0 +1,184 @@
+/* ============================================================================
+   GALAXY BROWSER — 3D windows for skills and projects
+   ============================================================================ */
+
+.browser {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #06060c;
+}
+
+.browserFullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  border: none;
+  border-radius: 0;
+}
+
+.browser:fullscreen { width: 100vw; height: 100vh; border: none; border-radius: 0; }
+
+/* Inside the browser the galaxy fills the available height. */
+.browser {
+  --galaxy-viewport-height: clamp(460px, calc(100vh - 300px), 1400px);
+  --galaxy-cockpit-border: none;
+}
+
+.browserFullscreen,
+.browser:fullscreen { --galaxy-viewport-height: calc(100vh - 84px); }
+
+.body { position: relative; }
+
+/* ─── Browser chrome ─── */
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-title-bar);
+}
+
+.dots { display: inline-flex; gap: 6px; flex-shrink: 0; }
+.dots i { width: 10px; height: 10px; border-radius: var(--radius-full); background: #ef4444; }
+.dots i:nth-child(2) { background: #f59e0b; }
+.dots i:nth-child(3) { background: #22c55e; }
+
+.windowTabs { display: flex; align-items: stretch; gap: 2px; min-width: 0; overflow-x: auto; scrollbar-width: none; align-self: stretch; }
+
+.windowTab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 0 var(--space-3);
+  border: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+
+.windowTab:hover { color: var(--color-text); background: var(--color-surface-hover); }
+.windowTabActive { color: var(--color-text); background: #06060c; }
+
+.windowIndicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #c084fc, #fb923c);
+}
+
+.address {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-comment);
+  white-space: nowrap;
+}
+
+.chromeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.chromeButton:hover { color: var(--color-text); border-color: var(--color-accent); }
+
+/* ─── Black hole travel overlay ─── */
+.travel {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: all;
+  background: radial-gradient(circle at center, rgba(6, 6, 12, 0.2), rgba(6, 6, 12, 0.85));
+}
+
+.accretion,
+.horizon {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.accretion {
+  width: min(70vmin, 520px);
+  background:
+    radial-gradient(circle, transparent 38%, rgba(255, 214, 150, 0.95) 40%, rgba(251, 146, 60, 0.7) 48%, rgba(192, 132, 252, 0.35) 60%, transparent 70%),
+    conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.35), transparent 30%, rgba(251, 146, 60, 0.4), transparent 60%, rgba(192, 132, 252, 0.4), transparent);
+  filter: blur(1px);
+  box-shadow: 0 0 80px rgba(192, 132, 252, 0.45);
+}
+
+.horizon {
+  width: 260vmax;
+  background: radial-gradient(circle, #000 55%, rgba(0, 0, 0, 0.92) 65%, transparent 72%);
+}
+
+.travelLabel {
+  position: relative;
+  padding: 6px 14px;
+  border: 1px solid rgba(192, 132, 252, 0.5);
+  border-radius: var(--radius-full);
+  color: #e9d5ff;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* ─── No WebGL fallback ─── */
+.fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 360px;
+  padding: var(--space-6);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.fallback button {
+  padding: 6px 14px;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-subtle);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .address,
+  .chromeLabel,
+  .dots { display: none; }
+  .windowTab span { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}

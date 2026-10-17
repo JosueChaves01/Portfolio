@@ -1,10 +1,12 @@
 import { useMemo, useRef, useState } from 'react';
+import { BlackHole } from './BlackHole';
+import { useLabelsPortal } from './labelsPortal';
 import { useFrame } from '@react-three/fiber';
 import { Html, Line, Stars } from '@react-three/drei';
 import { AdditiveBlending, BufferAttribute, BufferGeometry, CanvasTexture, Color, DoubleSide } from 'three';
-import { Icon } from '../../../../../shared/icons/Icon';
+import { Icon } from '../../../../shared/icons/Icon';
 import { FLIGHT, ORBIT } from '../../constants/galaxy.constants';
-import styles from './SkillsGalaxy.module.css';
+import styles from './GalaxyView.module.css';
 
 const LABEL_Z_RANGE = [10, 0];
 
@@ -70,15 +72,16 @@ function Dust({ systems, texture }) {
   );
 }
 
-function Hyperlanes({ systems }) {
-  const [core, ...others] = systems;
+function Hyperlanes({ systems, hub }) {
+  // Lanes run from the hub (a core system or the black hole) to every other system.
+  const others = systems.filter(({ position }) => position !== hub);
   return (
     <group>
       {others.map((system, index) => {
         const next = others[(index + 1) % others.length];
         return (
           <group key={system.id}>
-            <Line points={[core.position, system.position]} color={system.color} lineWidth={1} transparent opacity={0.28} dashed dashSize={1.2} gapSize={1} />
+            <Line points={[hub, system.position]} color={system.color} lineWidth={1} transparent opacity={0.28} dashed dashSize={1.2} gapSize={1} />
             <Line points={[system.position, next.position]} color="#64748b" lineWidth={0.6} transparent opacity={0.16} />
           </group>
         );
@@ -95,6 +98,7 @@ function Planet({ planet, index, paused, selectedId, onSelect, systemColor }) {
   const radius = ORBIT.FIRST_RADIUS + index * ORBIT.RADIUS_STEP;
   const speed = ORBIT.BASE_SPEED / Math.sqrt(index + 1);
   const isSelected = selectedId === planet.id;
+  const labelsPortal = useLabelsPortal();
 
   useFrame((_, delta) => {
     if (!paused) angle.current += speed * Math.min(delta, 0.05);
@@ -128,7 +132,7 @@ function Planet({ planet, index, paused, selectedId, onSelect, systemColor }) {
           </mesh>
           {/* The dossier names the selected planet, so its label would only crowd the close-up. */}
           {!isSelected && (
-            <Html position={[0, 1.1, 0]} center zIndexRange={LABEL_Z_RANGE} distanceFactor={24} style={{ pointerEvents: 'none' }}>
+            <Html portal={labelsPortal} position={[0, 1.1, 0]} center zIndexRange={LABEL_Z_RANGE} distanceFactor={24} style={{ pointerEvents: 'none' }}>
               <span className={`${styles.planetLabel} ${hovered ? styles.planetLabelActive : ''}`} style={{ '--planet-color': planet.color }}>
                 <Icon name={planet.icon} size={12} color={planet.color} />
                 {planet.name}
@@ -146,6 +150,7 @@ function StarSystem({ system, texture, paused, selectedId, onSelect, onSelectSys
     const random = seededRandom(system.id.length * 97 + system.position[0]);
     return [(random() - 0.5) * 0.6, 0, (random() - 0.5) * 0.6];
   }, [system.id, system.position]);
+  const labelsPortal = useLabelsPortal();
 
   return (
     <group position={system.position}>
@@ -157,7 +162,7 @@ function StarSystem({ system, texture, paused, selectedId, onSelect, onSelectSys
       <sprite scale={[11, 11, 1]}>
         <spriteMaterial map={texture} color={system.color} transparent opacity={0.85} depthWrite={false} blending={AdditiveBlending} />
       </sprite>
-      <Html position={[0, ORBIT.STAR_RADIUS + 2.4, 0]} center zIndexRange={LABEL_Z_RANGE} distanceFactor={30} style={{ pointerEvents: 'none' }}>
+      <Html portal={labelsPortal} position={[0, ORBIT.STAR_RADIUS + 2.4, 0]} center zIndexRange={LABEL_Z_RANGE} distanceFactor={30} style={{ pointerEvents: 'none' }}>
         <span className={styles.systemLabel} style={{ '--system-color': system.color }}>{system.title}</span>
       </Html>
       <group rotation={tilt}>
@@ -169,7 +174,7 @@ function StarSystem({ system, texture, paused, selectedId, onSelect, onSelectSys
   );
 }
 
-export function GalaxyScene({ systems, paused, selectedId, onSelect, onSelectSystem }) {
+export function GalaxyScene({ systems, hub, portal, onPortal, paused, selectedId, onSelect, onSelectSystem }) {
   const texture = useGlowTexture();
 
   return (
@@ -179,7 +184,8 @@ export function GalaxyScene({ systems, paused, selectedId, onSelect, onSelectSys
       <ambientLight intensity={0.55} />
       <Stars radius={220} depth={90} count={6000} factor={5} saturation={0.4} fade speed={0.6} />
       <Dust systems={systems} texture={texture} />
-      <Hyperlanes systems={systems} />
+      <Hyperlanes systems={systems} hub={hub} />
+      {portal && <BlackHole key={portal.target} portal={portal} texture={texture} onEnter={onPortal} />}
       {systems.map((system) => (
         <StarSystem key={system.id} system={system} texture={texture} paused={paused} selectedId={selectedId} onSelect={onSelect} onSelectSystem={onSelectSystem} />
       ))}

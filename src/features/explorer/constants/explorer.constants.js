@@ -7,6 +7,7 @@ export const FILE_IDS = {
   CONTACT: 'contact',
   README: 'readme',
   RESUME: 'resume',
+  BROWSER: 'browser',
 };
 
 export const FILE_REGISTRY = {
@@ -18,6 +19,8 @@ export const FILE_REGISTRY = {
   [FILE_IDS.CONTACT]: { name: 'contact.css', extension: 'css', icon: 'Palette', color: '#9B59B6', isDownload: false },
   [FILE_IDS.README]: { name: 'README.md', extension: 'md', icon: 'FileText', color: '#8B949E', isDownload: false },
   [FILE_IDS.RESUME]: { name: 'Josue_Chaves_Resume.pdf', extension: 'pdf', icon: 'FileDown', color: '#FF4444', isDownload: true },
+  // Not part of the file tree: opened from the tab bar "+" menu or the Skills launcher.
+  [FILE_IDS.BROWSER]: { name: 'galaxy.browser', extension: 'browser', icon: 'Orbit', color: '#c084fc', isDownload: false },
 };
 
 export const FILE_TREE_ORDER = [

@@ -1,13 +1,20 @@
 export const SKILLS = {
   HEADER_COMMENT: { en: '// skills.json - what I know', es: '// skills.json - lo que sé' },
   HEADING: { en: 'Skills in Practice', es: 'Habilidades en Acción' },
-  SUBHEADING: { en: '// Skills backed by concrete work across my projects', es: '// Habilidades respaldadas por trabajo concreto en mis proyectos' },
+  SUBHEADING: { en: 'Technical and soft skills, applied together across my web, automation, data and academic projects.', es: 'Habilidades técnicas y blandas que aplico en mis proyectos web, de automatización, de datos y académicos.' },
   ALSO_FAMILIAR_TITLE: { en: 'Also Familiar With', es: 'También Familiarizado Con' },
-  SOFT_COMMENT: { en: '// soft-skills.ts - how I work with people and problems', es: '// soft-skills.ts - cómo trabajo con personas y problemas' },
-  SOFT_HEADING: { en: 'Soft Skills', es: 'Habilidades Blandas' },
-  SOFT_IN_PRACTICE: { en: 'In practice', es: 'En la práctica' },
-  SOFT_EXPAND: { en: 'see in practice', es: 'ver en la práctica' },
-  SOFT_COLLAPSE: { en: 'hide', es: 'ocultar' },
+  TECHNICAL_LABEL: { en: 'Technical skill', es: 'Habilidad técnica' },
+  SOFT_LABEL: { en: 'Soft skill', es: 'Habilidad blanda' },
+  IN_PRACTICE: { en: 'Across my projects', es: 'En mis proyectos' },
+  EXPAND: { en: 'See in practice', es: 'Ver en la práctica' },
+  COLLAPSE: { en: 'Hide example', es: 'Ocultar ejemplo' },
+  LAUNCHER_EYEBROW: { en: '// galaxy.browser', es: '// galaxy.browser' },
+  LAUNCHER_TITLE: { en: 'Explore my skills in 3D', es: 'Explora mis habilidades en 3D' },
+  LAUNCHER_TEXT: { en: 'Open the galaxy navigator: fly freely between star systems of skills, then cross a black hole to reach the projects galaxy.', es: 'Abre el navegador galáctico: vuela libremente entre sistemas estelares de habilidades y cruza un agujero negro para llegar a la galaxia de proyectos.' },
+  LAUNCHER_SYSTEMS: { en: 'technical systems', es: 'sistemas técnicos' },
+  LAUNCHER_PLANETS: { en: 'skills', es: 'habilidades' },
+  LAUNCHER_OPEN: { en: 'Open skills galaxy', es: 'Abrir galaxia de habilidades' },
+  LAUNCHER_PROJECTS: { en: 'Go to projects galaxy', es: 'Ir a la galaxia de proyectos' },
 };
 
 

@@ -1,5 +1,6 @@
 import { useTabBar } from '../hooks/useTabBar';
 import { Tab } from './Tab';
+import { NewTabMenu } from './NewTabMenu';
 import styles from './TabBar.module.css';
 
 export function TabBar() {
@@ -16,6 +17,7 @@ export function TabBar() {
           onClose={handleTabClose}
         />
       ))}
+      <NewTabMenu />
     </div>
   );
 }
