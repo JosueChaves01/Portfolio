@@ -1,0 +1,813 @@
+/* ============================================================================
+   SKILLS ORBITAL — Vector Icon Badges, Full-Space & Zoom Controls
+   ============================================================================ */
+
+.orbitalCockpit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  position: relative;
+}
+
+/* ─── HUD Toolbar ────────────────────────────────────────────────────────── */
+
+.hudToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 8px 14px;
+  background: rgba(18, 20, 30, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.statusIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusPulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 10px #22c55e, 0 0 2px #4ade80;
+  animation: liveEnginePulse 2s ease-in-out infinite;
+}
+
+@keyframes liveEnginePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+}
+
+.statusText {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+}
+
+.statusDivider {
+  color: var(--color-comment);
+  margin: 0 4px;
+  opacity: 0.6;
+}
+
+.toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ─── Zoom Controls ──────────────────────────────────────────────────────── */
+
+.zoomControlGroup {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.zoomBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.zoomBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text);
+}
+
+.zoomBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.zoomLevelBtn {
+  padding: 0 8px;
+  height: 26px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.zoomLevelBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.controlButtons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ctrlBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.04em;
+}
+
+.ctrlBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.ctrlBtnActive {
+  background: rgba(129, 140, 248, 0.15) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+
+/* ─── Category Filter Chips ──────────────────────────────────────────────── */
+
+.filterBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  background: rgba(18, 20, 30, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.03em;
+}
+
+.filterChip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text);
+  border-color: var(--chip-color, var(--color-accent));
+  transform: translateY(-1px);
+}
+
+.filterChipActive {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--chip-color, var(--color-accent)) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 14px rgba(var(--color-accent-rgb, 129, 140, 248), 0.25);
+}
+
+.filterDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.filterCount {
+  font-size: 9.5px;
+  opacity: 0.55;
+  padding: 1px 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+/* ─── Cosmic Viewport Frame ──────────────────────────────────────────────── */
+
+.viewportFrame {
+  position: relative;
+  width: 100%;
+  height: clamp(560px, 75vh, 840px);
+  min-height: 540px;
+  max-height: 880px;
+  background: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(129, 140, 248, 0.07) 0%,
+      rgba(15, 17, 26, 0.45) 55%,
+      rgba(10, 11, 18, 0.96) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+/* Reticle corner markers */
+.reticleTopLeft,
+.reticleTopRight,
+.reticleBottomLeft,
+.reticleBottomRight {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(129, 140, 248, 0.4);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 5;
+  user-select: none;
+}
+
+.reticleTopLeft {
+  top: 10px;
+  left: 10px;
+}
+
+.reticleTopRight {
+  top: 10px;
+  right: 10px;
+}
+
+.reticleBottomLeft {
+  bottom: 10px;
+  left: 10px;
+}
+
+.reticleBottomRight {
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Viewport Header Tag */
+.viewportHeader {
+  position: absolute;
+  top: 12px;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 6;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--color-comment);
+  letter-spacing: 0.1em;
+}
+
+.viewportTitle {
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.viewportMode {
+  color: var(--color-accent);
+  opacity: 0.8;
+}
+
+/* Canvas Viewport */
+.viewportCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ─── Orbiting Icon Badges (Layer) ───────────────────────────────────────── */
+
+.nodesLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.iconBadge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: all;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  padding: 10px; /* Safe hit padding to prevent pointer flickering */
+  margin: -10px;
+  outline: none;
+  will-change: transform;
+  user-select: none;
+  contain: layout style;
+  transition: opacity 0.25s ease;
+}
+
+.badgeIconContainer {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(18, 20, 30, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--badge-color);
+  box-shadow:
+    0 0 12px var(--badge-color-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.iconBadge:hover .badgeIconContainer,
+.badgeHovered .badgeIconContainer {
+  transform: scale(1.22);
+  border-color: #ffffff;
+  box-shadow:
+    0 0 22px var(--badge-color),
+    0 0 6px #ffffff,
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  background: rgba(25, 28, 42, 0.95);
+}
+
+.badgeSelected .badgeIconContainer {
+  transform: scale(1.3);
+  border-color: #ffffff;
+  box-shadow:
+    0 0 28px var(--badge-color),
+    0 0 8px #ffffff,
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  background: rgba(30, 34, 52, 0.98);
+}
+
+.badgeLabel {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(13, 15, 24, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  transition: all var(--transition-fast);
+}
+
+.iconBadge:hover .badgeLabel,
+.badgeHovered .badgeLabel,
+.badgeSelected .badgeLabel {
+  color: #ffffff;
+  border-color: var(--badge-color);
+  background: rgba(18, 20, 30, 0.96);
+  box-shadow: 0 0 8px var(--badge-color-glow);
+}
+
+.toolPicker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.toolPicker select {
+  flex: 1;
+  min-width: 180px;
+  max-width: 400px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: var(--text-sm) var(--font-mono);
+}
+
+/* Decorative orbital ring */
+.badgeMasterRing {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px dashed var(--badge-color);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: masterRingOrbit 12s linear infinite;
+}
+
+@keyframes masterRingOrbit {
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+/* ─── Detailed Telemetry & Concepts Dossier Panel ───────────────────────── */
+
+.dossierPanel {
+  position: relative;
+  width: 100%;
+  background: rgba(18, 20, 30, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dossierActive {
+  border-color: var(--dossier-accent);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.45),
+    0 0 28px rgba(var(--color-accent-rgb, 129, 140, 248), 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.dossierContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+}
+
+/* Header */
+.dossierHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.dossierMainInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.dossierIconBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  border: 1px solid;
+  flex-shrink: 0;
+}
+
+.dossierTitleCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dossierCategory {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-comment);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dossierCategoryDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dossierName {
+  font-family: var(--font-decorative);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.dossierActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: auto;
+}
+
+.percentageBadgeCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.bigPercentage {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.tierPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.unpinBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #f87171;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.unpinBtn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+}
+
+.previewTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  background: rgba(129, 140, 248, 0.1);
+  border: 1px solid rgba(129, 140, 248, 0.25);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 0.05em;
+}
+
+.previewPulseDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  box-shadow: 0 0 6px var(--color-accent);
+}
+
+/* Segmented Gauge */
+.dossierGaugeSection {
+  width: 100%;
+}
+
+.segmentedBar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 8px;
+  padding: 2px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.barSegment {
+  flex: 1;
+  height: 100%;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Summary Statement */
+.dossierSummary {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.55;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.25);
+  border-left: 3px solid var(--dossier-accent);
+  padding: 8px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Concepts Block */
+.conceptsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.conceptsHeader {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.conceptsTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-comment);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.conceptsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.conceptChip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 12px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.conceptChip:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.conceptCheck {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.conceptText {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: #e2e8f0;
+  line-height: 1.35;
+}
+
+/* ─── Responsive Breakpoints ─────────────────────────────────────────────── */
+
+@media (max-width: 840px) {
+  .conceptsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .viewportFrame {
+    height: clamp(460px, 65vh, 600px);
+    min-height: 440px;
+    max-height: 600px;
+  }
+
+  .dossierContent {
+    padding: var(--space-3);
+  }
+
+  .dossierName {
+    font-size: 1.35rem;
+  }
+
+  .bigPercentage {
+    font-size: 1.45rem;
+  }
+
+  .toolbarRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .viewportFrame {
+    height: clamp(380px, 60vh, 500px);
+    min-height: 380px;
+    max-height: 500px;
+  }
+
+  .badgeIconContainer {
+    width: 32px;
+    height: 32px;
+  }
+
+  .badgeLabel {
+    font-size: 9px;
+    padding: 1px 4px;
+  }
+
+  .dossierHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dossierActions {
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 0;
+    margin-top: var(--space-1);
+  }
+
+  .percentageBadgeCol {
+    align-items: flex-start;
+  }
+
+  .filterBar {
+    gap: 4px;
+  }
+
+  .filterChip {
+    font-size: 9.5px;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .viewportFrame {
+    min-height: 290px;
+    max-height: 360px;
+  }
+
+  .controlButtons {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

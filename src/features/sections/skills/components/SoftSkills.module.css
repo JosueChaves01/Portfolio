@@ -1,0 +1,164 @@
+/* ============================================================================
+   SOFT SKILLS — Animated cards (Framer Motion)
+   ============================================================================ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.header { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.fileComment {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-comment);
+}
+
+.heading { margin: 0; font-size: var(--text-xl); color: var(--color-text); }
+
+.code {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.closing { margin: 0; }
+.keyword { color: #c084fc; }
+.variable { color: #38bdf8; }
+.bracket { color: #facc15; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0 0 0 var(--space-4);
+  list-style: none;
+  border-left: 1px dashed var(--color-border);
+}
+
+.item { min-width: 0; }
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-5);
+  overflow: hidden;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover,
+.card[aria-expanded='true'] {
+  border-color: color-mix(in srgb, var(--soft-color) 55%, var(--color-border));
+  box-shadow: 0 10px 30px -18px var(--soft-color);
+}
+
+.card:focus-visible { outline: 2px solid var(--soft-color); outline-offset: 2px; }
+
+.glow {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 160px;
+  height: 160px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, color-mix(in srgb, var(--soft-color) 40%, transparent), transparent 70%);
+  pointer-events: none;
+}
+
+.cardHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.iconWrap {
+  display: inline-flex;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--soft-color) 14%, transparent);
+}
+
+.index { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-comment); }
+
+.title {
+  position: relative;
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.summary,
+.practice {
+  position: relative;
+  display: block;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.practice { overflow: hidden; }
+
+.practiceLabel {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--soft-color);
+}
+
+.traits { position: relative; display: flex; flex-wrap: wrap; gap: 6px; }
+
+.trait {
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--soft-color);
+  border: 1px solid color-mix(in srgb, var(--soft-color) 35%, transparent);
+  border-radius: var(--radius-sm);
+}
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-comment);
+}
+
+.chevron { display: inline-flex; }
+
+.underline {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--soft-color);
+  transform-origin: left;
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; padding-left: var(--space-3); }
+  .card { padding: var(--space-4); }
+}

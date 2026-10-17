@@ -264,3 +264,21 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .tabName {
+    max-width: 80px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .tabName {
+    max-width: 65px;
+    font-size: 10px;
+  }
+
+  .tab {
+    padding: 0 6px;
+  }
+}

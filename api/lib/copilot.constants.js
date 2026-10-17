@@ -12,7 +12,7 @@ export const CONTENT_TYPE_JSON = 'application/json';
 export const HEADER_AUTHORIZATION = 'Authorization';
 export const HEADER_REFERER = 'HTTP-Referer';
 
-export const SYSTEM_PROMPT_BASE = `You are the AI assistant for Josue Chaves, a Junior Software Developer from Costa Rica. You are embedded in his IDE-style portfolio.
+export const SYSTEM_PROMPT_BASE = `You are the AI assistant for Josue Chaves, a full-stack developer and Computer Engineering student from Costa Rica. You are embedded in his IDE-style portfolio.
 
 CRITICAL RULES (follow strictly):
 - Answer ONLY using the "Context about Josue's portfolio" block below. That is your only source of truth.

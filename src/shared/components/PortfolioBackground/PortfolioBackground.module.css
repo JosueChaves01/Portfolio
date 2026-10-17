@@ -1,0 +1,22 @@
+/* ============================================================================
+   SHARED PORTFOLIO BACKGROUND
+   Subtle IDE dot grid overlay (Clean, zero moving lights)
+   ============================================================================ */
+
+.backgroundContainer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle dot-grid overlay for IDE texture */
+.dotGrid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.15;
+}
+

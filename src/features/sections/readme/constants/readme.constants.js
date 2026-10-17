@@ -1,41 +1,33 @@
 export const README = {
   HEADING: 'Josue Chaves',
-  SUBTITLE: { en: 'Junior Software Developer @TEC · Costa Rica', es: 'Desarrollador de Software Junior @TEC · Costa Rica' },
+  SUBTITLE: { en: 'Full-Stack Developer · Computer Engineering Student · Costa Rica', es: 'Desarrollador Full-Stack · Estudiante de Ingeniería en Computadores · Costa Rica' },
   FOOTER: { en: 'Made with AI by Josue · 2026', es: 'Hecho con IA por Josue · 2026' },
 };
 
-
 export const ROLE_TAGS = [
-  { id: 'javascript', icon: 'Code2', color: '#facc15', label: 'JavaScript' },
-  { id: 'typescript', icon: 'FileCode', color: '#1e40af', label: 'TypeScript' },
-  { id: 'python', icon: 'Zap', color: '#3b82f6', label: 'Python' },
-  { id: 'go', icon: 'Zap', color: '#00add8', label: 'Go' },
-  { label: { en: 'Backend Specialist', es: 'Especialista Backend' }, color: '#3b82f6' },
-  { label: { en: 'Distributed Systems', es: 'Sistemas Distribuidos' }, color: '#22c55e' },
-  { label: { en: 'AI Agent Architect', es: 'Arquitecto de Agentes IA' }, color: '#a855f7' },
+  { icon: 'FileCode', color: '#38bdf8', label: 'TypeScript' },
+  { icon: 'Globe', color: '#3b82f6', label: 'Next.js' },
+  { icon: 'Database', color: '#4ade80', label: 'Supabase' },
+  { icon: 'CreditCard', color: '#3b82f6', label: { en: 'Bookings & Payments', es: 'Reservas y Pagos' } },
+  { icon: 'Smartphone', color: '#22c55e', label: 'UI/UX' },
+  { icon: 'Sparkles', color: '#a855f7', label: { en: 'AI-assisted Development', es: 'Desarrollo con IA' } },
 ];
 
 export const ABOUT_BULLETS = [
-  { icon: '🎓', text: { en: 'Computer Engineering Student at ITCR', es: 'Estudiante de Ingeniería en Computadores en el ITCR' } },
-  { icon: '🚀', text: { en: 'Passionate about structural design patterns and scalable backend architectures', es: 'Apasionado por los patrones de diseño estructural y arquitecturas backend escalables' } },
-  { icon: '🛠️', text: { en: 'Currently building a structural-pattern-based workflow engine for LLM agents', es: 'Actualmente construyendo un motor de flujo de trabajo basado en patrones estructurales para agentes LLM' } },
-  { icon: '🌎', text: { en: 'Based in Costa Rica', es: 'Basado en Costa Rica' } },
+  { icon: 'GraduationCap', text: { en: 'Computer Engineering Student at ITCR', es: 'Estudiante de Ingeniería en Computadores en el ITCR' } },
+  { icon: 'Globe', text: { en: 'Latest work: White City Liberia, a multilingual transportation and rental web application', es: 'Trabajo reciente: White City Liberia, aplicación web multilingüe de transporte y renta de vehículos' } },
+  { icon: 'Workflow', text: { en: 'Quotes, reservations, payment integrations, administration and mobile UX', es: 'Cotizaciones, reservas, integraciones de pago, administración y UX móvil' } },
+  { icon: 'Sparkles', text: { en: 'AI-assisted implementation with code review and automated validation', es: 'Implementación con apoyo de IA, revisión de código y validación automatizada' } },
+  { icon: 'MapPin', text: { en: 'Based in Costa Rica', es: 'En Costa Rica' } },
 ];
 
 export const STACK_CATEGORIES = [
-  {
-    title: { en: 'Core Tech Stack', es: 'Tecnologías Principales' },
-    items: ['Node.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Docker'],
-  },
-  {
-    title: { en: 'Tools & DevOps', es: 'Herramientas y DevOps' },
-    items: ['Git', 'GitHub Actions', 'Azure', 'Linux', 'REST APIs'],
-  },
+  { title: { en: 'Core Tech Stack', es: 'Tecnologías Principales' }, items: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL'] },
+  { title: { en: 'Integrations & Delivery', es: 'Integraciones y Entrega' }, items: ['PayPal', 'ONVO', 'Resend', 'next-intl', 'Playwright', 'Git', 'Vercel'] },
 ];
-
 
 export const CONNECT_LINKS = [
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/josue-chaves-465ba823a/' },
-  { label: 'GitHub', url: 'https://github.com/josuechaves01' },
-  { label: 'Instagram', url: 'https://www.instagram.com/josue_chaves__/' },
+  { label: 'GitHub', url: 'https://github.com/JosueChaves01' },
+  { label: 'White City Liberia', url: 'https://www.whitecityliberia.com' },
 ];

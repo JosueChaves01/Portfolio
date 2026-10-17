@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../../../store/LanguageContext';
 import { useStatusBar } from '../hooks/useStatusBar';
 import { STATUS_BAR } from '../constants/statusBar.constants';
 import { Icon } from '../../../shared/icons/Icon';
+import { useClickOutside } from '../../../shared/hooks/useClickOutside';
 import { ThemeSelector } from './ThemeSelector';
 import styles from './StatusBar.module.css';
 
@@ -10,30 +11,40 @@ export function StatusBar() {
   const { language, themeLabel, currentTime } = useStatusBar();
   const { t } = useLanguage();
   const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const footerRef = useRef(null);
+
+  const closeThemeSelector = useCallback(() => setIsThemeSelectorOpen(false), []);
+  const toggleThemeSelector = () => setIsThemeSelectorOpen((open) => !open);
+
+  // Outside clicks are measured against the whole footer so the trigger can toggle the menu.
+  useClickOutside(footerRef, closeThemeSelector);
+
+  useEffect(() => {
+    if (!isThemeSelectorOpen) return undefined;
+    const onKeyDown = (event) => { if (event.key === 'Escape') closeThemeSelector(); };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isThemeSelectorOpen, closeThemeSelector]);
 
   const hasErrors = STATUS_BAR.ERRORS !== '0';
   const hasWarnings = STATUS_BAR.WARNINGS !== '0';
 
-  return (
-    <footer className={styles.statusBar}>
-      {isThemeSelectorOpen && (
-        <ThemeSelector onClose={() => setIsThemeSelectorOpen(false)} />
-      )}
+  const themeButton = (className) => (
+    <button
+      type="button"
+      className={className}
+      onClick={toggleThemeSelector}
+      title={t(STATUS_BAR.THEME_TITLE)}
+      aria-expanded={isThemeSelectorOpen}
+    >
+      <Icon name="Palette" size={14} strokeWidth={2.5} className={styles.icon} />
+      <span className={styles.label}>{themeLabel}</span>
+    </button>
+  );
 
-      {/* Mobile: Critical info only */}
-      <div className={styles.mobileIndicators}>
-        {hasErrors && (
-          <span className={`${styles.indicator} ${styles.error}`} title="Errors">
-            <Icon name="CircleX" size={16} strokeWidth={2.5} className={styles.indicatorIcon} />
-          </span>
-        )}
-        {hasWarnings && (
-          <span className={`${styles.indicator} ${styles.warning}`} title="Warnings">
-            <Icon name="TriangleAlert" size={16} strokeWidth={2.5} className={styles.indicatorIcon} />
-          </span>
-        )}
-      </div>
+  return (
+    <footer className={styles.statusBar} ref={footerRef}>
+      {isThemeSelectorOpen && <ThemeSelector onClose={closeThemeSelector} />}
 
       {/* Desktop layout */}
       <div className={styles.desktopContainer}>
@@ -77,16 +88,7 @@ export function StatusBar() {
             <span className={styles.label}>{t(STATUS_BAR.FORMATTER)}</span>
           </span>
           <span className={styles.separator}>•</span>
-          <span
-            className={`${styles.item} ${styles.theme}`}
-            onClick={() => setIsThemeSelectorOpen(!isThemeSelectorOpen)}
-            title={t(STATUS_BAR.THEME_TITLE)}
-            role="button"
-            tabIndex={0}
-          >
-            <Icon name="Palette" size={14} strokeWidth={2.5} className={styles.icon} />
-            <span className={styles.label}>{themeLabel}</span>
-          </span>
+          {themeButton(`${styles.item} ${styles.theme}`)}
           <span className={styles.separator}>•</span>
           <span className={styles.item}>
             <Icon name="Clock" size={14} strokeWidth={2.5} className={styles.icon} />
@@ -95,44 +97,31 @@ export function StatusBar() {
         </div>
       </div>
 
-      {/* Mobile: More menu */}
-      <div className={styles.mobileTime}>
-        {currentTime}
+      {/* Mobile layout: branch, problems, theme and time, with the theme always one tap away */}
+      <div className={styles.mobileContainer}>
+        <span className={styles.mobileItem}>
+          <Icon name="GitBranch" size={13} strokeWidth={2.5} className={styles.icon} />
+          {STATUS_BAR.GIT_BRANCH}
+        </span>
+        {hasErrors && (
+          <span className={`${styles.mobileItem} ${styles.error}`} title="Errors">
+            <Icon name="CircleX" size={13} strokeWidth={2.5} />
+            {STATUS_BAR.ERRORS}
+          </span>
+        )}
+        {hasWarnings && (
+          <span className={`${styles.mobileItem} ${styles.warning}`} title="Warnings">
+            <Icon name="TriangleAlert" size={13} strokeWidth={2.5} />
+            {STATUS_BAR.WARNINGS}
+          </span>
+        )}
+        <span className={styles.mobileSpacer} />
+        {themeButton(`${styles.mobileItem} ${styles.mobileTheme}`)}
+        <span className={styles.mobileItem}>
+          <Icon name="Clock" size={13} strokeWidth={2.5} className={styles.icon} />
+          {currentTime}
+        </span>
       </div>
-
-      <button
-        className={styles.mobileMenuBtn}
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        aria-label="More options"
-        title="More options"
-      >
-        <Icon name="MoreHorizontal" size={18} strokeWidth={2.5} />
-      </button>
-
-      {/* Mobile: Expandable menu */}
-      {isMobileMenuOpen && (
-        <div className={styles.mobileMenu}>
-          <div className={styles.menuItem}>
-            <span className={styles.menuLabel}>{language}</span>
-          </div>
-          <div className={styles.menuItem}>
-            <span className={styles.menuLabel}>{t(STATUS_BAR.ENCODING)}</span>
-          </div>
-          <div className={styles.menuItem}>
-            <span className={styles.menuLabel}>{t(STATUS_BAR.FORMATTER)}</span>
-          </div>
-          <button
-            className={styles.menuItem}
-            onClick={() => setIsThemeSelectorOpen(!isThemeSelectorOpen)}
-          >
-            <Icon name="Palette" size={14} strokeWidth={2.5} className={styles.icon} />
-            <span className={styles.menuLabel}>{themeLabel}</span>
-          </button>
-        </div>
-      )}
     </footer>
   );
 }
-
-
-

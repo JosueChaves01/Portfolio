@@ -30,7 +30,9 @@ export function TerminalInput({ value, onChange, onSubmit, onKeyDown }) {
         onKeyDown={handleKeyDown}
         autoComplete="off"
         spellCheck={false}
-        aria-label={t({ en: 'Terminal input', es: 'Entrada de terminal' })}
+        autoCapitalize="off"
+        enterKeyHint="send"
+        aria-label={t(TERMINAL.INPUT_LABEL)}
       />
     </div>
   );

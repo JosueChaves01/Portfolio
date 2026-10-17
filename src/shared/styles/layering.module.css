@@ -1,0 +1,163 @@
+/* ============================================================================
+   SHARED LAYERING SYSTEM — Glassmorphic Cards, Spotlights & Stagger Animations
+   ============================================================================
+   Import this module in any section to apply the portfolio's depth system.
+   Usage: composes: glassCard from '../../shared/styles/layering.module.css';
+   ============================================================================ */
+
+/* ─── Glassmorphic Card Base ─── */
+.glassCard {
+  position: relative;
+  background: rgba(18, 20, 30, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.glassCard:hover {
+  border-color: rgba(var(--color-accent-rgb, 100, 200, 255), 0.25);
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(var(--color-accent-rgb, 100, 200, 255), 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Tilt-Enabled Card (use with useTiltEffect hook) ─── */
+.tiltCard {
+  composes: glassCard;
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+    scale(var(--card-scale, 1));
+}
+
+/* ─── Cursor-Following Spotlight (Disabled) ─── */
+.cardSpotlight {
+  display: none !important;
+}
+
+/* ─── Card Content (sits above spotlight) ─── */
+.cardContent {
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── Card Header ─── */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  position: relative;
+  z-index: 2;
+}
+
+.cardLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cardHint {
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+/* ─── Inset Sub-Card ─── */
+.insetCard {
+  padding: var(--space-2) var(--space-3);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.insetCard:hover {
+  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Interactive Pill (tech tags, skills) ─── */
+.interactivePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text);
+  transition: all var(--transition-fast);
+}
+
+.interactivePill:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Section Label (category headers inside cards) ─── */
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+/* ─── Stagger Animations ─── */
+.staggerItem {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: staggerIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stagger1 { animation-delay: 0.04s; }
+.stagger2 { animation-delay: 0.10s; }
+.stagger3 { animation-delay: 0.16s; }
+.stagger4 { animation-delay: 0.22s; }
+.stagger5 { animation-delay: 0.28s; }
+.stagger6 { animation-delay: 0.34s; }
+.stagger7 { animation-delay: 0.40s; }
+.stagger8 { animation-delay: 0.46s; }
+.stagger9 { animation-delay: 0.52s; }
+.stagger10 { animation-delay: 0.58s; }
+.stagger11 { animation-delay: 0.64s; }
+.stagger12 { animation-delay: 0.70s; }
+
+@keyframes staggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Pulse Glow (for "current" indicators) ─── */
+.pulseGlow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px currentColor; }
+  50% { opacity: 0.5; box-shadow: 0 0 4px currentColor; }
+}

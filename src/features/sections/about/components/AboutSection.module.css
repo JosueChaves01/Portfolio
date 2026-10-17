@@ -1,37 +1,41 @@
+/* ============================================================================
+   ABOUT SECTION — Glassmorphic Bento Grid with Depth Layering
+   ============================================================================ */
+
 .section {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  max-width: 800px;
+  max-width: 900px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: var(--space-4);
 }
 
 .divider {
   height: 1px;
-  background-color: var(--color-border);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(var(--color-accent-rgb, 100, 200, 255), 0.25),
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   width: 100%;
-  margin: var(--space-4) 0;
+  margin: var(--space-2) 0;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--space-8);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
   align-items: start;
 }
 
-.focusSection,
-.educationSection {
-  display: flex;
-  flex-direction: column;
-}
-
-
+/* ─── Section Header ─── */
 .headerComment {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -60,17 +64,9 @@
   line-height: 1;
 }
 
-
 @keyframes blink {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .subheading {
@@ -80,11 +76,46 @@
   margin: 0;
 }
 
+/* ============================================================================
+   GLASSMORPHIC BIO CARD
+   ============================================================================ */
+
 .bioCard {
+  position: relative;
+  background: rgba(18, 20, 30, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   padding: var(--space-4) var(--space-5);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-surface);
+  overflow: hidden;
+
+  /* 3D tilt */
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+    scale(var(--card-scale, 1));
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.bioCard:hover {
+  border-color: rgba(var(--color-accent-rgb, 100, 200, 255), 0.25);
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(var(--color-accent-rgb, 100, 200, 255), 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Bio card spotlight (Disabled) */
+.bioSpotlight {
+  display: none !important;
+}
+
+.bioContent {
+  position: relative;
+  z-index: 2;
 }
 
 .bioText {
@@ -98,6 +129,57 @@
 .keyword {
   color: var(--color-accent);
   font-weight: 600;
+}
+
+/* ============================================================================
+   GLASSMORPHIC FOCUS/TALK-ABOUT SECTION CARDS
+   ============================================================================ */
+
+.focusSection,
+.educationSection {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Focus card wrapper */
+.focusCard {
+  position: relative;
+  background: rgba(18, 20, 30, 0.50);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  padding: var(--space-4);
+  overflow: hidden;
+
+  /* 3D tilt */
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+    scale(var(--card-scale, 1));
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.focusCard:hover {
+  border-color: rgba(var(--color-accent-rgb, 100, 200, 255), 0.2);
+  box-shadow:
+    0 10px 32px rgba(0, 0, 0, 0.3),
+    0 0 16px rgba(var(--color-accent-rgb, 100, 200, 255), 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Focus card spotlight (Disabled) */
+.focusSpotlight {
+  display: none !important;
+}
+
+.focusCardContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .sectionTitle {
@@ -120,6 +202,14 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.focusItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
 }
 
 .focusEmoji {
@@ -134,20 +224,31 @@
   line-height: 1.5;
 }
 
+/* ============================================================================
+   GLASSMORPHIC EDUCATION CARDS
+   ============================================================================ */
+
 .educationList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .educationCard {
-  padding: var(--space-4);
-  border: 1px solid var(--color-border);
+  padding: var(--space-3);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-sm);
-  background-color: var(--color-surface);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  transition: all var(--transition-fast);
+}
+
+.educationCard:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .eduHeader {
@@ -205,4 +306,85 @@
 .eduGpa strong,
 .eduGrades strong {
   color: var(--color-accent);
+}
+
+/* ============================================================================
+   MOBILE LAYOUT (≤768px)
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .section {
+    gap: var(--space-4);
+    max-width: 100%;
+  }
+
+  .content {
+    gap: var(--space-3);
+  }
+
+  .heading,
+  .cursor {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .focusGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .bioCard {
+    padding: var(--space-3);
+  }
+
+  .bioText {
+    font-size: var(--text-sm);
+  }
+
+  .focusCard {
+    padding: var(--space-3);
+  }
+}
+
+/* ============================================================================
+   SMALL MOBILE (≤480px)
+   ============================================================================ */
+
+@media (max-width: 480px) {
+  .heading,
+  .cursor {
+    font-size: clamp(1.75rem, 12vw, 2.4rem);
+  }
+
+  .focusGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .educationCard {
+    padding: var(--space-2);
+  }
+}
+
+/* ============================================================================
+   ULTRA-SMALL MOBILE (≤360px)
+   ============================================================================ */
+
+@media (max-width: 360px) {
+  .heading,
+  .cursor {
+    font-size: clamp(1.5rem, 11vw, 2rem);
+  }
+
+  .eduInstitution {
+    font-size: var(--text-sm);
+  }
+
+  .eduHeader {
+    flex-direction: column;
+    gap: 4px;
+  }
 }

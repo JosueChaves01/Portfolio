@@ -1,16 +1,11 @@
-import { useRef } from 'react';
 import { THEMES, SETTINGS } from '../../settings/constants/settings.constants';
 import { useTheme } from '../../../store/ThemeContext';
 import { useLanguage } from '../../../store/LanguageContext';
-import { useClickOutside } from '../../../shared/hooks/useClickOutside';
 import styles from './ThemeSelector.module.css';
 
 export function ThemeSelector({ onClose }) {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
-  const menuRef = useRef(null);
-
-  useClickOutside(menuRef, onClose);
 
   const handleThemeSelect = (themeId) => {
     setTheme(themeId);
@@ -18,7 +13,7 @@ export function ThemeSelector({ onClose }) {
   };
 
   return (
-    <div className={styles.selector} ref={menuRef}>
+    <div className={styles.selector}>
       <header className={styles.header}>{t(SETTINGS.SECTION_THEME)}</header>
 
       <div className={styles.list}>

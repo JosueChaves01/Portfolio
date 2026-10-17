@@ -1,26 +1,26 @@
+import { PROFILE, PROJECT_SIGNALS } from '../../../../shared/data/recentWork';
+
 export const HOME = {
   HEADER_COMMENT: { en: '// hello world !! Welcome to my portfolio', es: '// hola mundo !! Bienvenido a mi portafolio' },
   NAME_FIRST: 'Josue',
   NAME_LAST: 'Chaves',
-  BIO: {
-    en: 'I am a computer engineering student at ITCR with a passion for software architecture, distributed systems, data analytics, and agentic workflows. I build intelligent, scalable applications and explore the boundaries of LLM integration at ITCR.',
-    es: 'Soy estudiante de ingeniería en computadores en el ITCR con una pasión por la arquitectura de software, sistemas distribuidos, análisis de datos y flujos de trabajo agénticos. Construyo aplicaciones inteligentes y escalables, explorando los límites de la integración de LLMs en el ITCR.'
-  },
-  BIO_KEYWORDS: ['software architecture', 'distributed systems', 'data analytics', 'agentic workflows', 'LLM integration', 'ITCR', 'arquitectura de software', 'sistemas distribuidos', 'análisis de datos', 'flujos de trabajo agénticos', 'integración de LLMs'],
+  BIO: PROFILE.bio,
+  BIO_KEYWORDS: ['ITCR', 'business operations', 'operación de un negocio', 'AI assistants and automations', 'asistentes y automatizaciones con IA', 'real-time systems', 'sistemas en tiempo real'],
+  STATUS: { en: 'Open to work & collaborations', es: 'Abierto a trabajo y colaboraciones' },
 };
 
 export const ROLE_BADGES = [
-  { id: 'systems', label: { en: 'FullStack Engineer', es: 'Ingeniero FullStack' }, dotColor: '#3b82f6' },
-  { id: 'cloudcomputing', label: { en: 'Future Software Architect', es: 'Futuro Arquitecto de Software' }, dotColor: '#b48f29ff' },
-  { id: 'AI', label: { en: 'AI Enthusiast', es: 'Entusiasta de la IA' }, dotColor: '#22c55e' },
+  { id: 'fullstack', label: PROFILE.role, dotColor: '#3b82f6' },
+  { id: 'product', label: { en: 'Product & UI/UX', es: 'Producto y UI/UX' }, dotColor: '#facc15' },
+  { id: 'ai', label: { en: 'AI-assisted Development', es: 'Desarrollo con IA' }, dotColor: '#22c55e' },
 ];
 
 export const TYPEWRITER_PHRASES = [
   { en: 'Computer Engineering Student @ ITCR', es: 'Estudiante de Ingeniería en Computadores @ ITCR' },
-  { en: 'Building scalable backend systems', es: 'Construyendo sistemas backend escalables' },
-  { en: 'Enthusiastic about LLMs and Agent Workflows', es: 'Entusiasta de los LLMs y flujos de trabajo con agentes' },
-  { en: 'Exploring Distributed Architectures', es: 'Explorando arquitecturas distribuidas' },
-  { en: 'Passionate about efficient software design', es: 'Apasionado por el diseño de software eficiente' },
+  { en: 'Shipping web apps, APIs and AI automations', es: 'Creando apps web, APIs y automatizaciones con IA' },
+  { en: 'Connecting quotes, bookings and payments', es: 'Conectando cotizaciones, reservas y pagos' },
+  { en: 'Designing multilingual mobile experiences', es: 'Diseñando experiencias móviles multilingües' },
+  { en: 'Developing with AI, validating with tests', es: 'Desarrollando con IA, validando con pruebas' },
 ];
 
 
@@ -30,17 +30,12 @@ export const TYPEWRITER_DELETE_SPEED_MS = 30;
 export const TYPEWRITER_PAUSE_MS = 2000;
 
 export const ACTION_BUTTONS = [
-  { id: 'projects', icon: 'FolderOpen', label: 'Projects', variant: 'primary', targetTab: 'projects' },
-  { id: 'about', icon: 'User', label: 'About Me', variant: 'secondary', targetTab: 'about' },
-  { id: 'contact', icon: 'Mail', label: 'Contact', variant: 'secondary', targetTab: 'contact' },
+  { id: 'projects', icon: 'FolderOpen', label: { en: 'View my work', es: 'Ver mi trabajo' }, variant: 'primary', targetTab: 'projects' },
+  { id: 'skills', icon: 'Workflow', label: { en: 'Applied skills', es: 'Habilidades aplicadas' }, variant: 'secondary', targetTab: 'skills' },
+  { id: 'contact', icon: 'Mail', label: { en: 'Contact', es: 'Contacto' }, variant: 'secondary', targetTab: 'contact' },
 ];
 
-export const STATS = [
-  { value: '3+', label: 'YEARS' },
-  { value: '10+', label: 'PROJECTS' },
-  { value: '∞', label: 'CURIOSITY' },
-  { value: '↑', label: 'ALWAYS LEARNING' },
-];
+export const STATS = PROJECT_SIGNALS;
 
 export const SOCIAL_LINKS = [
   { id: 'github', label: 'GitHub', icon: 'Github', color: '#8B949E', url: 'https://github.com/josuechaves01' },

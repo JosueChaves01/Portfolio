@@ -1,0 +1,588 @@
+/* ============================================================================
+   HOME CARD STREAM — Stacked deck driven by scroll (Framer Motion)
+   The active card sits in front, the next two peek behind it and visited cards
+   lift away. On narrower layouts the cards render as a simple vertical list.
+   ============================================================================ */
+
+.deckContainer {
+  position: relative;
+  min-width: 0;
+  container-type: inline-size;
+  container-name: home-deck;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ─── Control Bar / Stepper Pill ────────────────────────────────────────── */
+
+.deckControlBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: var(--space-3);
+  padding: 0 4px;
+  gap: 12px;
+}
+
+.deckStepperPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(18, 20, 30, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  padding: 4px 8px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.stepperArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.stepperArrow:hover:not(:disabled) {
+  background: rgba(var(--color-accent-rgb, 100, 200, 255), 0.2);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.stepperArrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.stepperDots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stepperDot {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.stepperDot:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text);
+}
+
+.dotActive {
+  background: rgba(var(--color-accent-rgb, 100, 200, 255), 0.15) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+  font-weight: 600;
+}
+
+.dotNumber {
+  font-weight: 700;
+}
+
+.dotLabel {
+  display: inline;
+}
+
+.cardCounter {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* ─── Stacked deck stage ───────────────────────────────────────────────── */
+
+.deckUnifiedStage {
+  --deck-peek: 48px;
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  height: clamp(380px, calc(var(--home-viewport-height, 100vh) - 240px), 460px);
+  margin: 0 auto;
+}
+
+/* Every card shares the same frame; the space below is where queued cards peek. */
+.stageCardSlot {
+  position: absolute;
+  inset: 0 0 var(--deck-peek) 0;
+  min-width: 0;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+}
+
+.stageCardSlot > * { height: 100%; }
+
+/* ─── In-flow list (tablet / mobile / short screens) ─────────────────────── */
+
+.deckFlowList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 760px;
+  padding-bottom: var(--home-deck-tail, 0px);
+}
+
+.flowCardSlot { min-width: 0; }
+
+/* ─── Bento Content Card (Cards 1 to 4) ──────────────────────────────────── */
+
+.bentoContentCard {
+  position: relative;
+  background: rgba(18, 20, 30, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  user-select: text;
+}
+
+/* Header */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.cardLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cardHint {
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+/* Card 1: Presence */
+.statusIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.statusText {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #4ade80;
+  letter-spacing: 0.04em;
+}
+
+.badgeLocation {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--color-text-muted);
+}
+
+.presenceBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.presenceTitle {
+  font-family: var(--font-decorative);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.presenceSubtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.liveActivityBox {
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.activityHeader {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.activityBranch {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.activityTime {
+  margin-left: auto;
+  font-size: 9.5px;
+  color: var(--color-text-muted);
+}
+
+.activityCommit code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #cbd5e1;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+/* Card 2: Stack */
+.stackDesc {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.techPillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.techPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.techPill:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: var(--pill-color, var(--color-accent));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Card 3: Metrics */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-top: auto;
+}
+
+.metricItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.metricItem:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-1px);
+}
+
+.metricIconBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.metricContent {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.metricValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.metricLabel {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 2px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Card 4: CLI */
+.cliPrompt {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.cliDesc {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.commandChipsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cliChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  min-height: 38px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.cliChip:hover {
+  border-color: var(--color-accent);
+  background: rgba(var(--color-accent-rgb, 100, 200, 255), 0.08);
+  transform: translateX(3px);
+}
+
+.chipPrefix {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.chipText {
+  flex: 1;
+  color: #e2e8f0;
+}
+
+.chipArrow {
+  opacity: 0.4;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.cliChip:hover .chipArrow {
+  opacity: 1;
+  transform: translateX(2px);
+  color: var(--color-accent);
+}
+
+.chipExecuting {
+  border-color: #22c55e !important;
+  background: rgba(34, 197, 94, 0.15) !important;
+}
+
+/* ============================================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================================ */
+
+.deckInFlow .deckControlBar {
+  position: sticky;
+  top: 8px;
+  z-index: 20;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  background: var(--color-editor);
+}
+
+.deckInFlow .bentoContentCard {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+/* Only the active step shows its name, so the stepper fits the deck width. */
+.dotLabel { display: none; }
+.dotActive .dotLabel { display: inline; }
+
+
+@media (max-width: 768px) {
+  .bentoContentCard {
+    padding: var(--space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .dotLabel {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .bentoContentCard {
+    padding: var(--space-3);
+  }
+
+  .presenceTitle {
+    font-size: var(--text-base);
+  }
+
+  .metricsGrid {
+    gap: var(--space-2);
+  }
+
+  .metricItem {
+    padding: 6px 8px;
+  }
+}
+
+/* Cards in the stack are opaque so the queued ones never bleed through. */
+.bentoContentCard {
+  background: var(--color-surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.metricsGrid { margin-top: var(--space-4); }
+
+/* ─── Project spotlight extras ─── */
+.presenceBody { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+
+.spotlightDecision {
+  margin: var(--space-3) 0 0;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--color-accent);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.spotlightDecision span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.spotlightFooter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-3);
+}
+
+.spotlightProgress {
+  flex: 1;
+  height: 2px;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+}
+
+.spotlightProgress span {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+  transform-origin: left;
+}
+
+.spotlightLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .dotActive .dotLabel { display: none; }
+  .deckStepperPill { flex-wrap: nowrap; }
+}

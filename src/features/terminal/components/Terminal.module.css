@@ -133,3 +133,70 @@
   font-size: var(--text-sm);
   caret-color: var(--color-accent);
 }
+
+/* ─── Tabs as buttons ─── */
+button.tabLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: var(--font-mono);
+}
+
+.tabLabel:hover { color: var(--color-text); }
+
+.tabCount {
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
+  font-size: 10px;
+}
+
+/* ─── Output tones ─── */
+.toneCommand { color: var(--color-text); font-weight: 600; margin-top: var(--space-1); }
+.toneError { color: #f87171; }
+.toneSuccess { color: #4ade80; }
+.toneMuted { color: var(--color-comment); }
+.toneAccent { color: var(--color-accent); }
+
+/* ─── Autocomplete suggestions ─── */
+.suggestions,
+.quickBar {
+  display: flex;
+  gap: 6px;
+  padding: 4px var(--space-3);
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.suggestion,
+.quickCommand {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.suggestion { color: var(--color-accent); border-color: color-mix(in srgb, var(--color-accent) 40%, transparent); }
+
+.suggestion:hover,
+.quickCommand:hover { color: var(--color-text); border-color: var(--color-accent); }
+
+.quickCommand::before { content: '$ '; color: var(--color-accent); }
+
+@media (max-width: 768px) {
+  .suggestions,
+  .quickBar { padding: 4px var(--space-2); }
+}
+
+.input:focus-visible { outline: none; }
