@@ -2,14 +2,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { AnimatePresence, motion as Motion, useReducedMotion } from 'framer-motion';
 import { Vector3 } from 'three';
-import { useLanguage } from '../../../../../store/LanguageContext';
-import { Icon } from '../../../../../shared/icons/Icon';
-import { SKILLS_CATEGORIES } from '../../mocks/skills.mock';
-import { SOFT_SKILLS } from '../../mocks/softSkills.mock';
-import { CAMERA_FOV, CAMERA_HOME, GALAXY_TEXT, SOFT_SYSTEM_COLOR, SOFT_SYSTEM_ID, SYSTEM_POSITIONS } from '../../constants/galaxy.constants';
+import { useLanguage } from '../../../../store/LanguageContext';
+import { Icon } from '../../../../shared/icons/Icon';
+import { CAMERA_FOV, GALAXY_TEXT } from '../../constants/galaxy.constants';
+import { BROWSER_TEXT } from '../../constants/browser.constants';
 import { FlyControls } from './FlyControls';
 import { GalaxyScene } from './GalaxyScene';
-import styles from './SkillsGalaxy.module.css';
+import { LabelsPortalContext } from './labelsPortal';
+import styles from './GalaxyView.module.css';
 
 const SYSTEM_VIEW_OFFSET = new Vector3(0, 9, 26);
 const PLANET_VIEW_DISTANCE = 9;
@@ -20,33 +20,10 @@ const PAD_ACTIONS = [
   { action: 'down', icon: 'ChevronsDown', label: GALAXY_TEXT.PAD_DOWN },
 ];
 
-function useGalaxySystems(t) {
-  return useMemo(() => {
-    const resolve = (value) => (typeof value === 'string' ? value : t(value));
-    const soft = {
-      id: SOFT_SYSTEM_ID, kind: 'soft', color: SOFT_SYSTEM_COLOR, title: t(GALAXY_TEXT.SOFT_SYSTEM),
-      planets: SOFT_SKILLS.map((skill) => ({
-        id: `soft-${skill.id}`, kind: 'soft', name: t(skill.title), icon: skill.icon, color: skill.color,
-        summary: t(skill.summary), concepts: skill.traits.map(resolve), inPractice: t(skill.inPractice),
-      })),
-    };
-    const technical = SKILLS_CATEGORIES.map((category) => ({
-      id: category.id, kind: 'technical', color: category.orbitColor, title: t(category.title),
-      planets: category.skills.map((skill, index) => ({
-        id: `${category.id}-${index}`, kind: 'technical', name: resolve(skill.name), icon: skill.icon, color: skill.color,
-        summary: t(skill.summary), concepts: skill.concepts.map(resolve), evidence: t(skill.evidence),
-      })),
-    }));
-    return [soft, ...technical].map((system) => {
-      const position = SYSTEM_POSITIONS[system.id] || [0, 0, 0];
-      return { ...system, position, vector: new Vector3(...position), planets: system.planets.map((planet) => ({ ...planet, systemTitle: system.title })) };
-    });
-  }, [t]);
-}
-
-export default function SkillsGalaxy() {
+/** Free-flight 3D map for one universe (skills or projects) of the galaxy browser. */
+export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra }) {
   const { t } = useLanguage();
-  const systems = useGalaxySystems(t);
+  const { systems, cameraHome } = universe;
   const reducedMotion = useReducedMotion();
   const [selected, setSelected] = useState(null);
   const [engaged, setEngaged] = useState(false);
@@ -54,8 +31,7 @@ export default function SkillsGalaxy() {
   const inputRef = useRef(new Set());
   const flyTargetRef = useRef(null);
   const frameRef = useRef(null);
-  const cockpitRef = useRef(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const labelsRef = useRef(null);
   const isTouch = useMemo(() => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches, []);
 
   const setEngagedState = useCallback((value) => {
@@ -107,7 +83,7 @@ export default function SkillsGalaxy() {
 
   const resetView = () => {
     setSelected(null);
-    flyTo(new Vector3(...CAMERA_HOME.position), new Vector3(...CAMERA_HOME.lookAt));
+    flyTo(new Vector3(...cameraHome.position), new Vector3(...cameraHome.lookAt));
   };
 
   const pressPad = (action, pressed) => {
@@ -119,71 +95,50 @@ export default function SkillsGalaxy() {
     }
   };
 
-  // Native fullscreen where available; otherwise (e.g. iOS Safari) expand the map over the page.
-  const canUseNativeFullscreen = typeof document !== 'undefined' && document.fullscreenEnabled;
-
-  useEffect(() => {
-    const onChange = () => setIsFullscreen(document.fullscreenElement === cockpitRef.current);
-    document.addEventListener('fullscreenchange', onChange);
-    return () => document.removeEventListener('fullscreenchange', onChange);
-  }, []);
-
-  useEffect(() => {
-    if (!isFullscreen || canUseNativeFullscreen) return undefined;
-    const onKeyDown = (event) => { if (event.key === 'Escape') setIsFullscreen(false); };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isFullscreen, canUseNativeFullscreen]);
-
-  const toggleFullscreen = () => {
-    if (isFullscreen && !document.fullscreenElement) {
-      setIsFullscreen(false);
-      return;
-    }
-    if (!canUseNativeFullscreen) {
-      setIsFullscreen((value) => !value);
-      return;
-    }
-    if (document.fullscreenElement) document.exitFullscreen();
-    else cockpitRef.current?.requestFullscreen().catch(() => setIsFullscreen(true));
-  };
-
   const totalPlanets = systems.reduce((sum, { planets }) => sum + planets.length, 0);
 
   return (
-    <div ref={cockpitRef} className={`${styles.cockpit} ${isFullscreen ? styles.cockpitFullscreen : ''}`}>
+    <div className={styles.cockpit}>
       <div className={styles.toolbar}>
-        <span className={styles.fileTab}><Icon name="Orbit" size={13} /> {GALAXY_TEXT.FILE_NAME}</span>
-        <span className={styles.toolbarTitle}>{t(GALAXY_TEXT.TITLE)} <span className={styles.muted}>// {systems.length} · {totalPlanets} {t(GALAXY_TEXT.PLANETS)}</span></span>
+        <span className={styles.fileTab}><Icon name="Orbit" size={13} /> {universe.fileName}</span>
+        <span className={styles.toolbarTitle}>{universe.title} <span className={styles.muted}>// {systems.length} · {totalPlanets} {t(GALAXY_TEXT.PLANETS)}</span></span>
         <button type="button" className={styles.toolbarButton} onClick={resetView}>
           <Icon name="LocateFixed" size={13} /> <span className={styles.toolbarLabel}>{t(GALAXY_TEXT.RESET)}</span>
         </button>
-        <button
-          type="button"
-          className={styles.toolbarButton}
-          onClick={toggleFullscreen}
-          aria-pressed={isFullscreen}
-          title={t(isFullscreen ? GALAXY_TEXT.EXIT_FULLSCREEN : GALAXY_TEXT.FULLSCREEN)}
-        >
-          <Icon name={isFullscreen ? 'Minimize2' : 'Maximize2'} size={13} />
-          <span className={styles.toolbarLabel}>{t(isFullscreen ? GALAXY_TEXT.EXIT_FULLSCREEN : GALAXY_TEXT.FULLSCREEN)}</span>
-        </button>
+        {toolbarExtra}
       </div>
 
       <div ref={frameRef} className={`${styles.viewport} ${engaged ? styles.viewportEngaged : ''}`}>
-        <Canvas camera={{ position: CAMERA_HOME.position, fov: CAMERA_FOV, near: 0.1, far: 600 }} dpr={[1, 2]} gl={{ antialias: true }}>
-          <FlyControls
-            engagedRef={engagedRef}
-            inputRef={inputRef}
-            flyTargetRef={flyTargetRef}
-            systems={systems}
-            onTelemetry={updateTelemetry}
-            onEngage={engage}
-            reducedMotion={reducedMotion}
-          />
-          <GalaxyScene systems={systems} paused={Boolean(selected) || reducedMotion} selectedId={selected?.id} onSelect={selectPlanet} onSelectSystem={warpToSystem} />
+        <Canvas
+          camera={{ position: cameraHome.position, fov: CAMERA_FOV, near: 0.1, far: 600 }}
+          dpr={[1, 2]}
+          gl={{ antialias: true }}
+          onCreated={({ camera }) => camera.lookAt(...cameraHome.lookAt)}
+        >
+          <LabelsPortalContext.Provider value={labelsRef}>
+            <FlyControls
+              engagedRef={engagedRef}
+              inputRef={inputRef}
+              flyTargetRef={flyTargetRef}
+              systems={systems}
+              onTelemetry={updateTelemetry}
+              onEngage={engage}
+              reducedMotion={reducedMotion}
+            />
+            <GalaxyScene
+              systems={systems}
+              hub={universe.hub}
+              portal={universe.portal}
+              onPortal={onPortal}
+              paused={Boolean(selected) || reducedMotion}
+              selectedId={selected?.id}
+              onSelect={selectPlanet}
+              onSelectSystem={warpToSystem}
+            />
+          </LabelsPortalContext.Provider>
         </Canvas>
 
+        <div ref={labelsRef} className={styles.labelsLayer} aria-hidden="true" />
         <div className={styles.reticle} aria-hidden="true">+</div>
 
         <div className={styles.hudTop}>
@@ -269,7 +224,17 @@ export default function SkillsGalaxy() {
                   {selected.inPractice}
                 </p>
               )}
-              <span className={styles.panelTitle}>{t(selected.kind === 'soft' ? GALAXY_TEXT.TRAITS : GALAXY_TEXT.PRACTICAL)}</span>
+              {selected.decisions?.length > 0 && (
+                <>
+                  <span className={styles.panelTitle}>{t(BROWSER_TEXT.DECISIONS)}</span>
+                  <ul className={styles.decisionList}>
+                    {selected.decisions.map((decision) => <li key={decision}>{decision}</li>)}
+                  </ul>
+                </>
+              )}
+              <span className={styles.panelTitle}>
+                {t(selected.kind === 'soft' ? GALAXY_TEXT.TRAITS : selected.kind === 'project' ? BROWSER_TEXT.STACK : GALAXY_TEXT.PRACTICAL)}
+              </span>
               <div className={styles.concepts}>
                 {selected.concepts.map((concept, index) => (
                   <Motion.span key={concept} className={styles.concept} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + index * 0.05 }}>
@@ -277,6 +242,17 @@ export default function SkillsGalaxy() {
                   </Motion.span>
                 ))}
               </div>
+              {selected.kind === 'project' && (
+                <div className={styles.dossierLinks}>
+                  {selected.github && <a href={selected.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
+                  {selected.live && <a href={selected.live} target="_blank" rel="noopener noreferrer">Live ↗</a>}
+                  {onOpenProject && (
+                    <button type="button" onClick={onOpenProject}>
+                      {t(BROWSER_TEXT.CASE_STUDY)} <Icon name="ArrowRight" size={12} />
+                    </button>
+                  )}
+                </div>
+              )}
             </Motion.aside>
           )}
         </AnimatePresence>

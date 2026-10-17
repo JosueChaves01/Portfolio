@@ -74,3 +74,8 @@ export const KEY_BINDINGS = {
   KeyQ: 'down', KeyC: 'down',
   ShiftLeft: 'boost', ShiftRight: 'boost',
 };
+
+export const BLACK_HOLE = {
+  RADIUS: 3.4,
+  EVENT_HORIZON: 8,
+};

@@ -9,6 +9,8 @@ const INITIAL_ACTIVE_TAB = FILE_IDS.HOME;
 export function TabsProvider({ children }) {
   const [openTabs, setOpenTabs] = useState(INITIAL_OPEN_TABS);
   const [activeTab, setActiveTab] = useState(INITIAL_ACTIVE_TAB);
+  // Which window the galaxy browser shows (skills or projects).
+  const [browserWindow, setBrowserWindow] = useState('skills');
 
   const openTab = useCallback((fileId) => {
     if (!openTabs.includes(fileId)) {
@@ -25,12 +27,20 @@ export function TabsProvider({ children }) {
     }
   }, [openTabs, activeTab]);
 
+  const openBrowser = useCallback((windowId) => {
+    if (windowId) setBrowserWindow(windowId);
+    openTab(FILE_IDS.BROWSER);
+  }, [openTab]);
+
   const value = useMemo(() => ({
     openTabs,
     activeTab,
     openTab,
     closeTab,
-  }), [openTabs, activeTab, openTab, closeTab]);
+    browserWindow,
+    setBrowserWindow,
+    openBrowser,
+  }), [openTabs, activeTab, openTab, closeTab, browserWindow, openBrowser]);
 
   return (
     <TabsContext.Provider value={value}>

@@ -8,6 +8,7 @@ export const FILE_LANGUAGE_MAP = {
   [FILE_IDS.EXPERIENCE]: 'TypeScript',
   [FILE_IDS.CONTACT]: 'CSS',
   [FILE_IDS.README]: 'Markdown',
+  [FILE_IDS.BROWSER]: 'WebGL',
 };
 
 export const STATUS_BAR = {

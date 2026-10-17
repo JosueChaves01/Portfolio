@@ -5,7 +5,7 @@
 .cockpit {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--color-border);
+  border: var(--galaxy-cockpit-border, 1px solid var(--color-border));
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--color-surface);
@@ -53,7 +53,7 @@
 
 .viewport {
   position: relative;
-  height: clamp(460px, 72vh, 760px);
+  height: var(--galaxy-viewport-height, clamp(460px, 72vh, 760px));
   background: #06060c;
   touch-action: none;
   outline: 1px solid transparent;
@@ -308,7 +308,7 @@
 }
 
 @media (max-width: 768px) {
-  .viewport { height: clamp(420px, 70vh, 620px); }
+  .viewport { height: var(--galaxy-viewport-height, clamp(420px, 70vh, 620px)); }
   .systemList {
     top: auto;
     bottom: 60px;
@@ -346,4 +346,67 @@
 
 @media (max-width: 480px) {
   .toolbarLabel { display: none; }
+}
+
+/* ─── Project dossier extras ─── */
+.decisionList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding-left: var(--space-4);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.decisionList li::marker { color: var(--dossier-color); }
+
+.dossierLinks { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+.dossierLinks a,
+.dossierLinks button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dossierLinks a:hover,
+.dossierLinks button:hover { color: var(--color-text); border-color: var(--dossier-color); }
+
+/* ─── Black hole label ─── */
+.portalLabel {
+  padding: 4px 10px;
+  border: 1px solid rgba(192, 132, 252, 0.5);
+  border-radius: var(--radius-full);
+  background: rgba(6, 6, 12, 0.75);
+  color: #e9d5ff;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 0 18px rgba(192, 132, 252, 0.35);
+}
+
+/* Layer that hosts the 3D labels (drei <Html portal>), aligned with the canvas. */
+.labelsLayer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  /* Keep the system strip and the flight pad from overlapping on phones. */
+  .systemList { bottom: var(--space-2); }
+  .pad { bottom: 64px; }
 }

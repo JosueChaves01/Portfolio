@@ -10,6 +10,7 @@ const SECTION_COMPONENTS = {
   experience: lazy(() => import('../../sections/experience/components/ExperienceSection').then(m => ({ default: m.ExperienceSection }))),
   contact: lazy(() => import('../../sections/contact/components/ContactSection').then(m => ({ default: m.ContactSection }))),
   readme: lazy(() => import('../../sections/readme/components/ReadmeSection').then(m => ({ default: m.ReadmeSection }))),
+  browser: lazy(() => import('../../browser/components/GalaxyBrowser').then(m => ({ default: m.GalaxyBrowser }))),
 };
 
 export function useEditor() {

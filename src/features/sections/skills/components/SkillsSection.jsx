@@ -1,8 +1,7 @@
 import { SKILLS } from '../constants/skills.constants';
 import { useLanguage } from '../../../../store/LanguageContext';
-import { SkillsMap } from './SkillsMap';
-import { SoftSkills } from './SoftSkills';
-import { RecentCapabilities } from '../../../../shared/components/RecentCapabilities/RecentCapabilities';
+import { GalaxyLauncher } from './GalaxyLauncher';
+import { SkillsInAction } from './SkillsInAction';
 import styles from './SkillsSection.module.css';
 
 export function SkillsSection() {
@@ -16,10 +15,8 @@ export function SkillsSection() {
         <p className={styles.subheading}>{t(SKILLS.SUBHEADING)}</p>
       </div>
 
-      <RecentCapabilities />
-      <h2 className={styles.toolkitHeading}>{t({ en: 'Explore my skills galaxy', es: 'Explora mi galaxia de habilidades' })}</h2>
-      <SkillsMap />
-      <SoftSkills />
+      <SkillsInAction />
+      <GalaxyLauncher />
     </section>
   );
 }

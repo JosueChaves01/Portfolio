@@ -125,7 +125,7 @@ const COMMANDS = {
   },
 
   galaxy: ({ t, openTab, log }) => {
-    openTab(FILE_IDS.SKILLS);
+    openTab(FILE_IDS.BROWSER);
     log(t({ en: 'Opened skills galaxy', es: 'Se abrió la galaxia de habilidades' }));
     return [line(t({ en: 'Opening the skills galaxy… click the map, then fly with WASD.', es: 'Abriendo la galaxia de habilidades… haz clic en el mapa y vuela con WASD.' }), LINE_TONES.SUCCESS)];
   },

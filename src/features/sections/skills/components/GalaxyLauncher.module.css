@@ -1,0 +1,94 @@
+.launcher {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: center;
+  padding: var(--space-5);
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at 15% 50%, rgba(192, 132, 252, 0.12), transparent 55%),
+    var(--color-surface);
+}
+
+.preview {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0b0b16 30%, #06060c 70%);
+}
+
+.core {
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f472b6;
+  box-shadow: 0 0 24px #f472b6;
+}
+
+.orbit {
+  position: absolute;
+  border: 1px dashed rgba(148, 163, 184, 0.25);
+  border-radius: 50%;
+}
+
+.orbit i {
+  position: absolute;
+  top: -5px;
+  left: calc(50% - 5px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.blackHole {
+  position: absolute;
+  right: 8%;
+  bottom: 10%;
+  width: 18%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.75), 0 0 18px 6px rgba(192, 132, 252, 0.45);
+}
+
+.content { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  color: #c084fc;
+}
+
+.title { margin: 0; font-size: var(--text-2xl); color: var(--color-text); }
+.text { margin: 0; font-size: var(--text-sm); line-height: 1.7; color: var(--color-text-muted); }
+.meta { margin: 0; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-comment); }
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+
+.primary { border: 1px solid #c084fc; background: rgba(192, 132, 252, 0.18); color: var(--color-text); }
+.secondary { border: 1px solid var(--color-border); background: transparent; color: var(--color-text-muted); }
+.primary:hover { background: rgba(192, 132, 252, 0.28); }
+.secondary:hover { color: var(--color-text); border-color: var(--color-accent); }
+
+@media (max-width: 640px) {
+  .launcher { grid-template-columns: 1fr; gap: var(--space-4); padding: var(--space-4); }
+  .preview { width: 160px; margin: 0 auto; }
+  .title { font-size: var(--text-xl); }
+}
