@@ -1,11 +1,19 @@
 .editorArea {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   background-color: var(--color-editor);
   padding: var(--space-6) var(--space-8);
   position: relative;
   animation: editorFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   opacity: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100%;
 }
 
 /* ============================================================================
@@ -74,6 +82,7 @@
 @media (max-width: 768px) {
   .editorArea {
     padding: var(--space-3);
+    padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
     animation: editorFadeInMobile 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
@@ -89,5 +98,12 @@
   .loading,
   .placeholder {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .editorArea {
+    padding: 10px 8px;
+    padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
   }
 }

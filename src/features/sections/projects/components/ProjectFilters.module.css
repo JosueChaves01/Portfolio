@@ -1,0 +1,165 @@
+/* ============================================================================
+   PROJECT FILTERS — search, selectors and category chips
+   ============================================================================ */
+
+.panel {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-editor) 88%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.topRow {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) repeat(3, auto);
+  gap: var(--space-2);
+  align-items: end;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-comment);
+}
+
+.search:focus-within { border-color: var(--color-accent); color: var(--color-accent); }
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.search input::-webkit-search-cancel-button { display: none; }
+
+.clearSearch {
+  display: inline-flex;
+  padding: 2px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-comment);
+}
+
+.select select {
+  height: 36px;
+  min-width: 150px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: none;
+  letter-spacing: normal;
+  cursor: pointer;
+}
+
+.select select:focus-visible { outline: none; border-color: var(--color-accent); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.chip:hover { color: var(--color-text); border-color: var(--color-accent); }
+
+.chipActive {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+  background: var(--color-accent-subtle);
+}
+
+.count {
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-hover);
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+.chipActive .count { background: var(--color-accent); color: var(--color-bg); }
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.summary strong { color: var(--color-accent); }
+
+.reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+
+.reset:hover { color: var(--color-text); border-color: var(--color-accent); }
+
+@media (max-width: 1024px) {
+  .topRow { grid-template-columns: 1fr 1fr 1fr; }
+  .search { grid-column: 1 / -1; }
+  .select select { min-width: 0; width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .panel { position: static; }
+  .topRow { grid-template-columns: 1fr 1fr; }
+  .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--space-3)); padding: 0 var(--space-3); }
+  .chip { flex-shrink: 0; }
+}

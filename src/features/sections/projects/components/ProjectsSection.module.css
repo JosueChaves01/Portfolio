@@ -1,3 +1,7 @@
+/* ============================================================================
+   PROJECTS SECTION — Glassmorphic Showcase with 3D Tilt & Spotlight
+   ============================================================================ */
+
 .section {
   display: flex;
   flex-direction: column;
@@ -32,19 +36,125 @@
   gap: var(--space-4);
 }
 
+.collectionHeading { margin: var(--space-4) 0 0; font-size: var(--text-xl); color: var(--color-text); }
+
+/* ============================================================================
+   GLASSMORPHIC PROJECT CARD
+   ============================================================================ */
+
 .card {
+  position: relative;
+  background: rgba(18, 20, 30, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   padding: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-surface);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  transition: border-color var(--transition-fast), transform var(--transition-fast);
-  position: relative;
   overflow: hidden;
+
+  /* 3D tilt via CSS variables set by useTiltEffect */
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+    scale(var(--card-scale, 1));
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+.card:hover {
+  border-color: rgba(var(--color-accent-rgb, 100, 200, 255), 0.3);
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.35),
+    0 0 24px rgba(var(--color-accent-rgb, 100, 200, 255), 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Cursor-following spotlight inside the card (Disabled) */
+.cardSpotlight {
+  display: none !important;
+}
+
+/* ─── Card Content Wrapper ─── */
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.cardBodyWrapper {
+  display: block;
+  flex: 1;
+}
+
+/* ─── Card Header ─── */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  position: relative;
+  z-index: 2;
+}
+
+.cardEmoji {
+  font-size: var(--text-xl);
+}
+
+.cardCategory {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex: 1;
+}
+
+.cardLinks {
+  display: flex;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+/* ─── Glassmorphic Link Buttons ─── */
+.link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-text);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-1px);
+}
+
+.liveLink {
+  color: var(--color-accent);
+  border-color: rgba(var(--color-accent-rgb, 100, 200, 255), 0.3);
+  background: rgba(var(--color-accent-rgb, 100, 200, 255), 0.06);
+}
+
+.liveLink:hover {
+  color: var(--color-accent-hover);
+  border-color: var(--color-accent);
+  background: rgba(var(--color-accent-rgb, 100, 200, 255), 0.12);
+  box-shadow: 0 0 12px rgba(var(--color-accent-rgb, 100, 200, 255), 0.15);
+}
+
+/* ─── Card Image ─── */
 .cardImage {
   width: 320px;
   overflow: visible;
@@ -67,75 +177,7 @@
   transition: transform var(--transition-fast);
 }
 
-/* Zoom effect removed as per user request */
-
-.card:hover {
-  border-color: var(--color-accent);
-  transform: translateY(-2px);
-}
-
-.cardContent {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  flex: 1;
-}
-
-.cardBodyWrapper {
-  display: block;
-  flex: 1;
-}
-
-.cardHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.cardEmoji {
-  font-size: var(--text-xl);
-}
-
-.cardCategory {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  flex: 1;
-}
-
-.cardLinks {
-  display: flex;
-  gap: var(--space-2);
-  margin-left: auto;
-}
-
-.link {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  text-decoration: none;
-  border: 1px solid var(--color-border);
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-sm);
-  transition: color var(--transition-fast), border-color var(--transition-fast);
-}
-
-.link:hover {
-  color: var(--color-text);
-  border-color: var(--color-text-muted);
-}
-
-.liveLink {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-
-.liveLink:hover {
-  color: var(--color-accent-hover);
-}
-
+/* ─── Card Title ─── */
 .cardTitle {
   font-family: var(--font-decorative);
   font-size: var(--text-xl);
@@ -144,6 +186,7 @@
   margin: 0;
 }
 
+/* ─── Card Description ─── */
 .cardDescription {
   font-family: var(--font-sans);
   font-size: var(--text-sm);
@@ -155,11 +198,16 @@
   text-align: justify;
 }
 
+/* ─── Glassmorphic Tag Pills ─── */
 .cardTags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1);
+  gap: 6px;
 }
+
+/* ============================================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================================ */
 
 @media (max-width: 1360px) {
   .cardImage {
@@ -186,6 +234,116 @@
   }
 
   .heading {
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-size: clamp(2rem, 6vw, 3rem);
   }
+}
+
+@media (max-width: 768px) {
+  .section {
+    gap: var(--space-4);
+  }
+
+  .heading {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .card {
+    padding: var(--space-3);
+  }
+
+  .cardTitle {
+    font-size: var(--text-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: clamp(1.75rem, 12vw, 2.4rem);
+  }
+
+  .cardHeader {
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .cardLinks {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: var(--space-1);
+  }
+}
+
+@media (max-width: 360px) {
+  .heading {
+    font-size: clamp(1.5rem, 11vw, 2rem);
+  }
+
+  .card {
+    padding: var(--space-2);
+  }
+
+  .cardTitle {
+    font-size: var(--text-base);
+  }
+}
+
+/* ─── Grid item wrapper (entry animation) ─── */
+.gridItem { display: flex; min-width: 0; }
+.gridItem > .card { flex: 1; }
+
+/* ─── Technical case button ─── */
+.detailsButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--project-color) 35%, transparent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--project-color) 8%, transparent);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.detailsButton:hover,
+.detailsButton:focus-visible {
+  border-color: var(--project-color);
+  background: color-mix(in srgb, var(--project-color) 16%, transparent);
+  outline: none;
+}
+
+.detailsMeta { margin-left: auto; color: var(--color-comment); }
+.detailsArrow { flex-shrink: 0; color: var(--project-color); transition: transform var(--transition-fast); }
+.detailsButton:hover .detailsArrow { transform: translateX(3px); }
+
+/* ─── Empty state ─── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-10) var(--space-4);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.empty strong { color: var(--color-text); }
+
+.empty button {
+  margin-top: var(--space-2);
+  padding: 6px 12px;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-subtle);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
 }

@@ -19,10 +19,7 @@
    DESKTOP LAYOUT (>768px)
    ============================================================================ */
 
-.mobileIndicators,
-.mobileTime,
-.mobileMenuBtn,
-.mobileMenu {
+.mobileContainer {
   display: none;
 }
 
@@ -80,6 +77,12 @@
   opacity: 0.5;
 }
 
+button.item {
+  border: none;
+  font: inherit;
+  color: inherit;
+}
+
 .theme {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.08);
@@ -99,149 +102,54 @@
 
 @media (max-width: 768px) {
   .statusBar {
+    height: 28px;
     padding: 0 var(--space-2);
-    gap: var(--space-2);
-    height: 44px;
+    gap: 0;
+    font-size: 11px;
   }
 
-  /* Hide desktop layout */
-  .desktopContainer {
-    display: none;
-  }
+  .desktopContainer { display: none; }
 
-  /* Mobile: Status indicators (icons only) */
-  .mobileIndicators {
+  .mobileContainer {
     display: flex;
     align-items: center;
     gap: var(--space-1);
-    flex-shrink: 0;
-  }
-
-  .indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    opacity: 0.8;
-  }
-
-  .indicator:hover {
-    opacity: 1;
-    background-color: var(--color-status-bar-hover);
-  }
-
-  .error {
-    color: #f87171;
-  }
-
-  .warning {
-    color: #fbbf24;
-  }
-
-  .indicatorIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Mobile: Time display */
-  .mobileTime {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: var(--color-text-muted);
-    white-space: nowrap;
-    font-weight: 700;
     flex: 1;
     min-width: 0;
+    height: 100%;
   }
 
-  /* Mobile: More menu button */
-  .mobileMenuBtn {
-    display: flex;
+  .mobileItem {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-text-muted);
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
-    flex-shrink: 0;
-    padding: 0;
-    display: flex;
-  }
-
-  .mobileMenuBtn:active {
-    background-color: var(--color-status-bar-hover);
-    color: var(--color-text);
-  }
-
-  /* Mobile: Expandable menu */
-  .mobileMenu {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    bottom: 100%;
-    right: var(--space-2);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.4);
-    z-index: 1000;
-    overflow: hidden;
-    min-width: 180px;
-    animation: slideUp 0.2s ease-out;
-  }
-
-  .menuItem {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-text);
-    text-align: left;
-    transition: all var(--transition-fast);
+    gap: 4px;
+    height: 100%;
+    padding: 0 6px;
     white-space: nowrap;
-    border-bottom: 1px solid var(--color-border);
+    color: var(--color-status-bar-text);
+    font-weight: 600;
   }
 
-  .menuItem:last-child {
-    border-bottom: none;
+  .mobileItem .icon { opacity: 0.85; }
+  .mobileSpacer { flex: 1; min-width: 0; }
+  .error { color: #fecaca; }
+  .warning { color: #fde68a; }
+
+  .mobileTheme {
+    min-width: 0;
+    max-width: 50vw;
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: rgba(255, 255, 255, 0.14);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .menuItem:active {
-    background-color: var(--color-surface-hover);
-    color: var(--color-accent);
-  }
-
-  .menuLabel {
-    display: inline;
-  }
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(8px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
+  .mobileTheme .label { overflow: hidden; text-overflow: ellipsis; }
+  .mobileTheme:active,
+  .mobileTheme[aria-expanded='true'] { background-color: rgba(255, 255, 255, 0.26); }
 }
 
 /* ============================================================================

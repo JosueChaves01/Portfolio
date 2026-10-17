@@ -126,31 +126,6 @@
 
 @media (max-width: 768px) {
   .menuBar {
-    padding: 0 var(--space-1);
-    gap: 0;
-    height: auto;
-  }
-
-  .menuItem {
-    padding: var(--space-1);
-    font-size: 11px;
-    transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-                background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Faster ripple effect on mobile */
-  .menuItem:active::before {
-    width: 80px;
-    height: 80px;
-    transition: width 0.4s, height 0.4s;
-  }
-
-  /* Remove underline animation on mobile, use background only */
-  .menuItem.active::after {
     display: none;
-  }
-
-  .menuItem.active {
-    background-color: rgba(255, 255, 255, 0.1);
   }
 }

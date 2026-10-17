@@ -1,0 +1,431 @@
+/* ============================================================================
+   HERO CODE CARD — FLOATING 3D IDE WINDOW
+   ============================================================================ */
+
+.cardPerspectiveContainer {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.codeCard {
+  position: relative;
+  border-radius: var(--radius-md);
+  background: rgba(16, 18, 27, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+    scale(var(--card-scale, 1));
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+  user-select: text;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.codeCard:hover {
+  border-color: rgba(var(--color-accent-rgb, 100, 200, 255), 0.3);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(var(--color-accent-rgb, 100, 200, 255), 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Cursor spotlight halo (Disabled) */
+.cardSpotlight {
+  display: none !important;
+}
+
+/* Window Topbar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0 var(--space-3);
+  gap: var(--space-2);
+  user-select: none;
+}
+
+.windowControls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  transition: transform var(--transition-fast);
+}
+
+.dot:hover {
+  transform: scale(1.15);
+}
+
+.dotRed {
+  background-color: #ff5f56;
+}
+
+.dotYellow {
+  background-color: #ffbd2e;
+}
+
+.dotGreen {
+  background-color: #27c93f;
+}
+
+/* Tabs */
+.tabsList {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  min-width: 0;
+  margin: 0 var(--space-2);
+}
+
+.tabsList::-webkit-scrollbar {
+  display: none;
+}
+
+.tabBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.tabBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text);
+}
+
+.tabActive {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.tabIcon {
+  display: flex;
+  align-items: center;
+}
+
+/* Action Buttons */
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.actionBtn.running {
+  color: var(--color-accent);
+}
+
+.spinIcon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.btnLabel {
+  display: inline;
+}
+
+/* Code Body */
+.codeBody {
+  position: relative;
+  padding: var(--space-3) var(--space-2);
+  flex: 1;
+  min-height: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.codeLinesWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.codeLine {
+  display: flex;
+  align-items: flex-start;
+  padding: 1px 0;
+  transition: background-color var(--transition-fast);
+  border-radius: 2px;
+}
+
+.codeLine:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.lineNumber {
+  width: 28px;
+  text-align: right;
+  margin-right: var(--space-3);
+  color: #52525b;
+  font-size: 11px;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.lineContent {
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e2e8f0;
+}
+
+/* Syntax Token Colors */
+.tokenKeyword {
+  color: #c084fc;
+  font-weight: 500;
+}
+
+.tokenType {
+  color: #38bdf8;
+}
+
+.tokenString {
+  color: #4ade80;
+}
+
+.tokenProperty {
+  color: #93c5fd;
+}
+
+.tokenComment {
+  color: #64748b;
+  font-style: italic;
+}
+
+/* Output Drawer */
+.outputDrawer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(var(--color-accent-rgb, 100, 200, 255), 0.3);
+  padding: var(--space-2) var(--space-3);
+  animation: drawerSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 15;
+}
+
+@keyframes drawerSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.outputHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.outputLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.closeOutputBtn {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px;
+}
+
+.outputText {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: #86efac;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Card Footer */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  padding: 0 var(--space-3);
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  user-select: none;
+}
+
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusPulseDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.footerBrand {
+  opacity: 0.6;
+}
+
+/* ============================================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .cardPerspectiveContainer {
+    max-width: 100%;
+  }
+
+  .codeBody {
+    min-height: 200px;
+    font-size: 11.5px;
+    padding: var(--space-2);
+    overscroll-behavior: contain;
+  }
+
+  .btnLabel {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    padding: 0 var(--space-2);
+    height: 38px;
+  }
+
+  .windowControls {
+    display: none;
+  }
+
+  .tabsList {
+    margin: 0;
+  }
+
+  .tabBtn {
+    padding: 4px 7px;
+    font-size: 10.5px;
+  }
+
+  .actionBtn {
+    padding: 4px 7px;
+  }
+
+  .lineNumber {
+    width: 20px;
+    margin-right: var(--space-2);
+  }
+
+  .codeBody {
+    font-size: 11px;
+    padding: var(--space-2) var(--space-1);
+  }
+
+  .cardFooter {
+    font-size: 9px;
+    padding: 0 var(--space-2);
+  }
+}
+
+@media (max-width: 360px) {
+  .tabBtn {
+    padding: 3px 6px;
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .tabIcon {
+    transform: scale(0.9);
+  }
+}
+
+/* Inside the stacked deck the window fills its frame and must be opaque,
+   otherwise the queued cards behind it show through. */
+.cardPerspectiveContainer { max-width: none; }
+.codeCard { background: var(--color-surface); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.codeBody { max-height: none; }

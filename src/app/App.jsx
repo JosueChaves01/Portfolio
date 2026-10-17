@@ -17,6 +17,7 @@ import { Terminal } from '../features/terminal/components/Terminal';
 import { CopilotPanel } from '../features/copilot';
 import { CommandPalette } from '../features/commandPalette/components/CommandPalette';
 import { StatusBar } from '../features/statusBar/components/StatusBar';
+import { MobileNav } from '../shared/components/MobileNav/MobileNav';
 import { RESUME_URL } from '../features/explorer/constants/explorer.constants';
 
 import styles from './App.module.css';
@@ -157,6 +158,7 @@ export function App() {
       </div>
 
       <StatusBar />
+      <MobileNav />
 
       {isCommandPaletteOpen && <CommandPalette />}
     </div>

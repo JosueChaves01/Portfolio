@@ -1,8 +1,12 @@
+/* ============================================================================
+   EXPERIENCE SECTION — Git Timeline with Glassmorphic Depth
+   ============================================================================ */
+
 .section {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  max-width: 720px;
+  max-width: 820px;
 }
 
 .headerComment {
@@ -32,6 +36,10 @@
   flex-direction: column;
 }
 
+/* ============================================================================
+   TIMELINE ITEM WITH GLASSMORPHIC CARD
+   ============================================================================ */
+
 .timelineItem {
   display: flex;
   gap: var(--space-4);
@@ -49,16 +57,31 @@
   color: var(--color-text-muted);
   line-height: 1;
   margin-top: var(--space-1);
+  transition: all var(--transition-fast);
 }
 
 .indicator.current {
   color: var(--color-accent);
+  filter: drop-shadow(0 0 6px var(--color-accent));
+  animation: indicatorPulse 2.5s ease-in-out infinite;
 }
 
+@keyframes indicatorPulse {
+  0%, 100% { filter: drop-shadow(0 0 6px var(--color-accent)); opacity: 1; }
+  50% { filter: drop-shadow(0 0 12px var(--color-accent)); opacity: 0.7; }
+}
+
+/* Gradient timeline line */
 .timelineLine {
   flex: 1;
   width: 1px;
-  background-color: var(--color-border);
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--color-accent-rgb, 100, 200, 255), 0.3),
+    var(--color-border) 30%,
+    var(--color-border) 70%,
+    rgba(var(--color-accent-rgb, 100, 200, 255), 0.15)
+  );
   margin: var(--space-2) 0;
   min-height: var(--space-6);
 }
@@ -67,11 +90,48 @@
   display: none;
 }
 
+/* ─── Glassmorphic Content Card ─── */
+.timelineCard {
+  position: relative;
+  background: rgba(18, 20, 30, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: var(--space-4);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+
+  /* 3D tilt */
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+    scale(var(--card-scale, 1));
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.timelineCard:hover {
+  border-color: rgba(var(--color-accent-rgb, 100, 200, 255), 0.25);
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(var(--color-accent-rgb, 100, 200, 255), 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Card spotlight overlay (Disabled) */
+.cardSpotlight {
+  display: none !important;
+}
+
+/* Content above spotlight */
 .timelineContent {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding-bottom: var(--space-6);
+  position: relative;
+  z-index: 2;
 }
 
 .period {
@@ -106,16 +166,19 @@
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1);
+  gap: 6px;
 }
 
+/* ─── Glassmorphic Inset Projects ─── */
 .projects {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   margin: var(--space-2) 0;
-  padding-left: var(--space-4);
-  border-left: 2px solid var(--color-border);
+  padding: var(--space-3);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
 }
 
 .project {
@@ -138,3 +201,84 @@
   line-height: 1.5;
 }
 
+/* ============================================================================
+   MOBILE LAYOUT (≤768px)
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .section {
+    gap: var(--space-4);
+    max-width: 100%;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .timelineItem {
+    gap: var(--space-3);
+  }
+
+  .timelineCard {
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .timelineContent {
+    gap: var(--space-1);
+  }
+
+  .title {
+    font-size: var(--text-lg);
+  }
+
+  .description {
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  .projects {
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+}
+
+/* ============================================================================
+   SMALL MOBILE (≤480px)
+   ============================================================================ */
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: clamp(1.75rem, 12vw, 2.4rem);
+  }
+
+  .timelineItem {
+    gap: var(--space-2);
+  }
+
+  .indicator {
+    font-size: var(--text-base);
+  }
+}
+
+/* ============================================================================
+   ULTRA-SMALL MOBILE (≤360px)
+   ============================================================================ */
+
+@media (max-width: 360px) {
+  .heading {
+    font-size: clamp(1.5rem, 11vw, 2rem);
+  }
+
+  .title {
+    font-size: var(--text-base);
+  }
+
+  .company {
+    font-size: var(--text-xs);
+  }
+
+  .projects {
+    padding: var(--space-2);
+  }
+}

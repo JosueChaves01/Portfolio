@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { useState, useEffect, useRef } from 'react';
 import {
   TYPEWRITER_SPEED_MS,
@@ -6,7 +5,7 @@ import {
   TYPEWRITER_PAUSE_MS,
 } from '../constants/home.constants';
 
-const STATE = { TYPING: 'typing', PAUSING: 'pausing', DELETING: 'deleting' };
+const STATE = { TYPING: 'typing', DELETING: 'deleting' };
 
 export function useTypewriter(phrases) {
   const [displayText, setDisplayText] = useState('');
@@ -16,7 +15,7 @@ export function useTypewriter(phrases) {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    const currentPhrase = phrases[phraseIndex];
+    const currentPhrase = phrases[phraseIndex] || '';
 
     if (typingState === STATE.TYPING) {
       if (charIndex < currentPhrase.length) {
@@ -25,10 +24,8 @@ export function useTypewriter(phrases) {
           setCharIndex((i) => i + 1);
         }, TYPEWRITER_SPEED_MS);
       } else {
-        timeoutRef.current = setTimeout(() => setTypingState(STATE.PAUSING), TYPEWRITER_PAUSE_MS);
+        timeoutRef.current = setTimeout(() => setTypingState(STATE.DELETING), TYPEWRITER_PAUSE_MS);
       }
-    } else if (typingState === STATE.PAUSING) {
-      setTypingState(STATE.DELETING);
     } else if (typingState === STATE.DELETING) {
       if (charIndex > 0) {
         timeoutRef.current = setTimeout(() => {
@@ -36,8 +33,10 @@ export function useTypewriter(phrases) {
           setCharIndex((i) => i - 1);
         }, TYPEWRITER_DELETE_SPEED_MS);
       } else {
-        setPhraseIndex((i) => (i + 1) % phrases.length);
-        setTypingState(STATE.TYPING);
+        timeoutRef.current = setTimeout(() => {
+          setPhraseIndex((i) => (i + 1) % phrases.length);
+          setTypingState(STATE.TYPING);
+        }, 200);
       }
     }
 
