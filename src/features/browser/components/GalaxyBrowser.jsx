@@ -4,7 +4,7 @@ import { useLanguage } from '../../../store/LanguageContext';
 import { useTabs } from '../../../store/TabsContext';
 import { Icon } from '../../../shared/icons/Icon';
 import { FILE_IDS } from '../../explorer/constants/explorer.constants';
-import { GALAXY_TEXT } from '../constants/galaxy.constants';
+import { GALAXY_TEXT, SHIP_TEXT, VIEW_MODES } from '../constants/galaxy.constants';
 import { BROWSER_TEXT, BROWSER_WINDOWS, TRAVEL_DURATION_MS } from '../constants/browser.constants';
 import { buildSkillsUniverse } from '../universes/skillsUniverse';
 import { buildProjectsUniverse } from '../universes/projectsUniverse';
@@ -16,6 +16,21 @@ const WINDOWS = [
   { id: BROWSER_WINDOWS.SKILLS, icon: 'Sparkles', label: BROWSER_TEXT.WINDOW_SKILLS, section: FILE_IDS.SKILLS },
   { id: BROWSER_WINDOWS.PROJECTS, icon: 'FolderGit2', label: BROWSER_TEXT.WINDOW_PROJECTS, section: FILE_IDS.PROJECTS },
 ];
+
+const VIEW_STORAGE_KEY = 'portfolio-galaxy-view';
+const VIEW_OPTIONS = [
+  { id: VIEW_MODES.FREE, icon: 'Eye', label: SHIP_TEXT.MODE_FREE },
+  { id: VIEW_MODES.SHIP, icon: 'Rocket', label: SHIP_TEXT.MODE_SHIP },
+];
+
+function readStoredView() {
+  try {
+    const stored = window.localStorage.getItem(VIEW_STORAGE_KEY);
+    return Object.values(VIEW_MODES).includes(stored) ? stored : VIEW_MODES.FREE;
+  } catch {
+    return VIEW_MODES.FREE;
+  }
+}
 
 function supportsWebGL() {
   try {
@@ -34,6 +49,7 @@ export function GalaxyBrowser() {
   const [hasWebGL] = useState(supportsWebGL);
   const [travelTarget, setTravelTarget] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [viewMode, setViewMode] = useState(readStoredView);
   const rootRef = useRef(null);
   const timersRef = useRef([]);
 
@@ -90,6 +106,35 @@ export function GalaxyBrowser() {
     else rootRef.current?.requestFullscreen().catch(() => setIsFullscreen(true));
   };
 
+  const changeViewMode = (mode) => {
+    setViewMode(mode);
+    try {
+      window.localStorage.setItem(VIEW_STORAGE_KEY, mode);
+    } catch {
+      // Storage can be unavailable (private mode); the choice still applies for this visit.
+    }
+  };
+
+  const viewSwitch = (
+    <div className={styles.viewSwitch} role="radiogroup" aria-label={t(SHIP_TEXT.VIEW)}>
+      {VIEW_OPTIONS.map(({ id, icon, label }) => (
+        <button
+          key={id}
+          type="button"
+          role="radio"
+          aria-checked={viewMode === id}
+          className={`${styles.viewOption} ${viewMode === id ? styles.viewOptionActive : ''}`}
+          onClick={() => changeViewMode(id)}
+          title={t(label)}
+        >
+          {viewMode === id && <Motion.span layoutId="galaxy-view-pill" className={styles.viewPill} />}
+          <Icon name={icon} size={13} />
+          <span className={styles.chromeLabel}>{t(label)}</span>
+        </button>
+      ))}
+    </div>
+  );
+
   const fullscreenButton = (
     <button type="button" className={styles.chromeButton} onClick={toggleFullscreen} aria-pressed={isFullscreen}>
       <Icon name={isFullscreen ? 'Minimize2' : 'Maximize2'} size={13} />
@@ -129,7 +174,8 @@ export function GalaxyBrowser() {
             universe={universe}
             onPortal={travelTo}
             onOpenProject={() => openTab(FILE_IDS.PROJECTS)}
-            toolbarExtra={fullscreenButton}
+            toolbarExtra={<>{viewSwitch}{fullscreenButton}</>}
+            viewMode={viewMode}
           />
         ) : (
           <div className={styles.fallback}>

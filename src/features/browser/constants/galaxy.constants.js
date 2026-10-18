@@ -79,3 +79,69 @@ export const BLACK_HOLE = {
   RADIUS: 3.4,
   EVENT_HORIZON: 8,
 };
+
+export const VIEW_MODES = {
+  FREE: 'free',
+  SHIP: 'ship',
+};
+
+export const SHIP_TEXT = {
+  MODE_FREE: { en: 'Free camera', es: 'Cámara libre' },
+  MODE_SHIP: { en: 'Starship', es: 'Nave' },
+  VIEW: { en: 'View', es: 'Vista' },
+  SPEED: { en: 'Speed', es: 'Velocidad' },
+  THRUST: { en: 'Thrust', es: 'Empuje' },
+  BOOST: { en: 'BOOST', es: 'TURBO' },
+  GRAVITY: { en: 'Gravity well detected', es: 'Pozo gravitatorio detectado' },
+  SCAN: { en: 'Scan', es: 'Escanear' },
+  HELP_KEYS: { en: 'W thrust · S brake · A/D yaw · Q/E roll · R/V pitch · Shift boost · Space stop', es: 'W empuje · S frenar · A/D girar · Q/E rotar · R/V cabecear · Shift turbo · Espacio detener' },
+  HELP_MOUSE: { en: 'Drag to steer · Click a planet or press F near one to scan it', es: 'Arrastra para dirigir · Clic en un planeta o F cerca de uno para escanearlo' },
+  HELP_TOUCH: { en: 'Drag to steer · Use the pad to thrust and brake', es: 'Arrastra para dirigir · Usa los botones para acelerar y frenar' },
+  PAD_THRUST: { en: 'Thrust', es: 'Acelerar' },
+  PAD_BRAKE: { en: 'Brake', es: 'Frenar' },
+  PAD_BOOST: { en: 'Boost', es: 'Turbo' },
+  PAD_SCAN: { en: 'Scan nearby planet', es: 'Escanear planeta cercano' },
+};
+
+// Arcade-ish Newtonian flight: thrust adds velocity, there is very little drag,
+// and the ship keeps drifting until you brake (like No Man's Sky's space flight).
+export const SHIP = {
+  THRUST: 26,
+  BOOST_MULTIPLIER: 2.6,
+  BRAKE: 34,
+  LINEAR_DAMPING: 0.12,
+  MAX_SPEED: 42,
+  MAX_BOOST_SPEED: 110,
+  YAW_ACCEL: 4.2,
+  PITCH_ACCEL: 4.2,
+  ROLL_ACCEL: 5,
+  ANGULAR_DAMPING: 3.4,
+  MOUSE_STEER: 0.006,
+  MAX_STEER: 1.6,
+  BANK_FACTOR: 0.55,
+  CHASE_OFFSET: [0, 1.9, 7.2],
+  CHASE_LOOK_AHEAD: 12,
+  CHASE_STIFFNESS: 6,
+  FOV_MIN: 60,
+  FOV_MAX: 82,
+  GRAVITY_RANGE: 34,
+  GRAVITY_STRENGTH: 260,
+  STAR_COLLISION: 3.2,
+  SCAN_RANGE: 7,
+  TRAIL_POINTS: 90,
+  SPAWN_DISTANCE: 10,
+};
+
+export const SHIP_KEY_BINDINGS = {
+  KeyW: 'thrust', ArrowUp: 'thrust',
+  KeyS: 'brake', ArrowDown: 'brake',
+  KeyA: 'yawLeft', ArrowLeft: 'yawLeft',
+  KeyD: 'yawRight', ArrowRight: 'yawRight',
+  KeyQ: 'rollLeft',
+  KeyE: 'rollRight',
+  KeyR: 'pitchUp',
+  KeyF: 'scan',
+  KeyV: 'pitchDown',
+  ShiftLeft: 'boost', ShiftRight: 'boost',
+  Space: 'stop',
+};

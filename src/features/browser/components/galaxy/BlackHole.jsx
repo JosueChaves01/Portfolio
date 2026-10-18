@@ -1,9 +1,10 @@
 import { useMemo, useRef } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import { AdditiveBlending, CanvasTexture, DoubleSide, Vector3 } from 'three';
 import { BLACK_HOLE, FLIGHT } from '../../constants/galaxy.constants';
 import { useLabelsPortal } from './labelsPortal';
+import { useGalaxyRuntime } from './galaxyRuntime';
 import styles from './GalaxyView.module.css';
 
 function useDiskTexture() {
@@ -38,18 +39,19 @@ function useDiskTexture() {
 
 /** A portal to another browser window: fly into it (or click it) to travel. */
 export function BlackHole({ portal, texture, onEnter }) {
-  const { camera } = useThree();
   const diskRef = useRef();
   const outerDiskRef = useRef();
   const triggered = useRef(false);
   const center = useMemo(() => new Vector3(...portal.position), [portal.position]);
   const diskTexture = useDiskTexture();
   const labelsPortal = useLabelsPortal();
+  const { playerRef } = useGalaxyRuntime();
 
   useFrame((_, delta) => {
     diskRef.current.rotation.z += delta * 0.6;
     outerDiskRef.current.rotation.z -= delta * 0.25;
-    if (!triggered.current && camera.position.distanceTo(center) < BLACK_HOLE.EVENT_HORIZON) {
+    const player = playerRef.current;
+    if (!triggered.current && player.distanceTo(center) < BLACK_HOLE.EVENT_HORIZON) {
       triggered.current = true;
       onEnter(portal.target);
     }

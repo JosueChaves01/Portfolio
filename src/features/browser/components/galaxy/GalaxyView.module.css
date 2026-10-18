@@ -410,3 +410,103 @@
   .systemList { bottom: var(--space-2); }
   .pad { bottom: 64px; }
 }
+
+/* ─── Starship HUD ─── */
+.shipHud {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-3);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 220px;
+  z-index: 20;
+  pointer-events: none;
+  font-family: var(--font-mono);
+}
+
+.speedReadout {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: var(--radius-sm);
+  background: rgba(6, 6, 12, 0.72);
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.speedReadout strong { font-size: var(--text-lg); color: var(--color-text); font-variant-numeric: tabular-nums; }
+
+.boostTag {
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  color: var(--color-comment);
+  border: 1px solid var(--color-border);
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.boostTag[data-active='true'] { color: #fb923c; border-color: #fb923c; box-shadow: 0 0 12px rgba(251, 146, 60, 0.45); }
+
+.speedBar {
+  width: 200px;
+  height: 3px;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.speedBar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #c084fc, #fb923c);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.gravityAlert {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid rgba(192, 132, 252, 0.5);
+  border-radius: var(--radius-full);
+  background: rgba(6, 6, 12, 0.8);
+  color: #e9d5ff;
+  font-size: 11px;
+}
+
+.scanButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid #4ade80;
+  border-radius: var(--radius-full);
+  background: rgba(6, 6, 12, 0.85);
+  color: #bbf7d0;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 0 14px rgba(74, 222, 128, 0.3);
+}
+
+.scanButton kbd {
+  padding: 0 5px;
+  border: 1px solid rgba(187, 247, 208, 0.5);
+  border-radius: 3px;
+  font-size: 10px;
+}
+
+/* Ship pad has five buttons. */
+.pad:has(> :nth-child(5)) { grid-template-columns: repeat(3, 36px); }
+
+@media (max-width: 768px) {
+  .shipHud { bottom: 112px; min-width: 0; }
+  .speedBar { width: 140px; }
+}
