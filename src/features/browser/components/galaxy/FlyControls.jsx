@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Euler, Matrix4, Quaternion, Vector3 } from 'three';
 import { FLIGHT, KEY_BINDINGS, WORLD_RADIUS } from '../../constants/galaxy.constants';
+import { useGalaxyRuntime } from './galaxyRuntime';
 
 const UP = new Vector3(0, 1, 0);
 const COORD_INTERVAL = 0.1;
@@ -12,6 +13,7 @@ const COORD_INTERVAL = 0.1;
  */
 export function FlyControls({ engagedRef, inputRef, flyTargetRef, systems, onTelemetry, onEngage, reducedMotion }) {
   const { camera, gl } = useThree();
+  const { playerRef } = useGalaxyRuntime();
   const look = useRef({ yaw: 0, pitch: 0 });
   const velocity = useRef(new Vector3());
   const pointers = useRef(new Map());
@@ -164,6 +166,8 @@ export function FlyControls({ engagedRef, inputRef, flyTargetRef, systems, onTel
 
       if (camera.position.length() > WORLD_RADIUS) camera.position.setLength(WORLD_RADIUS);
     }
+
+    playerRef.current.copy(camera.position);
 
     coordTimer.current += delta;
     if (coordTimer.current > COORD_INTERVAL) {

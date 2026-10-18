@@ -4,15 +4,25 @@ import { AnimatePresence, motion as Motion, useReducedMotion } from 'framer-moti
 import { Vector3 } from 'three';
 import { useLanguage } from '../../../../store/LanguageContext';
 import { Icon } from '../../../../shared/icons/Icon';
-import { CAMERA_FOV, GALAXY_TEXT } from '../../constants/galaxy.constants';
+import { CAMERA_FOV, GALAXY_TEXT, SHIP_TEXT, VIEW_MODES } from '../../constants/galaxy.constants';
 import { BROWSER_TEXT } from '../../constants/browser.constants';
 import { FlyControls } from './FlyControls';
+import { ShipControls } from './ShipControls';
+import { GalaxyRuntimeContext } from './galaxyRuntime';
 import { GalaxyScene } from './GalaxyScene';
 import { LabelsPortalContext } from './labelsPortal';
 import styles from './GalaxyView.module.css';
 
 const SYSTEM_VIEW_OFFSET = new Vector3(0, 9, 26);
 const PLANET_VIEW_DISTANCE = 9;
+const SHIP_PAD_ACTIONS = [
+  { action: 'up', icon: 'ChevronsUp', label: GALAXY_TEXT.PAD_UP },
+  { action: 'forward', icon: 'Rocket', label: SHIP_TEXT.PAD_THRUST },
+  { action: 'boost', icon: 'Zap', label: SHIP_TEXT.PAD_BOOST },
+  { action: 'back', icon: 'Hand', label: SHIP_TEXT.PAD_BRAKE },
+  { action: 'down', icon: 'ChevronsDown', label: GALAXY_TEXT.PAD_DOWN },
+];
+
 const PAD_ACTIONS = [
   { action: 'up', icon: 'ChevronsUp', label: GALAXY_TEXT.PAD_UP },
   { action: 'forward', icon: 'ArrowUp', label: GALAXY_TEXT.PAD_FORWARD },
@@ -21,7 +31,7 @@ const PAD_ACTIONS = [
 ];
 
 /** Free-flight 3D map for one universe (skills or projects) of the galaxy browser. */
-export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra }) {
+export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra, viewMode = VIEW_MODES.FREE }) {
   const { t } = useLanguage();
   const { systems, cameraHome } = universe;
   const reducedMotion = useReducedMotion();
@@ -32,6 +42,13 @@ export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra }) 
   const flyTargetRef = useRef(null);
   const frameRef = useRef(null);
   const labelsRef = useRef(null);
+  const isShip = viewMode === VIEW_MODES.SHIP;
+  const runtime = useMemo(() => ({ playerRef: { current: new Vector3(...cameraHome.position) }, planetsRef: { current: new Map() } }), [cameraHome]);
+  const [nearPlanet, setNearPlanet] = useState(null);
+  const [gravityAlert, setGravityAlert] = useState(false);
+  const speedRef = useRef(null);
+  const throttleRef = useRef(null);
+  const boostRef = useRef(null);
   const isTouch = useMemo(() => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches, []);
 
   const setEngagedState = useCallback((value) => {
@@ -62,6 +79,15 @@ export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra }) 
     if (nearestRef.current) nearestRef.current.textContent = nearest ? `${nearestLabel}: ${nearest}` : '';
   }, [nearestLabel]);
 
+  // Speed and throttle go straight to the DOM; only rare changes (nearby planet, gravity) use state.
+  const updateShipTelemetry = useCallback(({ speed, maxSpeed, throttle, boosting, gravity, nearPlanet: near }) => {
+    if (speedRef.current) speedRef.current.textContent = speed.toFixed(0);
+    if (throttleRef.current) throttleRef.current.style.transform = `scaleX(${Math.min(1, speed / maxSpeed)})`;
+    if (boostRef.current) boostRef.current.dataset.active = String(boosting && throttle > 0.2);
+    setNearPlanet((current) => (current?.id === near?.id ? current : near));
+    setGravityAlert((current) => (current === gravity ? current : gravity));
+  }, []);
+
   const flyTo = (position, lookAt) => {
     flyTargetRef.current = { position: position.clone(), lookAt: lookAt.clone() };
   };
@@ -79,6 +105,16 @@ export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra }) 
     const viewPoint = planetPosition.clone().addScaledVector(outward, PLANET_VIEW_DISTANCE).add(new Vector3(0, 1.6, 0));
     setSelected(planet);
     flyTo(viewPoint, planetPosition);
+  };
+
+  // Stable scan callback for the ship controller (it subscribes to keyboard events once).
+  const selectPlanetRef = useRef(selectPlanet);
+  useEffect(() => { selectPlanetRef.current = selectPlanet; });
+  const scanPlanet = useCallback((planet, mesh) => selectPlanetRef.current(planet, mesh), []);
+
+  const scanNearby = () => {
+    const entry = nearPlanet && runtime.planetsRef.current.get(nearPlanet.id);
+    if (entry) selectPlanet(entry.planet, entry.mesh);
   };
 
   const resetView = () => {
@@ -115,16 +151,32 @@ export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra }) 
           gl={{ antialias: true }}
           onCreated={({ camera }) => camera.lookAt(...cameraHome.lookAt)}
         >
+          <GalaxyRuntimeContext.Provider value={runtime}>
           <LabelsPortalContext.Provider value={labelsRef}>
-            <FlyControls
-              engagedRef={engagedRef}
-              inputRef={inputRef}
-              flyTargetRef={flyTargetRef}
-              systems={systems}
-              onTelemetry={updateTelemetry}
-              onEngage={engage}
-              reducedMotion={reducedMotion}
-            />
+            {isShip ? (
+              <ShipControls
+                engagedRef={engagedRef}
+                inputRef={inputRef}
+                flyTargetRef={flyTargetRef}
+                systems={systems}
+                portal={universe.portal}
+                onTelemetry={updateTelemetry}
+                onShipTelemetry={updateShipTelemetry}
+                onScan={scanPlanet}
+                onEngage={engage}
+                reducedMotion={reducedMotion}
+              />
+            ) : (
+              <FlyControls
+                engagedRef={engagedRef}
+                inputRef={inputRef}
+                flyTargetRef={flyTargetRef}
+                systems={systems}
+                onTelemetry={updateTelemetry}
+                onEngage={engage}
+                reducedMotion={reducedMotion}
+              />
+            )}
             <GalaxyScene
               systems={systems}
               hub={universe.hub}
@@ -136,6 +188,7 @@ export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra }) 
               onSelectSystem={warpToSystem}
             />
           </LabelsPortalContext.Provider>
+          </GalaxyRuntimeContext.Provider>
         </Canvas>
 
         <div ref={labelsRef} className={styles.labelsLayer} aria-hidden="true" />
@@ -173,12 +226,47 @@ export function GalaxyView({ universe, onPortal, onOpenProject, toolbarExtra }) 
         </Motion.nav>
 
         <div className={styles.help}>
-          {!isTouch && <span>{t(GALAXY_TEXT.HELP_KEYS)}</span>}
-          <span>{t(isTouch ? GALAXY_TEXT.HELP_TOUCH : GALAXY_TEXT.HELP_MOUSE)}</span>
+          {!isTouch && <span>{t(isShip ? SHIP_TEXT.HELP_KEYS : GALAXY_TEXT.HELP_KEYS)}</span>}
+          <span>
+            {isShip
+              ? t(isTouch ? SHIP_TEXT.HELP_TOUCH : SHIP_TEXT.HELP_MOUSE)
+              : t(isTouch ? GALAXY_TEXT.HELP_TOUCH : GALAXY_TEXT.HELP_MOUSE)}
+          </span>
         </div>
 
+        {isShip && (
+          <div className={styles.shipHud}>
+            <div className={styles.speedReadout}>
+              <span className={styles.panelTitle}>{t(SHIP_TEXT.SPEED)}</span>
+              <span><strong ref={speedRef}>0</strong> u/s</span>
+              <span ref={boostRef} className={styles.boostTag} data-active="false">{t(SHIP_TEXT.BOOST)}</span>
+            </div>
+            <span className={styles.speedBar}><span ref={throttleRef} /></span>
+            <AnimatePresence>
+              {gravityAlert && (
+                <Motion.span key="gravity" className={styles.gravityAlert} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                  <Icon name="CircleDot" size={12} /> {t(SHIP_TEXT.GRAVITY)}
+                </Motion.span>
+              )}
+              {nearPlanet && !selected && (
+                <Motion.button
+                  key={nearPlanet.id}
+                  type="button"
+                  className={styles.scanButton}
+                  onClick={scanNearby}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                >
+                  <kbd>F</kbd> {t(SHIP_TEXT.SCAN)} · {nearPlanet.name}
+                </Motion.button>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+
         <div className={styles.pad}>
-          {PAD_ACTIONS.map(({ action, icon, label }) => (
+          {(isShip ? SHIP_PAD_ACTIONS : PAD_ACTIONS).map(({ action, icon, label }) => (
             <button
               key={action}
               type="button"

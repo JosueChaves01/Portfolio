@@ -1,9 +1,11 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useGalaxyRuntime } from './galaxyRuntime';
+import { useGlowTexture } from './glowTexture';
 import { BlackHole } from './BlackHole';
 import { useLabelsPortal } from './labelsPortal';
 import { useFrame } from '@react-three/fiber';
 import { Html, Line, Stars } from '@react-three/drei';
-import { AdditiveBlending, BufferAttribute, BufferGeometry, CanvasTexture, Color, DoubleSide } from 'three';
+import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, DoubleSide } from 'three';
 import { Icon } from '../../../../shared/icons/Icon';
 import { FLIGHT, ORBIT } from '../../constants/galaxy.constants';
 import styles from './GalaxyView.module.css';
@@ -20,22 +22,6 @@ function seededRandom(seed) {
   };
 }
 
-function useGlowTexture() {
-  return useMemo(() => {
-    const size = 128;
-    const canvas = document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    const context = canvas.getContext('2d');
-    const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-    gradient.addColorStop(0, 'rgba(255,255,255,1)');
-    gradient.addColorStop(0.25, 'rgba(255,255,255,0.55)');
-    gradient.addColorStop(1, 'rgba(255,255,255,0)');
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, size, size);
-    return new CanvasTexture(canvas);
-  }, []);
-}
 
 function Dust({ systems, texture }) {
   const geometry = useMemo(() => {
@@ -99,6 +85,14 @@ function Planet({ planet, index, paused, selectedId, onSelect, systemColor }) {
   const speed = ORBIT.BASE_SPEED / Math.sqrt(index + 1);
   const isSelected = selectedId === planet.id;
   const labelsPortal = useLabelsPortal();
+  const { planetsRef } = useGalaxyRuntime();
+
+  // Register the planet so the ship can detect and scan nearby planets.
+  useEffect(() => {
+    const registry = planetsRef.current;
+    registry.set(planet.id, { planet, mesh: meshRef.current });
+    return () => registry.delete(planet.id);
+  }, [planet, planetsRef]);
 
   useFrame((_, delta) => {
     if (!paused) angle.current += speed * Math.min(delta, 0.05);
